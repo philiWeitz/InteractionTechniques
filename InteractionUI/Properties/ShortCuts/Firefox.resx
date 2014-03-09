@@ -127,13 +127,13 @@
     <value />
   </data>
   <data name="PushOneHanded" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PushTwoHanded" xml:space="preserve">
     <value>{ENTER}</value>
   </data>
+  <data name="PushTwoHanded" xml:space="preserve">
+    <value>{Home}</value>
+  </data>
   <data name="SwipeDown" xml:space="preserve">
-    <value />
+    <value>{PGDN}</value>
   </data>
   <data name="SwipeToLeft" xml:space="preserve">
     <value>^{PGUP}</value>
@@ -142,6 +142,6 @@
     <value>^{PGDN}</value>
   </data>
   <data name="SwipeUp" xml:space="preserve">
-    <value />
+    <value>{PGUP}</value>
   </data>
 </root>

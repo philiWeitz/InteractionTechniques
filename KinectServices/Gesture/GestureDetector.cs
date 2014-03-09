@@ -59,6 +59,14 @@ namespace KinectServices.Gesture
                     result = swipeDetector.CheckToRightSwipeGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
                         || swipeDetector.CheckToRightSwipeGuesture(dataPointQueue.GetQueue(JointType.HandRight));
                     break;
+                case InteractionGesture.SwipeUp:
+                    result = swipeDetector.CheckUpSwipeGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                        || swipeDetector.CheckUpSwipeGuesture(dataPointQueue.GetQueue(JointType.HandRight));
+                    break;
+                case InteractionGesture.SwipeDown:
+                    result = swipeDetector.CheckDownSwipeGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                        || swipeDetector.CheckDownSwipeGuesture(dataPointQueue.GetQueue(JointType.HandRight));
+                    break;
                 default:
                     break;
             }

@@ -57,6 +57,8 @@ namespace InteractionUI.BusinessLogic
             kinectTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
             kinectTimer.Tick += new EventHandler(kinectTimer_Tick);
             kinectTimer.Interval = TimeSpan.FromMilliseconds(INTERVAL);
+
+            ApplicationList.NextProgram();
         }
 
         private void kinectTimer_Tick(object sender, EventArgs e)
@@ -97,24 +99,35 @@ namespace InteractionUI.BusinessLogic
         {
             bool detected = false;
 
-            foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
+            if (interactionService.checkGesture(InteractionGesture.PushTwoHanded))
             {
-                if (interactionService.checkGesture(gesture))
+                ApplicationList.NextProgram();
+
+                String shortCut = ShortCutUtil.GetShortCut(InteractionGesture.PushTwoHanded.ToString());
+                processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
+
+                detected = true;
+            }
+            else if (interactionService.checkGesture(InteractionGesture.PullTwoHanded))
+            {
+                ApplicationList.PreviousProgram();
+
+                String shortCut = ShortCutUtil.GetShortCut(InteractionGesture.PullTwoHanded.ToString());
+                processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
+
+                detected = true;
+            }
+            else
+            {
+                foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
                 {
-                    if (gesture == InteractionGesture.PushTwoHanded)
+                    if (interactionService.checkGesture(gesture))
                     {
-                        ApplicationList.NextProgram();
-                    }
-                    if (gesture == InteractionGesture.PullTwoHanded)
-                    {
-                        ApplicationList.PreviousProgram();
-                    }
+                        String shortCut = ShortCutUtil.GetShortCut(gesture.ToString());
+                        processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
 
-                    String shortCut = ShortCutUtil.GetShortCut(gesture.ToString());
-                    processService.SendKeyToProcess(
-                        ShortCutUtil.GetProcessName(), ShortCutUtil.GetShortCut(shortCut));
-
-                    detected = true;
+                        detected = true;
+                    }
                 }
             }
 

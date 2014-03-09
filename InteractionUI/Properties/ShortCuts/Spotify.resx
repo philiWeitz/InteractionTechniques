@@ -127,10 +127,10 @@
     <value />
   </data>
   <data name="PushOneHanded" xml:space="preserve">
-    <value />
+    <value>" "</value>
   </data>
   <data name="PushTwoHanded" xml:space="preserve">
-    <value>{ENTER}</value>
+    <value>"do nothing"</value>
   </data>
   <data name="SwipeDown" xml:space="preserve">
     <value>^{DOWN}</value>
