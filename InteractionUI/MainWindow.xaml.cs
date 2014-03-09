@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using InteractionUI.Util;
+﻿using System.Windows;
+using InteractionUI.BusinessLogic;
 
 namespace InteractionUI
 {
@@ -20,10 +8,20 @@ namespace InteractionUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private KinectInteraction interaction;
+
+
         public MainWindow()
         {
-            ShortCutUtil.SetApplicationName("");
             InitializeComponent();
+            initialize();
+        }
+
+        private void initialize()
+        {
+            interaction = new KinectInteraction();
+            interaction.ScreenImage = image1;
+            interaction.Start();
         }
     }
 }

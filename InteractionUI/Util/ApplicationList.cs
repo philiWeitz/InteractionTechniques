@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.IO;
+using System.Linq;
 using InteractionUtil.Util;
 
 namespace InteractionUI.Util
@@ -60,7 +58,7 @@ namespace InteractionUI.Util
         private void _initialize()
         {
             // add all shortcut files in the short cut directory
-            String shortCutPath = Directory.GetCurrentDirectory() + InteractionConsts.SHORT_CUT_DIRECTORY;
+            String shortCutPath = Directory.GetCurrentDirectory() + @"\" + InteractionConsts.SHORT_CUT_DIRECTORY;
             String[] files = Directory.GetFiles(shortCutPath);
 
             foreach (String file in files)

@@ -7,6 +7,6 @@ namespace InteractionUtil.Util
 {
     public static class InteractionConsts
     {
-        public static readonly String SHORT_CUT_DIRECTORY = @"\Properties\ShortCuts\";
+        public static readonly String SHORT_CUT_DIRECTORY = @"Properties\ShortCuts\";
     }
 }

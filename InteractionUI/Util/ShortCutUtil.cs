@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
+using System.IO;
 using System.Threading;
 using System.Xml;
-using System.IO;
 using Common.Logging;
 using InteractionUtil.Util;
 
@@ -16,6 +14,7 @@ namespace InteractionUI.Util
         private static ReaderWriterLock readWriteLock = new ReaderWriterLock();
 
         private static ShortCutUtil instance;
+        private static readonly string APP_NAME = "AppName";
         private static readonly string XML_NODE_DATA = "data";
         private static readonly string XML_ATTRIBUTE_NAME = "name";
 
@@ -33,6 +32,12 @@ namespace InteractionUI.Util
         public static string GetShortCut(String key)
         {
             return Instance._getShortCut(key);
+        }
+
+        // gets the process name
+        public static string GetProcessName()
+        {
+            return Instance._getShortCut(APP_NAME);
         }
 
         // gets an instance of the short cut class
@@ -82,37 +87,40 @@ namespace InteractionUI.Util
             // set a write lock to protect short cut dictionary
             readWriteLock.AcquireWriterLock(0);
 
-            try
+            if (this.appName != appName)
             {
-                this.appName = appName;
-
-                shortCuts.Clear();
-
-                // gets the xml document for a specific language
-                XmlDocument xmlDocument = new XmlDocument();
-
                 try
                 {
-                    xmlDocument.Load(InteractionConsts.SHORT_CUT_DIRECTORY + appName);
-                }
-                catch (FileNotFoundException e)
-                {
-                    log.Error("Couldn't find language file \"" + InteractionConsts.SHORT_CUT_DIRECTORY + appName + "\"!", e);
-                    return;
-                }
+                    this.appName = appName;
 
-                // reads all short cuts key value pairs from the xml document and stores them
-                XmlNodeList nodes = xmlDocument.GetElementsByTagName(XML_NODE_DATA);
-                foreach (XmlNode node in nodes)
-                {
-                    shortCuts.Add(node.Attributes.
-                        GetNamedItem(XML_ATTRIBUTE_NAME).Value, node.InnerText.Trim());
+                    shortCuts.Clear();
+
+                    // gets the xml document for a specific language
+                    XmlDocument xmlDocument = new XmlDocument();
+
+                    try
+                    {
+                        xmlDocument.Load(InteractionConsts.SHORT_CUT_DIRECTORY + appName);
+                    }
+                    catch (FileNotFoundException e)
+                    {
+                        log.Error("Couldn't find language file \"" + InteractionConsts.SHORT_CUT_DIRECTORY + appName + "\"!", e);
+                        return;
+                    }
+
+                    // reads all short cuts key value pairs from the xml document and stores them
+                    XmlNodeList nodes = xmlDocument.GetElementsByTagName(XML_NODE_DATA);
+                    foreach (XmlNode node in nodes)
+                    {
+                        shortCuts.Add(node.Attributes.
+                            GetNamedItem(XML_ATTRIBUTE_NAME).Value, node.InnerText.Trim());
+                    }
                 }
-            }
-            finally
-            {
-                // Ensure that the lock is released.
-                readWriteLock.ReleaseWriterLock();
+                finally
+                {
+                    // Ensure that the lock is released.
+                    readWriteLock.ReleaseWriterLock();
+                }
             }
         }
     }
