@@ -11,5 +11,6 @@ namespace KinectServices.Service.Interface
         ColorImagePoint getColorPointJoint(JointType type);
         DepthImagePoint getDepthPointJoint(JointType type);
         bool hasJoint(JointType type);
+        bool userInRange();
     }
 }

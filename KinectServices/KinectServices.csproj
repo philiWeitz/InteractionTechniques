@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Common\KinectDataPoint.cs" />
     <Compile Include="Common\InteractionGesture.cs" />
+    <Compile Include="Gesture\CircleDetector.cs" />
     <Compile Include="Gesture\PointQueue.cs" />
     <Compile Include="Gesture\GestureDetector.cs" />
     <Compile Include="Gesture\InteractionMath.cs" />

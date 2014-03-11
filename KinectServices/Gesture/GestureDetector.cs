@@ -1,4 +1,5 @@
-﻿using InteractionUtil.Util;
+﻿using System;
+using InteractionUtil.Util;
 using KinectServices.Common;
 using KinectServices.Service.Interface;
 using Microsoft.Kinect;
@@ -7,8 +8,15 @@ namespace KinectServices.Gesture
 {
     class GestureDetector
     {
+        private static readonly int MAX_QUEUE_SIZE_IN_MS = 1000;
+        private static readonly int MAX_SWIPE_TIME_IN_MS = 500;
+        private static readonly int MAX_PUSH_PULL_TIME_IN_MS = 400;
+        private static readonly int MAX_CIRCLE_TIME_IN_MS = 1000;
+
+        private DateTime gestureTime;
         private PointQueue dataPointQueue;
         private SwipeDetector swipeDetector;
+        private CircleDetector circleDetector;
         private PushPullGestureDetector pushPullDetector;
         private ISkeletonService skeletonService = null;
 
@@ -24,62 +32,73 @@ namespace KinectServices.Gesture
             addDataPoint(JointType.HandRight);
         }
 
-        public void ClearGestureQueue()
+        public void setGestureTimeOut(int gestureTimeOut)
         {
-            dataPointQueue.ClearQueue();
+            gestureTime = DateTime.Now.AddMilliseconds(gestureTimeOut);
         }
 
         public bool CheckGesture(InteractionGesture gesture)
         {
             bool result = false;
 
-            switch (gesture)
+            if (getSekeltonService().userInRange() && !isTimeOut())
             {
-                case InteractionGesture.PullOneHanded:
-                    result = pushPullDetector.CheckPullGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        || pushPullDetector.CheckPullGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                case InteractionGesture.PullTwoHanded:
-                    result = pushPullDetector.CheckPullGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        && pushPullDetector.CheckPullGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                case InteractionGesture.PushOneHanded:
-                    result = pushPullDetector.CheckPushGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        || pushPullDetector.CheckPushGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                case InteractionGesture.PushTwoHanded:
-                    result = pushPullDetector.CheckPushGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        && pushPullDetector.CheckPushGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                case InteractionGesture.SwipeToLeft:
-                    result = swipeDetector.CheckToLeftSwipeGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        || swipeDetector.CheckToLeftSwipeGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                case InteractionGesture.SwipeToRight:
-                    result = swipeDetector.CheckToRightSwipeGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        || swipeDetector.CheckToRightSwipeGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                case InteractionGesture.SwipeUp:
-                    result = swipeDetector.CheckUpSwipeGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        || swipeDetector.CheckUpSwipeGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                case InteractionGesture.SwipeDown:
-                    result = swipeDetector.CheckDownSwipeGuesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                        || swipeDetector.CheckDownSwipeGuesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    break;
-                default:
-                    break;
+                switch (gesture)
+                {
+                    case InteractionGesture.CircleCounterClock:
+                        result = circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.CircleClock:
+                        result = circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.PullOneHanded:
+                        result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.PullTwoHanded:
+                        result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            && pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.PushOneHanded:
+                        result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.PushTwoHanded:
+                        result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            && pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.SwipeToLeft:
+                        result = swipeDetector.CheckToLeftSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || swipeDetector.CheckToLeftSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.SwipeToRight:
+                        result = swipeDetector.CheckToRightSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || swipeDetector.CheckToRightSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.SwipeUp:
+                        result = swipeDetector.CheckUpSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || swipeDetector.CheckUpSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    case InteractionGesture.SwipeDown:
+                        result = swipeDetector.CheckDownSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || swipeDetector.CheckDownSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+                    default:
+                        break;
+                }
             }
-
             return result;
         }
 
         private void initialize()
         {
-            dataPointQueue = new PointQueue(500);
+            dataPointQueue = new PointQueue(MAX_QUEUE_SIZE_IN_MS);
 
-            swipeDetector = new SwipeDetector();
-            pushPullDetector = new PushPullGestureDetector();
+            swipeDetector = new SwipeDetector(MAX_SWIPE_TIME_IN_MS);
+            circleDetector = new CircleDetector(MAX_CIRCLE_TIME_IN_MS);
+            pushPullDetector = new PushPullGestureDetector(MAX_PUSH_PULL_TIME_IN_MS);
         }
 
         private void addDataPoint(JointType joint)
@@ -97,6 +116,16 @@ namespace KinectServices.Gesture
                 skeletonService = SpringUtil.getService<ISkeletonService>();
             }
             return skeletonService;
+        }
+
+        private bool isTimeOut()
+        {
+            if (gestureTime > DateTime.Now)
+            {
+                dataPointQueue.ClearQueue();
+                return true;
+            }
+            return false;
         }
     }
 }

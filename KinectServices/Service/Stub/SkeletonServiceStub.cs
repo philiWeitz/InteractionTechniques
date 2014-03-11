@@ -13,7 +13,6 @@ namespace KinectServices.Service.Stub
                     new Dictionary<JointType, ColorImagePoint>();
 
 
-
         public void enableSkeleton(KinectSensor sensor)
         {
             System.Timers.Timer timer = new System.Timers.Timer(10);
@@ -42,6 +41,11 @@ namespace KinectServices.Service.Stub
         public bool hasJoint(JointType type)
         {
             return jointMap.ContainsKey(type);
+        }
+
+        public bool userInRange()
+        {
+            return true;
         }
 
         void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)

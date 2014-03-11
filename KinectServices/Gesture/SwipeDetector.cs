@@ -19,33 +19,38 @@ namespace KinectServices.Gesture
     {
         private static readonly int MAX_X_Y_DIFFERENCE = 50;
         private static readonly int MIN_SWIPE_LENGTH = 200;
+        private int maxSwipeTime;
 
-
-        public bool CheckToLeftSwipeGuesture(Queue<KinectDataPoint> queue)
+        public SwipeDetector(int maxSwipeTime)
         {
-            return checkSwipeGuesture(queue, InteractionDirection.TO_LEFT);
+            this.maxSwipeTime = maxSwipeTime;
         }
 
-        public bool CheckToRightSwipeGuesture(Queue<KinectDataPoint> queue)
+        public bool CheckToLeftSwipeGesture(Queue<KinectDataPoint> queue)
         {
-            return checkSwipeGuesture(queue, InteractionDirection.TO_RIGHT);
+            return checkSwipeGesture(queue, InteractionDirection.TO_LEFT);
         }
 
-        public bool CheckUpSwipeGuesture(Queue<KinectDataPoint> queue)
+        public bool CheckToRightSwipeGesture(Queue<KinectDataPoint> queue)
         {
-            return checkSwipeGuesture(queue, InteractionDirection.UP);
+            return checkSwipeGesture(queue, InteractionDirection.TO_RIGHT);
         }
 
-        public bool CheckDownSwipeGuesture(Queue<KinectDataPoint> queue)
+        public bool CheckUpSwipeGesture(Queue<KinectDataPoint> queue)
         {
-            return checkSwipeGuesture(queue, InteractionDirection.DOWN);
+            return checkSwipeGesture(queue, InteractionDirection.UP);
         }
 
-        private bool checkSwipeGuesture(Queue<KinectDataPoint> queue, InteractionDirection direction)
+        public bool CheckDownSwipeGesture(Queue<KinectDataPoint> queue)
         {
-            for (int i = (queue.Count / 2); i <= queue.Count; ++i)
+            return checkSwipeGesture(queue, InteractionDirection.DOWN);
+        }
+
+        private bool checkSwipeGesture(Queue<KinectDataPoint> queue, InteractionDirection direction)
+        {
+            for (int i = 0; i < queue.Count; ++i)
             {
-                if (checkSwipeGuesture(queue,i,direction))
+                if (checkSwipeGesture(queue,i,direction))
                 {
                     return true;
                 }
@@ -54,19 +59,26 @@ namespace KinectServices.Gesture
         }
 
 
-        private bool checkSwipeGuesture(Queue<KinectDataPoint> queue, int stepSize, InteractionDirection direction)
+        private bool checkSwipeGesture(Queue<KinectDataPoint> queue, int stepSize, InteractionDirection direction)
         {
-            for (int i = 0; i + stepSize < queue.Count; ++i)
-            {
-                ColorImagePoint p1 = queue.ElementAt(i).ColorPoint;
-                ColorImagePoint p2 = queue.ElementAt(i + stepSize).ColorPoint; 
+            int minPoints = stepSize  + 1;
 
-                double length = InteractionMath.CalcDistance(p1,p2);
+            for (int i = 0; i < queue.Count - minPoints; ++i)
+            {
+                if (queue.ElementAt(i).TimeStamp.AddMilliseconds(maxSwipeTime) < queue.ElementAt(i + stepSize).TimeStamp)
+                {
+                    break;
+                }
+
+                ColorImagePoint p1 = queue.ElementAt(i).ColorPoint;
+                ColorImagePoint p2 = queue.ElementAt(i + stepSize).ColorPoint;
+
+                double length = InteractionMath.CalcDistance(p1, p2);
 
                 if (length >= MIN_SWIPE_LENGTH &&
                     (getLeftRightDirection(p1, p2) == direction || getUpDownDirection(p1, p2) == direction))
                 {
-                    if (maxXYDifference(p1,p2,direction))
+                    if (maxXYDifference(p1, p2, direction))
                     {
                         return true;
                     }

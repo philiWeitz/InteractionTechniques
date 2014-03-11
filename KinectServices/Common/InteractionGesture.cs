@@ -3,13 +3,15 @@ namespace KinectServices.Common
 {
     public enum InteractionGesture
     {
-        PushOneHanded = 0,
-        PushTwoHanded = 1,
-        PullOneHanded = 2,
+        CircleClock = 0,
+        CircleCounterClock = 1,
+        PushTwoHanded = 2,
         PullTwoHanded = 3,
-        SwipeToLeft = 4,
-        SwipeToRight = 5,
-        SwipeUp = 6,
-        SwipeDown = 7
+        PushOneHanded = 4,
+        PullOneHanded = 5,
+        SwipeToLeft = 6,
+        SwipeToRight = 7,
+        SwipeUp = 8,
+        SwipeDown = 9
     }
 }

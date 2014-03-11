@@ -23,9 +23,9 @@ namespace KinectServices.Service.Impl
             }
         }
 
-        public void clearInteractionQueue()
+        public void setGestureTimeOut(int gestureTimeOut)
         {
-            gestureDetector.ClearGestureQueue();
+            gestureDetector.setGestureTimeOut(gestureTimeOut);
         }
 
         public bool checkGesture(InteractionGesture gesture)

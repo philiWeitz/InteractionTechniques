@@ -57,8 +57,6 @@ namespace InteractionUI.BusinessLogic
             kinectTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
             kinectTimer.Tick += new EventHandler(kinectTimer_Tick);
             kinectTimer.Interval = TimeSpan.FromMilliseconds(INTERVAL);
-
-            ApplicationList.NextProgram();
         }
 
         private void kinectTimer_Tick(object sender, EventArgs e)
@@ -85,6 +83,12 @@ namespace InteractionUI.BusinessLogic
                         drawingContext.DrawImage(bitmapSource, new Rect(0, 0, bitmap.Width, bitmap.Height));
                         // draw hands
                         drawJoints(drawingContext);
+
+                        if (!skeletonService.userInRange())
+                        {
+                            drawingContext.PushOpacity(0.2);
+                            drawingContext.DrawRectangle(Brushes.Red, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
+                        }
                     }
 
                     bitmap.Render(drawingVisual);
@@ -99,41 +103,31 @@ namespace InteractionUI.BusinessLogic
         {
             bool detected = false;
 
-            if (interactionService.checkGesture(InteractionGesture.PushTwoHanded))
+            foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
             {
-                ApplicationList.NextProgram();
-
-                String shortCut = ShortCutUtil.GetShortCut(InteractionGesture.PushTwoHanded.ToString());
-                processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
-
-                detected = true;
-            }
-            else if (interactionService.checkGesture(InteractionGesture.PullTwoHanded))
-            {
-                ApplicationList.PreviousProgram();
-
-                String shortCut = ShortCutUtil.GetShortCut(InteractionGesture.PullTwoHanded.ToString());
-                processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
-
-                detected = true;
-            }
-            else
-            {
-                foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
+                if (interactionService.checkGesture(gesture))
                 {
-                    if (interactionService.checkGesture(gesture))
+                    if (InteractionGesture.PushTwoHanded == gesture)
                     {
-                        String shortCut = ShortCutUtil.GetShortCut(gesture.ToString());
-                        processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
-
-                        detected = true;
+                        ApplicationList.NextProgram();
                     }
+                    else if (InteractionGesture.PullTwoHanded == gesture)
+                    {
+                        ApplicationList.PreviousProgram();
+                    }
+
+                    String shortCut = ShortCutUtil.GetShortCut(gesture.ToString());
+                    processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
+
+                    detected = true;
+                    break;
                 }
-            }
+            }        
 
             if (detected)
             {
-                interactionService.clearInteractionQueue();
+                System.Media.SystemSounds.Exclamation.Play();
+                interactionService.setGestureTimeOut(800);
             }
         }
 

@@ -120,17 +120,23 @@
   <data name="AppName" xml:space="preserve">
     <value>spotify</value>
   </data>
+  <data name="CircleClock" xml:space="preserve">
+    <value>^{UP}</value>
+  </data>
+  <data name="CircleCounterClock" xml:space="preserve">
+    <value>^{DOWN}</value>
+  </data>
   <data name="PullOneHanded" xml:space="preserve">
-    <value />
+    <value>{TAB}</value>
   </data>
   <data name="PullTwoHanded" xml:space="preserve">
-    <value />
+    <value>{HOME}</value>
   </data>
   <data name="PushOneHanded" xml:space="preserve">
     <value>" "</value>
   </data>
   <data name="PushTwoHanded" xml:space="preserve">
-    <value>"do nothing"</value>
+    <value>{HOME}</value>
   </data>
   <data name="SwipeDown" xml:space="preserve">
     <value>^{DOWN}</value>

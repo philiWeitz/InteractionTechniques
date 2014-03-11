@@ -6,7 +6,7 @@ namespace KinectServices.Service.Interface
     public interface IInteractionService
     {
         void enableInteractionService(KinectSensor sensor);
-        void clearInteractionQueue();
+        void setGestureTimeOut(int gestureTimeOut);
         bool checkGesture(InteractionGesture gesture);
     }
 }

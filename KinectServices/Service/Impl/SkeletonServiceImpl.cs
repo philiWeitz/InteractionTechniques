@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using KinectServices.Common;
 using KinectServices.Service.Interface;
+using KinectServices.Util;
 using Microsoft.Kinect;
 
 
@@ -12,14 +13,10 @@ namespace KinectServices.Service.Impl
     {
         private static readonly int MAX_SKELETON_COUNT = 6;
 
-        private DateTime timeStamp;
-        private DepthImageFormat depthImageFormat;
         private Skeleton[] skeletons = new Skeleton[MAX_SKELETON_COUNT];
 
-        private IDictionary<JointType, ColorImagePoint> colorPointJointMap =
-            new Dictionary<JointType, ColorImagePoint>();
-        private IDictionary<JointType, DepthImagePoint> depthPointJointMap =
-            new Dictionary<JointType, DepthImagePoint>();
+        private IDictionary<JointType, KinectDataPoint> jointDataPointMap =
+            new Dictionary<JointType, KinectDataPoint>();
 
 
         public void enableSkeleton(KinectSensor sensor)
@@ -33,43 +30,36 @@ namespace KinectServices.Service.Impl
 
         public KinectDataPoint getDataPoint(JointType type)
         {
-            return new KinectDataPoint(colorPointJointMap[type], depthPointJointMap[type]);
+            return jointDataPointMap[type];
         }
 
         public ColorImagePoint getColorPointJoint(JointType type)
         {
-            return colorPointJointMap[type];
+            return jointDataPointMap[type].ColorPoint;
         }
-
 
         public DepthImagePoint getDepthPointJoint(JointType type)
         {
-            return depthPointJointMap[type];
+            return jointDataPointMap[type].DepthPoint;
         }
-
 
         public bool hasJoint(JointType type)
         {
-            return colorPointJointMap.ContainsKey(type);
+            return jointDataPointMap.ContainsKey(type);
         }
 
-        private void printJointSpeed(JointType joint , ColorImagePoint newColorPoint)
+        public bool userInRange()
         {
-            if (colorPointJointMap.ContainsKey(joint))
+            if (hasJoint(JointType.ShoulderCenter))
             {
-                ColorImagePoint oldColorPoint = colorPointJointMap[joint];
-
-                int a = oldColorPoint.X - newColorPoint.X;
-                int b = oldColorPoint.Y - newColorPoint.Y;
-
-                double c = Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
-                double ticks = (DateTime.Now.Ticks - timeStamp.Ticks) / 100000;
-                double pixelPerTicks = c / ticks;
-
-                Console.WriteLine("Speed " + joint.ToString() + ": " + pixelPerTicks);
+                DepthImagePoint depthPoint = getDepthPointJoint(JointType.ShoulderCenter);
+                if (depthPoint.Depth > KinectConsts.MIN_DISTANCE)
+                {
+                    return true;
+                }
             }
+            return false;
         }
-
 
         private void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
@@ -101,41 +91,30 @@ namespace KinectServices.Service.Impl
                         KinectSensor sensor = (KinectSensor) sender;
                         CoordinateMapper coordinateMapper = new CoordinateMapper(sensor);
 
-                        depthImageFormat = depthFrame.Format;
-
-                        // get the depth point out of the skeleton tracking
-                        DepthImagePoint headDepthPoint = coordinateMapper.
-                            MapSkeletonPointToDepthPoint(first.Joints[JointType.Head].Position, depthFrame.Format);
-                        DepthImagePoint leftHandDepthPoint = coordinateMapper.
-                            MapSkeletonPointToDepthPoint(first.Joints[JointType.HandLeft].Position, depthFrame.Format);
-                        DepthImagePoint rightHandDepthPoint = coordinateMapper.
-                            MapSkeletonPointToDepthPoint(first.Joints[JointType.HandRight].Position, depthFrame.Format);
-
-                        depthPointJointMap.Clear();
-                        depthPointJointMap[JointType.Head] = headDepthPoint;
-                        depthPointJointMap[JointType.HandLeft] = leftHandDepthPoint;
-                        depthPointJointMap[JointType.HandRight] = rightHandDepthPoint;
-
-                        // gets the color points out of the skeleton tracking
-                        ColorImagePoint headImagePoint = coordinateMapper.MapDepthPointToColorPoint(
-                            depthFrame.Format, headDepthPoint, ColorImageFormat.RgbResolution640x480Fps30);
-                        ColorImagePoint leftHandImagePoint = coordinateMapper.MapDepthPointToColorPoint(
-                            depthFrame.Format, leftHandDepthPoint, ColorImageFormat.RgbResolution640x480Fps30);
-                        ColorImagePoint rightHandImagePoint = coordinateMapper.MapDepthPointToColorPoint(
-                            depthFrame.Format, rightHandDepthPoint, ColorImageFormat.RgbResolution640x480Fps30);
-
-                        // debug - print left hand speed
-                        //printJointSpeed(JointType.HandLeft, leftHandImagePoint);
-
-                        colorPointJointMap.Clear();
-                        colorPointJointMap[JointType.Head] = headImagePoint;
-                        colorPointJointMap[JointType.HandLeft] = leftHandImagePoint;
-                        colorPointJointMap[JointType.HandRight] = rightHandImagePoint;
-
-                        this.timeStamp = DateTime.Now;
+                        jointDataPointMap.Clear();
+ 
+                        jointDataPointMap[JointType.Head] =
+                            getDataPoint(first.Joints, JointType.Head, coordinateMapper, depthFrame);
+                        jointDataPointMap[JointType.HandLeft] =
+                            getDataPoint(first.Joints, JointType.HandLeft, coordinateMapper, depthFrame);
+                        jointDataPointMap[JointType.HandRight] =
+                            getDataPoint(first.Joints, JointType.HandRight, coordinateMapper, depthFrame);
+                        jointDataPointMap[JointType.ShoulderCenter] =
+                            getDataPoint(first.Joints, JointType.ShoulderCenter, coordinateMapper, depthFrame);
                     }
                 }
             }
+        }
+
+        private KinectDataPoint getDataPoint(JointCollection joints, JointType joint,
+            CoordinateMapper coordinateMapper, DepthImageFrame depthFrame)
+        {
+            DepthImagePoint depthPoint = coordinateMapper.
+                MapSkeletonPointToDepthPoint(joints[joint].Position, depthFrame.Format);
+            ColorImagePoint colorPoint = coordinateMapper.MapDepthPointToColorPoint(
+                depthFrame.Format, depthPoint, ColorImageFormat.RgbResolution640x480Fps30);
+            
+            return new KinectDataPoint(colorPoint, depthPoint);
         }
     }
 }
