@@ -5,6 +5,11 @@ namespace KinectServices.Service.Stub
 {
     public class SensorServiceStub : ISensorService
     {
+        public bool sensorAvailable(int idx)
+        {
+            return false;
+        }
+
         public void startSensor(int idx)
         {
             // nothing to do

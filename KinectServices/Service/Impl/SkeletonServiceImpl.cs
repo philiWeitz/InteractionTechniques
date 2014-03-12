@@ -14,6 +14,7 @@ namespace KinectServices.Service.Impl
         private static readonly int MAX_SKELETON_COUNT = 6;
 
         private Skeleton[] skeletons = new Skeleton[MAX_SKELETON_COUNT];
+        private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();
 
         private IDictionary<JointType, KinectDataPoint> jointDataPointMap =
             new Dictionary<JointType, KinectDataPoint>();
@@ -21,8 +22,9 @@ namespace KinectServices.Service.Impl
 
         public void enableSkeleton(KinectSensor sensor)
         {
-            if (null != sensor)
+            if (null != sensor && !sensorSet.Contains(sensor))
             {
+                sensorSet.Add(sensor);
                 sensor.AllFramesReady +=
                     new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             }
@@ -78,6 +80,9 @@ namespace KinectServices.Service.Impl
                     where s.TrackingState == SkeletonTrackingState.Tracked
                     select s).FirstOrDefault();
 
+                // clear last joint points
+                jointDataPointMap.Clear();
+
                 if (null != first)
                 {
                     using (DepthImageFrame depthFrame = e.OpenDepthImageFrame())
@@ -88,11 +93,9 @@ namespace KinectServices.Service.Impl
                             return;
                         }
 
-                        KinectSensor sensor = (KinectSensor) sender;
+                        KinectSensor sensor = (KinectSensor)sender;
                         CoordinateMapper coordinateMapper = new CoordinateMapper(sensor);
 
-                        jointDataPointMap.Clear();
- 
                         jointDataPointMap[JointType.Head] =
                             getDataPoint(first.Joints, JointType.Head, coordinateMapper, depthFrame);
                         jointDataPointMap[JointType.HandLeft] =

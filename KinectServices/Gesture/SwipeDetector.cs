@@ -17,6 +17,7 @@ namespace KinectServices.Gesture
 
     class SwipeDetector
     {
+        private static readonly int MAX_DEPTH_DIFFERENCE = 40;
         private static readonly int MAX_X_Y_DIFFERENCE = 50;
         private static readonly int MIN_SWIPE_LENGTH = 200;
         private int maxSwipeTime;
@@ -78,7 +79,10 @@ namespace KinectServices.Gesture
                 if (length >= MIN_SWIPE_LENGTH &&
                     (getLeftRightDirection(p1, p2) == direction || getUpDownDirection(p1, p2) == direction))
                 {
-                    if (maxXYDifference(p1, p2, direction))
+                    int depthDiff = Math.Abs(
+                        queue.ElementAt(i).DepthPoint.Depth - queue.ElementAt(i + stepSize).DepthPoint.Depth);
+
+                    if (maxXYDifference(p1, p2, direction) && depthDiff < MAX_DEPTH_DIFFERENCE)
                     {
                         return true;
                     }

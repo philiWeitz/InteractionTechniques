@@ -1,5 +1,9 @@
-﻿using System.Windows;
-using InteractionUI.BusinessLogic;
+﻿using System;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using InteractionUI.MenuUI;
 
 namespace InteractionUI
 {
@@ -8,8 +12,7 @@ namespace InteractionUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private KinectInteraction interaction;
-
+        private static readonly String BACKGROUND_IMG = "Content/Images/BackgroundMainWindow.png";
 
         public MainWindow()
         {
@@ -17,11 +20,13 @@ namespace InteractionUI
             initialize();
         }
 
-        private void initialize()
+        public void initialize()
         {
-            interaction = new KinectInteraction();
-            interaction.ScreenImage = image1;
-            interaction.Start();
+            MainView view = new MainView();
+            _mainFrame.Navigate(view);
+
+            Background = new ImageBrush(new BitmapImage(
+                new Uri(BaseUriHelper.GetBaseUri(this), BACKGROUND_IMG)));
         }
     }
 }

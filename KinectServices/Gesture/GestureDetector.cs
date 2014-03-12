@@ -13,6 +13,7 @@ namespace KinectServices.Gesture
         private static readonly int MAX_PUSH_PULL_TIME_IN_MS = 400;
         private static readonly int MAX_CIRCLE_TIME_IN_MS = 1000;
 
+        private KinectSensor sensor;
         private DateTime gestureTime;
         private PointQueue dataPointQueue;
         private SwipeDetector swipeDetector;
@@ -21,9 +22,9 @@ namespace KinectServices.Gesture
         private ISkeletonService skeletonService = null;
 
 
-        public GestureDetector()
+        public GestureDetector(KinectSensor sensor)
         {
-            initialize();
+            initialize(sensor);
         }
 
         public void Update()
@@ -92,8 +93,9 @@ namespace KinectServices.Gesture
             return result;
         }
 
-        private void initialize()
+        private void initialize(KinectSensor sensor)
         {
+            this.sensor = sensor;
             dataPointQueue = new PointQueue(MAX_QUEUE_SIZE_IN_MS);
 
             swipeDetector = new SwipeDetector(MAX_SWIPE_TIME_IN_MS);
@@ -114,6 +116,7 @@ namespace KinectServices.Gesture
             if (null == skeletonService)
             {
                 skeletonService = SpringUtil.getService<ISkeletonService>();
+                skeletonService.enableSkeleton(sensor);
             }
             return skeletonService;
         }

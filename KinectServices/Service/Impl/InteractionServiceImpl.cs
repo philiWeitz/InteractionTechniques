@@ -3,22 +3,23 @@ using KinectServices.Common;
 using KinectServices.Gesture;
 using KinectServices.Service.Interface;
 using Microsoft.Kinect;
+using System.Collections.Generic;
 
 namespace KinectServices.Service.Impl
 {
     public class InteractionServiceImpl : IInteractionService
     {
         private GestureDetector gestureDetector;
+        private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();
 
-        public InteractionServiceImpl()
-        {
-            initialize();
-        }
 
         public void enableInteractionService(KinectSensor sensor)
         {
-            if (null != sensor)
+            if (null != sensor && !sensorSet.Contains(sensor))
             {
+                gestureDetector = new GestureDetector(sensor);
+
+                sensorSet.Add(sensor);
                 sensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(sensor_AllFramesReady);
             }
         }
@@ -31,11 +32,6 @@ namespace KinectServices.Service.Impl
         public bool checkGesture(InteractionGesture gesture)
         {
             return gestureDetector.CheckGesture(gesture);
-        }
-        
-        private void initialize()
-        {
-            gestureDetector = new GestureDetector();
         }
 
         void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)

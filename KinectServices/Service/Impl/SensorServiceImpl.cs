@@ -14,6 +14,12 @@ namespace KinectServices.Service.Impl
             initialize();
         }
 
+        public bool sensorAvailable(int idx)
+        {
+            return (KinectSensor.KinectSensors.Count > idx && 
+                KinectSensor.KinectSensors[idx].Status == KinectStatus.Connected);
+        }
+
         public void startSensor(int idx)
         {
             if (KinectSensor.KinectSensors.Count > idx)
@@ -21,7 +27,7 @@ namespace KinectServices.Service.Impl
                 logger.Info("Kinect connected to sensor " + idx);
                 KinectSensor sensor = KinectSensor.KinectSensors[idx];
 
-                if (sensor.Status == KinectStatus.Connected)
+                if (sensor.Status == KinectStatus.Connected && !sensor.IsRunning)
                 {
                     TransformSmoothParameters smooth = new TransformSmoothParameters();
                     smooth.Smoothing = 0.75f;

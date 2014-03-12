@@ -1,6 +1,8 @@
 ﻿using System;
 using KinectServices.Service.Interface;
 using Microsoft.Kinect;
+using Spring.Collections;
+using System.Collections.Generic;
 
 namespace KinectServices.Service.Impl
 {
@@ -11,11 +13,14 @@ namespace KinectServices.Service.Impl
         private int bytesPerPixel;
 
         private byte[] imageBuffer;
+        private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();
+
 
         public void enableCamera(KinectSensor sensor)
         {
-            if (null != sensor)
+            if (null != sensor && !sensorSet.Contains(sensor))
             {
+                sensorSet.Add(sensor);
                 sensor.ColorFrameReady +=
                     new EventHandler<ColorImageFrameReadyEventArgs>(sensor_ColorFrameReady);
             }

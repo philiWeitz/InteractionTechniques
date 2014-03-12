@@ -62,7 +62,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BusinessLogic\KinectCamera.cs" />
     <Compile Include="BusinessLogic\KinectInteraction.cs" />
+    <Compile Include="MenuUI\CameraWindow.xaml.cs">
+      <DependentUpon>CameraWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuUI\MainView.xaml.cs">
+      <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuUI\ShortCutsMainView.xaml.cs">
+      <DependentUpon>ShortCutsMainView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Util\ApplicationList.cs" />
     <Compile Include="Util\ShortCutUtil.cs" />
     <Page Include="MainWindow.xaml">
@@ -77,6 +87,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MenuUI\CameraWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuUI\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuUI\ShortCutsMainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -92,6 +114,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Content\Images\BackgroundMainWindow.png" />
     <Content Include="Properties\ShortCuts\Firefox.resx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
