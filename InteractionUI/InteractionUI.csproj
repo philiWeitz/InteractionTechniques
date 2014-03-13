@@ -70,11 +70,12 @@
     <Compile Include="MenuUI\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuUI\ShortCutEditView.xaml.cs">
+      <DependentUpon>ShortCutEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuUI\ShortCutsMainView.xaml.cs">
       <DependentUpon>ShortCutsMainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Util\ApplicationList.cs" />
-    <Compile Include="Util\ShortCutUtil.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -92,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuUI\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MenuUI\ShortCutEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -114,11 +119,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Resource Include="Content\Images\BackgroundMainWindow.png" />
-    <Content Include="Properties\ShortCuts\Firefox.resx">
+    <Content Include="Properties\ShortCuts\Spotify.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Properties\ShortCuts\Spotify.resx">
+    <Resource Include="Content\Images\BackgroundMainWindow.png" />
+    <Content Include="Properties\ShortCuts\Firefox.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <EmbeddedResource Include="Properties\Resources.resx">

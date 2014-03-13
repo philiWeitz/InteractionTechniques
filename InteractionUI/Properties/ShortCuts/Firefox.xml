@@ -1,0 +1,13 @@
+<root>
+  <ProcessName>firefox</ProcessName>
+  <CircleClock></CircleClock>
+  <CircleCounterClock></CircleCounterClock>
+  <PushTwoHanded>{Home}</PushTwoHanded>
+  <PullTwoHanded></PullTwoHanded>
+  <PushOneHanded>{ENTER}</PushOneHanded>
+  <PullOneHanded></PullOneHanded>
+  <SwipeToLeft>^{PGUP}</SwipeToLeft>
+  <SwipeToRight>^{PGDN}</SwipeToRight>
+  <SwipeUp>{PGUP}</SwipeUp>
+  <SwipeDown>{PGDN}</SwipeDown>
+</root>

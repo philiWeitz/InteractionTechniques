@@ -1,12 +1,12 @@
 ﻿using System;
+using InteractionUtil.Common;
 using InteractionUtil.Util;
-using KinectServices.Common;
 using KinectServices.Service.Interface;
 using Microsoft.Kinect;
 
 namespace KinectServices.Gesture
 {
-    class GestureDetector
+    internal class GestureDetector
     {
         private static readonly int MAX_QUEUE_SIZE_IN_MS = 1000;
         private static readonly int MAX_SWIPE_TIME_IN_MS = 500;

@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace KinectServices.Service.Stub
 {
-    public class SkeletonServiceStub : ISkeletonService
+    internal class SkeletonServiceStub : ISkeletonService
     {
         private IDictionary<JointType, ColorImagePoint> jointMap =
                     new Dictionary<JointType, ColorImagePoint>();

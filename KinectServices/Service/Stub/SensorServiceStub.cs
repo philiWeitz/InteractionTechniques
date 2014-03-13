@@ -3,7 +3,7 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Service.Stub
 {
-    public class SensorServiceStub : ISensorService
+    internal class SensorServiceStub : ISensorService
     {
         public bool sensorAvailable(int idx)
         {

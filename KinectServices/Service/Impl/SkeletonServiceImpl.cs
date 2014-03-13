@@ -9,7 +9,7 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Service.Impl
 {
-    public class SkeletonServiceImpl : ISkeletonService
+    internal class SkeletonServiceImpl : ISkeletonService
     {
         private static readonly int MAX_SKELETON_COUNT = 6;
 

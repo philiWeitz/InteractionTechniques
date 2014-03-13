@@ -55,6 +55,21 @@ namespace InteractionUI.MenuUI
             {
                 startCameraButton.IsEnabled = false;
                 startStopButton.IsEnabled = false;
+                
+                // stop interaction service
+                if (null != interaction)
+                {
+                    interaction.Stop();
+                    interaction = null;
+                }
+                
+                // close camera window
+                if (null != cameraView)
+                {
+                    cameraView.Stop();
+                    cameraView.Close();
+                    cameraView = null;
+                }
             }
         }
 

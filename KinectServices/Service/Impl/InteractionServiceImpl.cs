@@ -1,13 +1,13 @@
 ﻿using System;
-using KinectServices.Common;
+using System.Collections.Generic;
+using InteractionUtil.Common;
 using KinectServices.Gesture;
 using KinectServices.Service.Interface;
 using Microsoft.Kinect;
-using System.Collections.Generic;
 
 namespace KinectServices.Service.Impl
 {
-    public class InteractionServiceImpl : IInteractionService
+    internal class InteractionServiceImpl : IInteractionService
     {
         private GestureDetector gestureDetector;
         private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();

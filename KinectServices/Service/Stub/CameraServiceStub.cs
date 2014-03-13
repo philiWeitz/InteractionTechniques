@@ -3,7 +3,7 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Service.Stub
 {
-    public class CameraServiceStub : ICameraService
+    internal class CameraServiceStub : ICameraService
     {
         public void enableCamera(KinectSensor sensor)
         {

@@ -3,7 +3,7 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Gesture
 {
-    public static class InteractionMath
+    internal static class InteractionMath
     {
         public static double CalcDistanceLinePoint(ColorImagePoint v1, ColorImagePoint v2, ColorImagePoint point)
         {

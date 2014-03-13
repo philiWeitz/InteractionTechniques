@@ -5,7 +5,7 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Service.Impl
 {
-    public class SensorServiceImpl : ISensorService
+    internal class SensorServiceImpl : ISensorService
     {
         private ILog logger;
 

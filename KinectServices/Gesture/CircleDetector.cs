@@ -6,13 +6,13 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Gesture
 {
-    public enum InteractionCircle
+    internal enum InteractionCircle
     {
         CLOCK_WISE = 0,
         COUNTER_CLOCK_WISE = 1
     }
 
-    class CircleDetector
+    internal class CircleDetector
     {
         private static readonly int MIN_DIAMETER = 75;
         private static readonly int MAX_X_Y_GITTER = 25;

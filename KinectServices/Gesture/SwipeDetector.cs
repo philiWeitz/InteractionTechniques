@@ -6,7 +6,7 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Gesture
 {
-    public enum InteractionDirection 
+    internal enum InteractionDirection 
     {
         TO_LEFT = 0,
         TO_RIGHT = 1,
@@ -15,7 +15,7 @@ namespace KinectServices.Gesture
     }
 
 
-    class SwipeDetector
+    internal class SwipeDetector
     {
         private static readonly int MAX_DEPTH_DIFFERENCE = 40;
         private static readonly int MAX_X_Y_DIFFERENCE = 50;

@@ -6,7 +6,7 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Gesture
 {
-    class PointQueue
+    internal class PointQueue
     {
         private int maxTime;
 
@@ -24,7 +24,7 @@ namespace KinectServices.Gesture
         {
             Queue<KinectDataPoint> queue = getQueue(joint);
 
-            if (queue.Count > 0 && queue.Last().TimeStamp >= queue.First().TimeStamp.AddMilliseconds(maxTime))
+            while (queue.Count > 0 && point.TimeStamp >= queue.First().TimeStamp.AddMilliseconds(maxTime))
             {
                 queue.Dequeue();
             }

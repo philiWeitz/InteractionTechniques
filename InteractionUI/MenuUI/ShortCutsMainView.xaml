@@ -20,20 +20,41 @@
             <RowDefinition Height="50" />
             <RowDefinition Height="75" />
         </Grid.RowDefinitions>
-        
-        <ListView Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+
+        <ListView Name="shortcutDefinitionList" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
             <ListView.View>
-                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
-                    <GridViewColumn Header="Icon" Width="75"/>
-                    <GridViewColumn Header="Application Name" Width="150"/>
-                    <GridViewColumn Header="Add" Width="30"/>
-                    <GridViewColumn Header="Edit" Width="30"/>
-                    <GridViewColumn Header="Rem" Width="30"/>
+                <GridView AllowsColumnReorder="true">
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}"/>
+
+                    <GridViewColumn Header="">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Grid>
+                                        <Button Name="editButton" Content="Edit" Tag="{Binding}" Click="editButton_Click" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>                        
+                    </GridViewColumn>
+
+                    <GridViewColumn Header="">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Grid>
+                                        <Button Name="removeButton" Content="Remove" Tag="{Binding}" Click="removeButton_Click" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    
                 </GridView>
             </ListView.View>
         </ListView>
-        
-        <Button Name="addAppButton" Content="Add Application" Margin="0,5,10,5" Grid.Column="1" Grid.Row="2"></Button>
+
+        <Button Name="addDefinitionButton" Content="Add Definition" Margin="0,5,10,5" Grid.Column="1" Grid.Row="2" Click="addDefinitionButton_Click"></Button>
         <Button Name="toMainViewButton" Content="Back To Main" Margin="10,5,0,5" Grid.Column="2" Grid.Row="2" Click="toMainViewButton_Click"></Button>
     </Grid>
 </Page>

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Windows.Threading;
-using InteractionUI.Util;
+using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
-using KinectServices.Common;
 using KinectServices.Service.Interface;
 
 namespace InteractionUI.BusinessLogic
@@ -26,6 +25,7 @@ namespace InteractionUI.BusinessLogic
         public event EventHandler GestureEvent;
         private ISensorService sensorService;
         private IProcessService processService;
+        private IShortcutService shortcutService;
         private IInteractionService interactionService;
 
         private DispatcherTimer kinectTimer;
@@ -58,6 +58,7 @@ namespace InteractionUI.BusinessLogic
 
             processService = SpringUtil.getService<IProcessService>();
             sensorService = SpringUtil.getService<ISensorService>();
+            shortcutService = SpringUtil.getService<IShortcutService>();
             interactionService = SpringUtil.getService<IInteractionService>();
 
             sensorService.startSensor(sensorIdx);
@@ -78,11 +79,11 @@ namespace InteractionUI.BusinessLogic
                 {
                     if (InteractionGesture.PushTwoHanded == gesture)
                     {
-                        ApplicationList.NextProgram();
+                        shortcutService.NextApplication();
                     }
                     else if (InteractionGesture.PullTwoHanded == gesture)
                     {
-                        ApplicationList.PreviousProgram();
+                        shortcutService.PreviousApplication();
                     }
 
                     if (null != GestureEvent)
@@ -90,8 +91,8 @@ namespace InteractionUI.BusinessLogic
                         GestureEvent.Invoke(this, new KinectInteractionArg(gesture.ToString()));
                     }
 
-                    String shortCut = ShortCutUtil.GetShortCut(gesture.ToString());
-                    processService.SendKeyToProcess(ShortCutUtil.GetProcessName(), shortCut);
+                    String shortCut = shortcutService.GetShortcut(gesture);
+                    processService.SendKeyToProcess(shortcutService.GetProcessName(), shortCut);
 
                     detected = true;
                     break;

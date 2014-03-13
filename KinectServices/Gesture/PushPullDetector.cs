@@ -4,13 +4,13 @@ using KinectServices.Common;
 
 namespace KinectServices.Gesture
 {
-    public enum InteractionPushPull
+    internal enum InteractionPushPull
     {
         PUSH = 0,
         PULL = 1
     }
 
-    class PushPullGestureDetector
+    internal class PushPullGestureDetector
     {
         private static readonly int MIN_DEPTH = 75;
         private static readonly int MAX_PUSH_PULL_RANGE = 50;

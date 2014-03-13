@@ -8,7 +8,7 @@ using InteractionUtil.Service.Interface;
 
 namespace InteractionUtil.Service.Impl
 {
-    public class ProcessServiceImpl : IProcessService
+    internal class ProcessServiceImpl : IProcessService
     {
         private static int GWL_STYLE = -16;
         private static uint WS_MINIMIZE = 0x20000000;

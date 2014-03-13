@@ -48,8 +48,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\InteractionGesture.cs" />
+    <Compile Include="Common\ShortcutDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\Impl\ShortcutReaderWriterImpl.cs" />
+    <Compile Include="Service\Impl\ShortcutServiceImpl.cs" />
     <Compile Include="Service\Interface\IProcessService.cs" />
+    <Compile Include="Service\Interface\IShortcutReaderWriterService.cs" />
+    <Compile Include="Service\Interface\IShortcutService.cs" />
     <Compile Include="Util\InteractionConsts.cs" />
     <Compile Include="Service\Impl\ProcessServiceImpl.cs" />
     <Compile Include="Util\SpringUtil.cs" />

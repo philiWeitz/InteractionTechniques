@@ -1,5 +1,5 @@
 ﻿
-namespace KinectServices.Common
+namespace InteractionUtil.Common
 {
     public enum InteractionGesture
     {

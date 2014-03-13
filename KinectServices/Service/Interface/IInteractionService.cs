@@ -1,4 +1,4 @@
-﻿using KinectServices.Common;
+﻿using InteractionUtil.Common;
 using Microsoft.Kinect;
 
 namespace KinectServices.Service.Interface

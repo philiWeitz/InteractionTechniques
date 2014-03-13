@@ -1,12 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using KinectServices.Service.Interface;
 using Microsoft.Kinect;
-using Spring.Collections;
-using System.Collections.Generic;
 
 namespace KinectServices.Service.Impl
 {
-    public class CameraServiceImpl : ICameraService
+    internal class CameraServiceImpl : ICameraService
     {
         private int height;
         private int width;
