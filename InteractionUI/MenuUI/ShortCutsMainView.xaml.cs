@@ -1,11 +1,9 @@
-﻿using System.Windows.Controls;
-using InteractionUI.BusinessLogic;
-using System.Collections.Generic;
-using System;
-using System.Windows.Media;
+﻿using System;
+using System.Windows;
+using System.Windows.Controls;
+using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
-using InteractionUtil.Common;
 
 namespace InteractionUI.MenuUI
 {
@@ -46,6 +44,7 @@ namespace InteractionUI.MenuUI
 
         private void toMainViewButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
+            shortCutReaderWriter.ReadDefinitionsFromDirectory();
             NavigationService.Navigate(parent);
         }
 
@@ -58,9 +57,15 @@ namespace InteractionUI.MenuUI
 
         private void removeButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ShortcutDefinition item = (ShortcutDefinition)((Button)sender).Tag;
-            shortcutDefinitionList.Items.Remove(item);
-            shortCutReaderWriter.RemoveShortcutDefinition(item);
+            MessageBoxResult result = MessageBox.Show("Do you really want to delete this itme?",
+                "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            
+            if (result == MessageBoxResult.Yes)
+            {
+                ShortcutDefinition item = (ShortcutDefinition)((Button)sender).Tag;
+                shortcutDefinitionList.Items.Remove(item);
+                shortCutReaderWriter.RemoveShortcutDefinition(item);   
+            }
         }
 
         private void addDefinitionButton_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -69,9 +74,15 @@ namespace InteractionUI.MenuUI
             NavigationService.Navigate(editView);
         }
 
-        void editView_OnSaveEvent(object sender, EventArgs e)
+        private void checkBoxChanged(object sender, RoutedEventArgs e)
+        {
+            ShortcutDefinition item = (ShortcutDefinition)((CheckBox)sender).Tag;
+            shortCutReaderWriter.UpdateShortcutDefinition(item);
+        }
+
+        private void editView_OnSaveEvent(object sender, EventArgs e)
         {
             fillListView();
-        }
+        }  
     }
 }

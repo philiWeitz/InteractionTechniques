@@ -6,6 +6,7 @@ namespace InteractionUtil.Common
 {
     public class ShortcutDefinition
     {
+        public bool Active { get; set; }
         public String Name { get; set; }
         public String OldName { get; set; }
         public String ProcessName { get; set; }
@@ -13,6 +14,7 @@ namespace InteractionUtil.Common
 
         public ShortcutDefinition()
         {
+            Active = true;
             ProcessName = String.Empty;
 
             GestureMap = new Dictionary<InteractionGesture, string>();

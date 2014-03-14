@@ -1,5 +1,6 @@
 <root>
   <ProcessName>firefox</ProcessName>
+  <Active>True</Active>
   <CircleClock></CircleClock>
   <CircleCounterClock></CircleCounterClock>
   <PushTwoHanded>{Home}</PushTwoHanded>

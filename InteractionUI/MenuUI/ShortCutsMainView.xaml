@@ -49,7 +49,19 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    
+
+                    <GridViewColumn Header="Active">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Grid>
+                                        <CheckBox Tag="{Binding}" IsChecked="{Binding Active}" Checked="checkBoxChanged" Unchecked="checkBoxChanged" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+
                 </GridView>
             </ListView.View>
         </ListView>

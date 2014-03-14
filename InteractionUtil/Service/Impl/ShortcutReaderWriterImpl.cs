@@ -12,10 +12,12 @@ namespace InteractionUtil.Service.Impl
     internal class ShortcutReaderWriterImpl : IShortcutReaderWriterService
     {
         private static readonly String ROOT = "root";
+        private static readonly String NODE_ACTIVE = "Active";       
         private static readonly String NODE_PROCESS = "ProcessName";        
         
         private String shortCutPath;
         private List<ShortcutDefinition> shortcutList = null;
+        private List<ShortcutDefinition> activeShortcutList = null;
 
 
         public ShortcutReaderWriterImpl()
@@ -30,6 +32,15 @@ namespace InteractionUtil.Service.Impl
                 ReadDefinitionsFromDirectory();
             }
             return shortcutList;
+        }
+
+        public List<ShortcutDefinition> GetActiveShortCutList()
+        {
+            if (null == activeShortcutList)
+            {
+                ReadDefinitionsFromDirectory();
+            }
+            return activeShortcutList;
         }
 
         public void AddShortcutDefinition(String name)
@@ -67,10 +78,17 @@ namespace InteractionUtil.Service.Impl
         public List<ShortcutDefinition> ReadDefinitionsFromDirectory()
         {
             shortcutList = new List<ShortcutDefinition>();
+            activeShortcutList = new List<ShortcutDefinition>();
 
             foreach (String file in Directory.GetFiles(shortCutPath,"*.xml"))
             {
-                shortcutList.Add(xmlToShortcutDefinition(file));
+                ShortcutDefinition def = xmlToShortcutDefinition(file);
+                shortcutList.Add(def);
+
+                if (def.Active)
+                {
+                    activeShortcutList.Add(def);
+                }
             }
 
             return shortcutList;
@@ -86,6 +104,10 @@ namespace InteractionUtil.Service.Impl
             XmlNode processNode = xmlDoc.CreateElement(NODE_PROCESS);
             processNode.InnerText = item.ProcessName;
             root.AppendChild(processNode);
+
+            XmlNode activeNode = xmlDoc.CreateElement(NODE_ACTIVE);
+            activeNode.InnerText = item.Active.ToString();
+            root.AppendChild(activeNode);
 
             foreach (KeyValuePair<InteractionGesture,String> mapItem in item.GestureMap)
             {
@@ -109,6 +131,12 @@ namespace InteractionUtil.Service.Impl
             if (processNodes.Count > 0)
             {
                 result.ProcessName = processNodes.Item(0).InnerText;
+            }
+
+            XmlNodeList activeNodes = xmlDoc.GetElementsByTagName(NODE_ACTIVE);
+            if (activeNodes.Count > 0)
+            {
+                result.Active = Boolean.Parse(activeNodes.Item(0).InnerText);
             }
 
             foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))

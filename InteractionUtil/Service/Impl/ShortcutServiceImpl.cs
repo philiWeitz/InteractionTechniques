@@ -14,7 +14,7 @@ namespace InteractionUtil.Service.Impl
 
         public string GetShortcut(InteractionGesture key)
         {
-            List<ShortcutDefinition> list = getReaderWriterService().GetShortCutList();
+            List<ShortcutDefinition> list = getReaderWriterService().GetActiveShortCutList();
             
             if (list.Count > 0)
             {
@@ -31,7 +31,7 @@ namespace InteractionUtil.Service.Impl
 
         public string GetProcessName()
         {
-            List<ShortcutDefinition> list = getReaderWriterService().GetShortCutList();
+            List<ShortcutDefinition> list = getReaderWriterService().GetActiveShortCutList();
 
             if (list.Count > 0)
             {
@@ -48,16 +48,30 @@ namespace InteractionUtil.Service.Impl
 
         public void NextApplication()
         {
-            currIdx = (currIdx + 1) % getReaderWriterService().GetShortCutList().Count;
+            if (getReaderWriterService().GetActiveShortCutList().Count > 0)
+            {
+                currIdx = (currIdx + 1) % getReaderWriterService().GetActiveShortCutList().Count;
+            }
+            else
+            {
+                currIdx = 0;
+            }
         }
 
 
         public void PreviousApplication()
         {
-            currIdx -= 1;
-            if (currIdx < 0)
+            if (getReaderWriterService().GetActiveShortCutList().Count > 0)
             {
-                currIdx = getReaderWriterService().GetShortCutList().Count - 1;
+                currIdx -= 1;
+                if (currIdx < 0)
+                {
+                    currIdx = getReaderWriterService().GetActiveShortCutList().Count - 1;
+                }
+            }
+            else
+            {
+                currIdx = 0;
             }
         }
 

@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using InteractionUI.BusinessLogic;
-using KinectServices.Common;
 using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
@@ -87,7 +77,14 @@ namespace InteractionUI.MenuUI
 
         private bool isValid()
         {
-            return (nameTextBox.Text != String.Empty);
+            nameTextBox.ClearValue(TextBox.BorderBrushProperty);
+
+            if (nameTextBox.Text == String.Empty)
+            {
+                nameTextBox.BorderBrush = Brushes.Red;
+                return false;
+            }
+            return true;
         }
 
         private void cancelButton_Click(object sender, RoutedEventArgs e)
@@ -109,6 +106,10 @@ namespace InteractionUI.MenuUI
                 }
 
                 this.NavigationService.GoBack();
+            }
+            else
+            {
+                MessageBox.Show("Please fill in all mandatory fields");
             }
         }
     }

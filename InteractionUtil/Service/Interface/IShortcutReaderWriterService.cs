@@ -11,5 +11,6 @@ namespace InteractionUtil.Service.Interface
         void RemoveShortcutDefinition(ShortcutDefinition item);
         List<ShortcutDefinition> ReadDefinitionsFromDirectory();
         List<ShortcutDefinition> GetShortCutList();
+        List<ShortcutDefinition> GetActiveShortCutList();
     }
 }
