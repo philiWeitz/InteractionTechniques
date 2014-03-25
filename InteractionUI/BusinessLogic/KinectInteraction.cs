@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Threading;
+using GestureServices.Service.Interface;
 using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
@@ -26,7 +27,7 @@ namespace InteractionUI.BusinessLogic
         private ISensorService sensorService;
         private IProcessService processService;
         private IShortcutService shortcutService;
-        private IInteractionService interactionService;
+        private IGestureService gestureService;
 
         private DispatcherTimer kinectTimer;
         public String LastGesture { get; private set; }
@@ -59,10 +60,10 @@ namespace InteractionUI.BusinessLogic
             processService = SpringUtil.getService<IProcessService>();
             sensorService = SpringUtil.getService<ISensorService>();
             shortcutService = SpringUtil.getService<IShortcutService>();
-            interactionService = SpringUtil.getService<IInteractionService>();
+            gestureService = SpringUtil.getService<IGestureService>();
 
             sensorService.startSensor(sensorIdx);
-            interactionService.enableInteractionService(sensorService.getSensor(sensorIdx));
+            gestureService.enableGestureService(sensorService.getSensor(sensorIdx));
 
             kinectTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
             kinectTimer.Tick += new EventHandler(kinectTimer_Tick);
@@ -75,7 +76,7 @@ namespace InteractionUI.BusinessLogic
 
             foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
             {
-                if (interactionService.checkGesture(gesture))
+                if (gestureService.checkGesture(gesture))
                 {
                     if (InteractionGesture.PushTwoHanded == gesture)
                     {
@@ -102,7 +103,7 @@ namespace InteractionUI.BusinessLogic
             if (detected)
             {
                 System.Media.SystemSounds.Exclamation.Play();
-                interactionService.setGestureTimeOut(800);
+                gestureService.setGestureTimeOut(800);
             }
         }
     }

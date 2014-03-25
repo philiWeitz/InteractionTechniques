@@ -4,7 +4,7 @@ using System.Linq;
 using KinectServices.Common;
 using Microsoft.Kinect;
 
-namespace KinectServices.Gesture
+namespace GestureServices.Gesture
 {
     internal enum InteractionCircle
     {

@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using GestureServices.Gesture;
+using GestureServices.Service.Interface;
 using InteractionUtil.Common;
-using KinectServices.Gesture;
-using KinectServices.Service.Interface;
+using KinectServices.Common;
 using Microsoft.Kinect;
 
-namespace KinectServices.Service.Impl
+namespace GestureServices.Service.Impl
 {
-    internal class InteractionServiceImpl : IInteractionService
+    internal class GestureServiceImpl : IGestureService
     {
         private GestureDetector gestureDetector;
         private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();
 
-
-        public void enableInteractionService(KinectSensor sensor)
+        public void enableGestureService(KinectSensor sensor)
         {
             if (null != sensor && !sensorSet.Contains(sensor))
             {
@@ -34,7 +34,12 @@ namespace KinectServices.Service.Impl
             return gestureDetector.CheckGesture(gesture);
         }
 
-        void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
+        public Queue<KinectDataPoint> getDataPointQueue(JointType joint)
+        {
+            return gestureDetector.getDataPointQueue(joint);
+        }
+
+        private void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
             gestureDetector.Update();
         }

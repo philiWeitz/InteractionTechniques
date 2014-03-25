@@ -138,6 +138,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GestureServices\GestureServices.csproj">
+      <Project>{e11b48dc-4e2a-4492-b8d0-3efe6096ccf6}</Project>
+      <Name>GestureServices</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InteractionUtil\InteractionUtil.csproj">
       <Project>{20AFD03B-F237-455C-AD96-EBA90012DBAC}</Project>
       <Name>InteractionUtil</Name>

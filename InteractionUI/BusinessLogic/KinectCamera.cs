@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using GestureServices.Service.Interface;
 using InteractionUtil.Util;
+using KinectServices.Common;
 using KinectServices.Service.Interface;
 using KinectServices.Util;
 using Microsoft.Kinect;
@@ -19,12 +22,12 @@ namespace InteractionUI.BusinessLogic
         private ISensorService sensorService;
         private ICameraService cameraService;
         private ISkeletonService skeletonService;
+        private IGestureService gestureService;
 
         private DispatcherTimer cameraTimer;
         private String lastGesture = "";
 
         public Image ScreenImage { get; set; }
-
 
         public KinectCamera(int sensorIdx)
         {
@@ -51,16 +54,17 @@ namespace InteractionUI.BusinessLogic
             cameraService = SpringUtil.getService<ICameraService>();
             sensorService = SpringUtil.getService<ISensorService>();
             skeletonService = SpringUtil.getService<ISkeletonService>();
+            gestureService = SpringUtil.getService<IGestureService>();
 
             sensorService.startSensor(sensorIdx);
             cameraService.enableCamera(sensorService.getSensor(sensorIdx));
             skeletonService.enableSkeleton(sensorService.getSensor(sensorIdx));
+            gestureService.enableGestureService(sensorService.getSensor(sensorIdx));
 
             cameraTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
             cameraTimer.Tick += new EventHandler(cameraTimer_Tick);
             cameraTimer.Interval = TimeSpan.FromMilliseconds(INTERVAL);
         }
-
 
         private void interaction_GestureEvent(object sender, EventArgs e)
         {
@@ -105,13 +109,13 @@ namespace InteractionUI.BusinessLogic
             }
         }
 
-
         private void drawJoints(DrawingContext drawingContext)
         {
             if (skeletonService.hasJoint(JointType.HandLeft))
             {
                 ColorImagePoint point = skeletonService.getColorPointJoint(JointType.HandLeft);
                 drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.X - 10, point.Y - 10, 20, 20));
+                drawJointDataQueue(drawingContext, JointType.HandLeft);
             }
             if (skeletonService.hasJoint(JointType.HandRight))
             {
@@ -123,6 +127,26 @@ namespace InteractionUI.BusinessLogic
                 FlowDirection.LeftToRight, new Typeface("Verdana"), 32, Brushes.Black);
 
             drawingContext.DrawText(formattedText, new Point(10, 10));
+        }
+
+        private void drawJointDataQueue(DrawingContext drawingContext, JointType joint)
+        {
+            Pen pen = new Pen(Brushes.Black, 5);
+            pen.Freeze();
+
+            Queue<KinectDataPoint> queue = gestureService.getDataPointQueue(joint);
+
+            Point oldPoint = default(Point);
+            foreach (KinectDataPoint dataPoint in queue)
+            {
+                Point newPoint = new Point(dataPoint.ColorPoint.X, dataPoint.ColorPoint.Y);
+
+                if (default(Point) != oldPoint)
+                {
+                    drawingContext.DrawLine(pen, oldPoint, newPoint);
+                }
+                oldPoint = newPoint;
+            }
         }
     }
 }

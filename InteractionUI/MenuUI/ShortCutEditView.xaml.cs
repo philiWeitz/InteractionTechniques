@@ -7,6 +7,7 @@ using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
 
+
 namespace InteractionUI.MenuUI
 {
     public class GestureShortcutPair
@@ -24,7 +25,7 @@ namespace InteractionUI.MenuUI
     {
         private ShortcutDefinition item;
         private IShortcutReaderWriterService shortcutReaderWriter;
-        public event EventHandler OnSaveEvent; 
+        public event EventHandler OnSaveEvent;
 
 
         public ShortCutEditView()

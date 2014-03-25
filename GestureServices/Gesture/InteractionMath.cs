@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Kinect;
 
-namespace KinectServices.Gesture
+namespace GestureServices.Gesture
 {
     internal static class InteractionMath
     {
