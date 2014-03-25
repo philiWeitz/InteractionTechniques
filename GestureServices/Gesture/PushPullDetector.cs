@@ -16,23 +16,22 @@ namespace GestureServices.Gesture
         private static readonly int MAX_PUSH_PULL_RANGE = 50;
         private int maxPushPullTime;
 
-
         public PushPullGestureDetector(int maxPushPullTime)
         {
             this.maxPushPullTime = maxPushPullTime;
         }
 
-        public bool CheckPushGesture(Queue<KinectDataPoint> queue)
+        public bool CheckPushGesture(List<KinectDataPoint> queue)
         {
             return checkPushPullGesture(queue, InteractionPushPull.PUSH);
         }
 
-        public bool CheckPullGesture(Queue<KinectDataPoint> queue)
+        public bool CheckPullGesture(List<KinectDataPoint> queue)
         {
             return checkPushPullGesture(queue, InteractionPushPull.PULL);
         }
 
-        private bool checkPushPullGesture(Queue<KinectDataPoint> queue, InteractionPushPull pushPull)
+        private bool checkPushPullGesture(List<KinectDataPoint> queue, InteractionPushPull pushPull)
         {
             for (int i = 1; i < queue.Count; ++i)
             {
@@ -45,7 +44,7 @@ namespace GestureServices.Gesture
             return false;
         }
 
-        private bool chekPushPullGesture(Queue<KinectDataPoint> queue, int stepSize, InteractionPushPull pushPull)
+        private bool chekPushPullGesture(List<KinectDataPoint> queue, int stepSize, InteractionPushPull pushPull)
         {
             int minPoints = 2 * stepSize + 1;
 
@@ -58,7 +57,6 @@ namespace GestureServices.Gesture
 
                 int d1 = queue.ElementAt(i).DepthPoint.Depth - queue.ElementAt(i + stepSize).DepthPoint.Depth;
                 int d2 = queue.ElementAt(i + stepSize).DepthPoint.Depth - queue.ElementAt(i + (2 * stepSize)).DepthPoint.Depth;
-
 
                 if ((d1 >= MIN_DEPTH && d2 <= -MIN_DEPTH && pushPull == InteractionPushPull.PUSH)
                     || (d1 <= -MIN_DEPTH && d2 >= MIN_DEPTH && pushPull == InteractionPushPull.PULL))

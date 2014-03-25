@@ -134,7 +134,7 @@ namespace InteractionUI.BusinessLogic
             Pen pen = new Pen(Brushes.Black, 5);
             pen.Freeze();
 
-            Queue<KinectDataPoint> queue = gestureService.getDataPointQueue(joint);
+            List<KinectDataPoint> queue = gestureService.getDataPointQueue(joint);
 
             Point oldPoint = default(Point);
             foreach (KinectDataPoint dataPoint in queue)

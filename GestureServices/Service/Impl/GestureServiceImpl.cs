@@ -34,7 +34,7 @@ namespace GestureServices.Service.Impl
             return gestureDetector.CheckGesture(gesture);
         }
 
-        public Queue<KinectDataPoint> getDataPointQueue(JointType joint)
+        public List<KinectDataPoint> getDataPointQueue(JointType joint)
         {
             return gestureDetector.getDataPointQueue(joint);
         }

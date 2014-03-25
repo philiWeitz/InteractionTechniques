@@ -13,6 +13,6 @@ namespace GestureServices.Service.Interface
 
         bool checkGesture(InteractionGesture gesture);
 
-        Queue<KinectDataPoint> getDataPointQueue(JointType joint);
+        List<KinectDataPoint> getDataPointQueue(JointType joint);
     }
 }

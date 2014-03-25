@@ -27,27 +27,27 @@ namespace GestureServices.Gesture
             this.maxSwipeTime = maxSwipeTime;
         }
 
-        public bool CheckToLeftSwipeGesture(Queue<KinectDataPoint> queue)
+        public bool CheckToLeftSwipeGesture(List<KinectDataPoint> queue)
         {
             return checkSwipeGesture(queue, InteractionDirection.TO_LEFT);
         }
 
-        public bool CheckToRightSwipeGesture(Queue<KinectDataPoint> queue)
+        public bool CheckToRightSwipeGesture(List<KinectDataPoint> queue)
         {
             return checkSwipeGesture(queue, InteractionDirection.TO_RIGHT);
         }
 
-        public bool CheckUpSwipeGesture(Queue<KinectDataPoint> queue)
+        public bool CheckUpSwipeGesture(List<KinectDataPoint> queue)
         {
             return checkSwipeGesture(queue, InteractionDirection.UP);
         }
 
-        public bool CheckDownSwipeGesture(Queue<KinectDataPoint> queue)
+        public bool CheckDownSwipeGesture(List<KinectDataPoint> queue)
         {
             return checkSwipeGesture(queue, InteractionDirection.DOWN);
         }
 
-        private bool checkSwipeGesture(Queue<KinectDataPoint> queue, InteractionDirection direction)
+        private bool checkSwipeGesture(List<KinectDataPoint> queue, InteractionDirection direction)
         {
             for (int i = 0; i < queue.Count; ++i)
             {
@@ -60,7 +60,7 @@ namespace GestureServices.Gesture
         }
 
 
-        private bool checkSwipeGesture(Queue<KinectDataPoint> queue, int stepSize, InteractionDirection direction)
+        private bool checkSwipeGesture(List<KinectDataPoint> queue, int stepSize, InteractionDirection direction)
         {
             int minPoints = stepSize  + 1;
 

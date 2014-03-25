@@ -3,16 +3,14 @@ using System.Linq;
 using KinectServices.Common;
 using Microsoft.Kinect;
 
-
 namespace GestureServices.Gesture
 {
     internal class PointQueue
     {
         private int maxTime;
 
-        private Dictionary<JointType, Queue<KinectDataPoint>>
-            jointPoints = new Dictionary<JointType, Queue<KinectDataPoint>>();
-
+        private Dictionary<JointType, List<KinectDataPoint>>
+            jointPoints = new Dictionary<JointType, List<KinectDataPoint>>();
 
         // maxTime - max gesture time
         public PointQueue(int maxTime)
@@ -22,16 +20,16 @@ namespace GestureServices.Gesture
 
         public void AddPoint(KinectDataPoint point, JointType joint)
         {
-            Queue<KinectDataPoint> queue = getQueue(joint);
+            List<KinectDataPoint> queue = getQueue(joint);
 
             while (queue.Count > 0 && point.TimeStamp >= queue.First().TimeStamp.AddMilliseconds(maxTime))
             {
-                queue.Dequeue();
+                queue.RemoveAt(0);
             }
-            queue.Enqueue(point);
+            queue.Add(point);
         }
 
-        public Queue<KinectDataPoint> GetQueue(JointType joint)
+        public List<KinectDataPoint> GetQueue(JointType joint)
         {
             return getQueue(joint);
         }
@@ -43,19 +41,19 @@ namespace GestureServices.Gesture
 
         public void ClearQueue()
         {
-            foreach (Queue<KinectDataPoint> q in jointPoints.Values)
+            foreach (List<KinectDataPoint> q in jointPoints.Values)
             {
                 q.Clear();
             }
         }
 
-        private Queue<KinectDataPoint> getQueue(JointType joint)
+        private List<KinectDataPoint> getQueue(JointType joint)
         {
-            Queue<KinectDataPoint> queue;
+            List<KinectDataPoint> queue;
 
             if (jointPoints.TryGetValue(joint, out queue) == false)
             {
-                jointPoints[joint] = new Queue<KinectDataPoint>();
+                jointPoints[joint] = new List<KinectDataPoint>();
                 queue = jointPoints[joint];
             }
             return queue;

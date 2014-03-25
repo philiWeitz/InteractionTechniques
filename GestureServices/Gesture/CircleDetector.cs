@@ -14,27 +14,26 @@ namespace GestureServices.Gesture
 
     internal class CircleDetector
     {
-        private static readonly int MIN_DIAMETER = 75;
+        private static readonly int MIN_DIAMETER = 50;
         private static readonly int MAX_X_Y_GITTER = 25;
         private int maxCircleTime;
-
 
         public CircleDetector(int maxCircleTime)
         {
             this.maxCircleTime = maxCircleTime;
         }
 
-        public bool CheckCircleCounterClockGesture(Queue<KinectDataPoint> queue)
+        public bool CheckCircleCounterClockGesture(List<KinectDataPoint> queue)
         {
             return checkCircleGesture(queue, InteractionCircle.COUNTER_CLOCK_WISE);
         }
 
-        public bool CheckCircleClockGesture(Queue<KinectDataPoint> queue)
+        public bool CheckCircleClockGesture(List<KinectDataPoint> queue)
         {
             return checkCircleGesture(queue, InteractionCircle.CLOCK_WISE);
         }
 
-        private bool checkCircleGesture(Queue<KinectDataPoint> queue, InteractionCircle direction)
+        private bool checkCircleGesture(List<KinectDataPoint> queue, InteractionCircle direction)
         {
             for (int i = 0; i < queue.Count; ++i)
             {
@@ -47,7 +46,7 @@ namespace GestureServices.Gesture
             return false;
         }
 
-        private bool checkCircleGesture(Queue<KinectDataPoint> queue, int stepSize, InteractionCircle direction)
+        private bool checkCircleGesture(List<KinectDataPoint> queue, int stepSize, InteractionCircle direction)
         {
             int minPoints = stepSize * 4 + 1;
 
@@ -75,7 +74,7 @@ namespace GestureServices.Gesture
                     if (Math.Abs(dist1 - dist2) < MAX_X_Y_GITTER && Math.Abs(dist2 - dist3) < MAX_X_Y_GITTER &&
                         Math.Abs(dist3 - dist4) < MAX_X_Y_GITTER && Math.Abs(dist4 - dist1) < MAX_X_Y_GITTER)
                     {
-                        if (getDirection(p1,p2) == direction)
+                        if (getDirection(p1, p2) == direction)
                         {
                             return true;
                         }

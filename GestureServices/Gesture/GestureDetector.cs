@@ -30,17 +30,20 @@ namespace GestureServices.Gesture
 
         public void Update()
         {
-            addDataPoint(JointType.HandLeft);
-            addDataPoint(JointType.HandRight);
+            if (getSekeltonService().userInRange())
+            {
+                addDataPoint(JointType.HandLeft);
+                addDataPoint(JointType.HandRight);
+            }
         }
 
-        public Queue<KinectDataPoint> getDataPointQueue(JointType joint)
+        public List<KinectDataPoint> getDataPointQueue(JointType joint)
         {
             if (getSekeltonService().userInRange())
             {
                 return dataPointQueue.GetQueue(joint);
             }
-            return new Queue<KinectDataPoint>();
+            return new List<KinectDataPoint>();
         }
 
         public void setGestureTimeOut(int gestureTimeOut)
@@ -56,30 +59,36 @@ namespace GestureServices.Gesture
             {
                 switch (gesture)
                 {
-                    //case InteractionGesture.CircleCounterClock:
-                    //    result = circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                    //        || circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    //    break;
-                    //case InteractionGesture.CircleClock:
-                    //    result = circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                    //        || circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    //    break;
-                    //case InteractionGesture.PullOneHanded:
-                    //    result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                    //        || pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    //    break;
-                    //case InteractionGesture.PullTwoHanded:
-                    //    result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                    //        && pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    //    break;
-                    //case InteractionGesture.PushOneHanded:
-                    //    result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                    //        || pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    //    break;
-                    //case InteractionGesture.PushTwoHanded:
-                    //    result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                    //        && pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                    //    break;
+                    case InteractionGesture.CircleCounterClock:
+                        result = circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+
+                    case InteractionGesture.CircleClock:
+                        result = circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+
+                    case InteractionGesture.PullOneHanded:
+                        result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+
+                    case InteractionGesture.PullTwoHanded:
+                        result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            && pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+
+                    case InteractionGesture.PushOneHanded:
+                        result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            || pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+
+                    case InteractionGesture.PushTwoHanded:
+                        result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
+                            && pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
+                        break;
+
                     case InteractionGesture.SwipeToLeft:
                         result = swipeDetector.CheckToLeftSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
                             || swipeDetector.CheckToLeftSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
