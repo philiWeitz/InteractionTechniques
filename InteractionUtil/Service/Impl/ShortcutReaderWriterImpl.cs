@@ -12,6 +12,7 @@ namespace InteractionUtil.Service.Impl
     internal class ShortcutReaderWriterImpl : IShortcutReaderWriterService
     {
         private static readonly String ROOT = "root";
+        private static readonly String NODE_IDX = "Index"; 
         private static readonly String NODE_ACTIVE = "Active";       
         private static readonly String NODE_PROCESS = "ProcessName";        
         
@@ -72,6 +73,8 @@ namespace InteractionUtil.Service.Impl
             if (File.Exists(shortCutPath + item.Name + ".xml"))
             {
                 File.Delete(shortCutPath + item.Name + ".xml");
+                shortcutList.Remove(item);
+                activeShortcutList.Remove(item);
             }
         }
 
@@ -91,6 +94,9 @@ namespace InteractionUtil.Service.Impl
                 }
             }
 
+            shortcutList.Sort();
+            activeShortcutList.Sort();
+
             return shortcutList;
         }
 
@@ -101,19 +107,13 @@ namespace InteractionUtil.Service.Impl
             XmlNode root = xmlDoc.CreateElement(ROOT);
             xmlDoc.AppendChild(root);
 
-            XmlNode processNode = xmlDoc.CreateElement(NODE_PROCESS);
-            processNode.InnerText = item.ProcessName;
-            root.AppendChild(processNode);
-
-            XmlNode activeNode = xmlDoc.CreateElement(NODE_ACTIVE);
-            activeNode.InnerText = item.Active.ToString();
-            root.AppendChild(activeNode);
+            addNode(xmlDoc, root, NODE_PROCESS, item.ProcessName);
+            addNode(xmlDoc, root, NODE_ACTIVE, item.Active);
+            addNode(xmlDoc, root, NODE_IDX, item.Idx);
 
             foreach (KeyValuePair<InteractionGesture,String> mapItem in item.GestureMap)
             {
-                XmlNode node = xmlDoc.CreateElement(mapItem.Key.ToString());
-                node.InnerText = mapItem.Value;
-                root.AppendChild(node);
+                addNode(xmlDoc, root, mapItem.Key.ToString(), mapItem.Value);
             }
            
             return xmlDoc.InnerXml;
@@ -139,6 +139,12 @@ namespace InteractionUtil.Service.Impl
                 result.Active = Boolean.Parse(activeNodes.Item(0).InnerText);
             }
 
+            XmlNodeList idxNodes = xmlDoc.GetElementsByTagName(NODE_IDX);
+            if (idxNodes.Count > 0)
+            {
+                result.Idx = int.Parse(idxNodes.Item(0).InnerText);
+            }
+
             foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
             {
                 XmlNodeList nodes = xmlDoc.GetElementsByTagName(gesture.ToString());
@@ -149,6 +155,13 @@ namespace InteractionUtil.Service.Impl
             }
 
             return result;
+        }
+
+        private void addNode(XmlDocument xmlDoc, XmlNode parent, String nodeName, Object innerText)
+        {
+            XmlNode node = xmlDoc.CreateElement(nodeName);
+            node.InnerText = innerText.ToString();
+            parent.AppendChild(node);
         }
     }
 }

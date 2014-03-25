@@ -1,6 +1,7 @@
 <root>
   <ProcessName>spotify</ProcessName>
   <Active>True</Active>
+  <Index>0</Index>
   <CircleClock>^{UP}</CircleClock>
   <CircleCounterClock>^{DOWN}</CircleCounterClock>
   <PushTwoHanded>{HOME}</PushTwoHanded>

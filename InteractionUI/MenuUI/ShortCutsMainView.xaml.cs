@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
+using System.Collections.Generic;
 
 namespace InteractionUI.MenuUI
 {
@@ -64,13 +65,29 @@ namespace InteractionUI.MenuUI
             {
                 ShortcutDefinition item = (ShortcutDefinition)((Button)sender).Tag;
                 shortcutDefinitionList.Items.Remove(item);
-                shortCutReaderWriter.RemoveShortcutDefinition(item);   
+                shortCutReaderWriter.RemoveShortcutDefinition(item);
+
+                //int idx = 0;
+                //foreach (ShortcutDefinition def in shortCutReaderWriter.GetShortCutList())
+                //{
+                //    if (idx >= item.Idx)
+                //    {
+                //        def.Idx = idx;
+                //        shortCutReaderWriter.UpdateShortcutDefinition(item);
+                //    }
+                //    ++idx;
+                //}
+
+                //fillListView();
             }
         }
 
         private void addDefinitionButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            editView.EditDefinition(new ShortcutDefinition());
+            ShortcutDefinition newItem = new ShortcutDefinition();
+            newItem.Idx = shortcutDefinitionList.Items.Count;
+
+            editView.EditDefinition(newItem);
             NavigationService.Navigate(editView);
         }
 
