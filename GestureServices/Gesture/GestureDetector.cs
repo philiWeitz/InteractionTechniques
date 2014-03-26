@@ -10,7 +10,7 @@ namespace GestureServices.Gesture
 {
     internal class GestureDetector
     {
-        private static readonly int MAX_QUEUE_SIZE_IN_MS = 2000;
+        private static readonly int MAX_QUEUE_SIZE_IN_MS = 1000;
         private static readonly int MAX_SWIPE_TIME_IN_MS = 500;
         private static readonly int MAX_PUSH_PULL_TIME_IN_MS = 400;
         private static readonly int MAX_CIRCLE_TIME_IN_MS = 1000;

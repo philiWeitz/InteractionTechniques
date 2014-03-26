@@ -12,8 +12,8 @@ namespace GestureServices.Gesture
 
     internal class PushPullGestureDetector
     {
-        private static readonly int MIN_DEPTH = 75;
-        private static readonly int MAX_PUSH_PULL_RANGE = 50;
+        private static readonly int MIN_DEPTH = 100;
+        private static readonly int MAX_PUSH_PULL_RANGE = 30;
         private int maxPushPullTime;
 
         public PushPullGestureDetector(int maxPushPullTime)

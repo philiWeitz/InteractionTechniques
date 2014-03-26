@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using KinectServices.Common;
+using KinectServices.Util;
 using Microsoft.Kinect;
 
 namespace GestureServices.Gesture
 {
-    internal enum InteractionDirection 
+    internal enum InteractionDirection
     {
         TO_LEFT = 0,
         TO_RIGHT = 1,
@@ -14,12 +15,11 @@ namespace GestureServices.Gesture
         DOWN = 3
     }
 
-
     internal class SwipeDetector
     {
         private static readonly int MAX_DEPTH_DIFFERENCE = 40;
         private static readonly int MAX_X_Y_DIFFERENCE = 50;
-        private static readonly int MIN_SWIPE_LENGTH = 200;
+        private static readonly int STD_MIN_SWIPE_LENGTH = 150;
         private int maxSwipeTime;
 
         public SwipeDetector(int maxSwipeTime)
@@ -51,7 +51,7 @@ namespace GestureServices.Gesture
         {
             for (int i = 0; i < queue.Count; ++i)
             {
-                if (checkSwipeGesture(queue,i,direction))
+                if (checkSwipeGesture(queue, i, direction))
                 {
                     return true;
                 }
@@ -59,10 +59,9 @@ namespace GestureServices.Gesture
             return false;
         }
 
-
         private bool checkSwipeGesture(List<KinectDataPoint> queue, int stepSize, InteractionDirection direction)
         {
-            int minPoints = stepSize  + 1;
+            int minPoints = stepSize + 1;
 
             for (int i = 0; i < queue.Count - minPoints; ++i)
             {
@@ -71,12 +70,15 @@ namespace GestureServices.Gesture
                     break;
                 }
 
+                int minSwipeLength =
+                    (STD_MIN_SWIPE_LENGTH * KinectConsts.STD_DISTANCE) / queue.ElementAt(i).DepthPoint.Depth;
+
                 ColorImagePoint p1 = queue.ElementAt(i).ColorPoint;
                 ColorImagePoint p2 = queue.ElementAt(i + stepSize).ColorPoint;
 
                 double length = InteractionMath.CalcDistance(p1, p2);
 
-                if (length >= MIN_SWIPE_LENGTH &&
+                if (length >= minSwipeLength &&
                     (getLeftRightDirection(p1, p2) == direction || getUpDownDirection(p1, p2) == direction))
                 {
                     int depthDiff = Math.Abs(
@@ -91,9 +93,9 @@ namespace GestureServices.Gesture
             return false;
         }
 
-        private InteractionDirection getLeftRightDirection(ColorImagePoint p1, ColorImagePoint p2) 
+        private InteractionDirection getLeftRightDirection(ColorImagePoint p1, ColorImagePoint p2)
         {
-            if(p1.X < p2.X) 
+            if (p1.X < p2.X)
             {
                 return InteractionDirection.TO_RIGHT;
             }

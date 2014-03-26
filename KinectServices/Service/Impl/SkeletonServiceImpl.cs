@@ -6,7 +6,6 @@ using KinectServices.Service.Interface;
 using KinectServices.Util;
 using Microsoft.Kinect;
 
-
 namespace KinectServices.Service.Impl
 {
     internal class SkeletonServiceImpl : ISkeletonService
@@ -18,7 +17,6 @@ namespace KinectServices.Service.Impl
 
         private IDictionary<JointType, KinectDataPoint> jointDataPointMap =
             new Dictionary<JointType, KinectDataPoint>();
-
 
         public void enableSkeleton(KinectSensor sensor)
         {
@@ -96,8 +94,6 @@ namespace KinectServices.Service.Impl
                         KinectSensor sensor = (KinectSensor)sender;
                         CoordinateMapper coordinateMapper = new CoordinateMapper(sensor);
 
-                        jointDataPointMap[JointType.Head] =
-                            getDataPoint(first.Joints, JointType.Head, coordinateMapper, depthFrame);
                         jointDataPointMap[JointType.HandLeft] =
                             getDataPoint(first.Joints, JointType.HandLeft, coordinateMapper, depthFrame);
                         jointDataPointMap[JointType.HandRight] =
@@ -116,7 +112,7 @@ namespace KinectServices.Service.Impl
                 MapSkeletonPointToDepthPoint(joints[joint].Position, depthFrame.Format);
             ColorImagePoint colorPoint = coordinateMapper.MapDepthPointToColorPoint(
                 depthFrame.Format, depthPoint, ColorImageFormat.RgbResolution640x480Fps30);
-            
+
             return new KinectDataPoint(colorPoint, depthPoint);
         }
     }
