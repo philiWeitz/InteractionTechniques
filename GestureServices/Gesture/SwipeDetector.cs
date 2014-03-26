@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using KinectServices.Common;
 using KinectServices.Util;
-using Microsoft.Kinect;
 
 namespace GestureServices.Gesture
 {
@@ -65,24 +64,24 @@ namespace GestureServices.Gesture
 
             for (int i = 0; i < queue.Count - minPoints; ++i)
             {
-                if (queue.ElementAt(i).TimeStamp.AddMilliseconds(maxSwipeTime) < queue.ElementAt(i + stepSize).TimeStamp)
+                KinectDataPoint p1 = queue.ElementAt(i);
+                KinectDataPoint p2 = queue.ElementAt(i + stepSize);
+
+                if (p1.TimeStamp.AddMilliseconds(maxSwipeTime) < p2.TimeStamp)
                 {
                     break;
                 }
 
                 int minSwipeLength =
-                    (STD_MIN_SWIPE_LENGTH * KinectConsts.STD_DISTANCE) / queue.ElementAt(i).DepthPoint.Depth;
+                    (STD_MIN_SWIPE_LENGTH * KinectConsts.STD_DISTANCE) / queue.ElementAt(i).Z;
 
-                ColorImagePoint p1 = queue.ElementAt(i).ColorPoint;
-                ColorImagePoint p2 = queue.ElementAt(i + stepSize).ColorPoint;
-
-                double length = InteractionMath.CalcDistance(p1, p2);
+                double length = p1.CalcDistance(p2);
 
                 if (length >= minSwipeLength &&
                     (getLeftRightDirection(p1, p2) == direction || getUpDownDirection(p1, p2) == direction))
                 {
                     int depthDiff = Math.Abs(
-                        queue.ElementAt(i).DepthPoint.Depth - queue.ElementAt(i + stepSize).DepthPoint.Depth);
+                        queue.ElementAt(i).Z - queue.ElementAt(i + stepSize).Z);
 
                     if (maxXYDifference(p1, p2, direction) && depthDiff < MAX_DEPTH_DIFFERENCE)
                     {
@@ -93,7 +92,7 @@ namespace GestureServices.Gesture
             return false;
         }
 
-        private InteractionDirection getLeftRightDirection(ColorImagePoint p1, ColorImagePoint p2)
+        private InteractionDirection getLeftRightDirection(KinectDataPoint p1, KinectDataPoint p2)
         {
             if (p1.X < p2.X)
             {
@@ -102,7 +101,7 @@ namespace GestureServices.Gesture
             return InteractionDirection.TO_LEFT;
         }
 
-        private InteractionDirection getUpDownDirection(ColorImagePoint p1, ColorImagePoint p2)
+        private InteractionDirection getUpDownDirection(KinectDataPoint p1, KinectDataPoint p2)
         {
             if (p1.Y < p2.Y)
             {
@@ -111,7 +110,7 @@ namespace GestureServices.Gesture
             return InteractionDirection.UP;
         }
 
-        private bool maxXYDifference(ColorImagePoint p1, ColorImagePoint p2, InteractionDirection direction)
+        private bool maxXYDifference(KinectDataPoint p1, KinectDataPoint p2, InteractionDirection direction)
         {
             if (direction == InteractionDirection.TO_LEFT || direction == InteractionDirection.TO_RIGHT)
             {

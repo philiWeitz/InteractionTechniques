@@ -8,8 +8,6 @@ namespace KinectServices.Service.Interface
     {
         void enableSkeleton(KinectSensor sensor);
         KinectDataPoint getDataPoint(JointType type);
-        ColorImagePoint getColorPointJoint(JointType type);
-        DepthImagePoint getDepthPointJoint(JointType type);
         bool hasJoint(JointType type);
         bool userInRange();
     }

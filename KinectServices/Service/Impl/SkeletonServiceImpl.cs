@@ -33,16 +33,6 @@ namespace KinectServices.Service.Impl
             return jointDataPointMap[type];
         }
 
-        public ColorImagePoint getColorPointJoint(JointType type)
-        {
-            return jointDataPointMap[type].ColorPoint;
-        }
-
-        public DepthImagePoint getDepthPointJoint(JointType type)
-        {
-            return jointDataPointMap[type].DepthPoint;
-        }
-
         public bool hasJoint(JointType type)
         {
             return jointDataPointMap.ContainsKey(type);
@@ -52,8 +42,8 @@ namespace KinectServices.Service.Impl
         {
             if (hasJoint(JointType.ShoulderCenter))
             {
-                DepthImagePoint depthPoint = getDepthPointJoint(JointType.ShoulderCenter);
-                if (depthPoint.Depth > KinectConsts.MIN_DISTANCE)
+                KinectDataPoint shoulderCenter = getDataPoint(JointType.ShoulderCenter);
+                if (shoulderCenter.Z > KinectConsts.MIN_DISTANCE)
                 {
                     return true;
                 }

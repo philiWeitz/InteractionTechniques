@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using KinectServices.Common;
-using Microsoft.Kinect;
 
 namespace GestureServices.Gesture
 {
@@ -52,22 +51,23 @@ namespace GestureServices.Gesture
 
             for (int i = 0; i < queue.Count - minPoints; ++i)
             {
-                if (queue.ElementAt(i).TimeStamp.AddMilliseconds(maxCircleTime) < queue.ElementAt(i + (4 * stepSize)).TimeStamp)
+                KinectDataPoint p1 = queue.ElementAt(i);
+                KinectDataPoint p4 = queue.ElementAt(i + (3 * stepSize));
+
+                if (p1.TimeStamp.AddMilliseconds(maxCircleTime) < p4.TimeStamp)
                 {
                     break;
                 }
 
-                ColorImagePoint p1 = queue.ElementAt(i).ColorPoint;
-                ColorImagePoint p2 = queue.ElementAt(i + stepSize).ColorPoint;
-                ColorImagePoint p3 = queue.ElementAt(i + (2 * stepSize)).ColorPoint;
-                ColorImagePoint p4 = queue.ElementAt(i + (3 * stepSize)).ColorPoint;
+                KinectDataPoint p2 = queue.ElementAt(i + stepSize);
+                KinectDataPoint p3 = queue.ElementAt(i + (2 * stepSize));
 
-                double diag1 = InteractionMath.CalcDistance(p1, p3);
-                double diag2 = InteractionMath.CalcDistance(p2, p4);
-                double dist1 = InteractionMath.CalcDistance(p1, p2);
-                double dist2 = InteractionMath.CalcDistance(p2, p3);
-                double dist3 = InteractionMath.CalcDistance(p3, p4);
-                double dist4 = InteractionMath.CalcDistance(p4, p1);
+                double diag1 = p1.CalcDistance(p3);
+                double diag2 = p2.CalcDistance(p4);
+                double dist1 = p1.CalcDistance(p2);
+                double dist2 = p2.CalcDistance(p3);
+                double dist3 = p3.CalcDistance(p4);
+                double dist4 = p4.CalcDistance(p1);
 
                 if (diag1 > MIN_DIAMETER && diag2 > MIN_DIAMETER)
                 {
@@ -85,7 +85,7 @@ namespace GestureServices.Gesture
             return false;
         }
 
-        private InteractionCircle getDirection(ColorImagePoint p1, ColorImagePoint p2)
+        private InteractionCircle getDirection(KinectDataPoint p1, KinectDataPoint p2)
         {
             int dirX = p2.X - p1.X;
 

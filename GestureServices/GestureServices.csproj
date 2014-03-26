@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Gesture\CircleDetector.cs" />
     <Compile Include="Gesture\GestureDetector.cs" />
-    <Compile Include="Gesture\InteractionMath.cs" />
     <Compile Include="Gesture\PointQueue.cs" />
     <Compile Include="Gesture\PushPullDetector.cs" />
     <Compile Include="Gesture\SwipeDetector.cs" />

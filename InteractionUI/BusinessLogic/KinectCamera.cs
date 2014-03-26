@@ -113,13 +113,13 @@ namespace InteractionUI.BusinessLogic
         {
             if (skeletonService.hasJoint(JointType.HandLeft))
             {
-                ColorImagePoint point = skeletonService.getColorPointJoint(JointType.HandLeft);
+                KinectDataPoint point = skeletonService.getDataPoint(JointType.HandLeft);
                 drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.X - 10, point.Y - 10, 20, 20));
                 drawJointDataQueue(drawingContext, JointType.HandLeft);
             }
             if (skeletonService.hasJoint(JointType.HandRight))
             {
-                ColorImagePoint point = skeletonService.getColorPointJoint(JointType.HandRight);
+                KinectDataPoint point = skeletonService.getDataPoint(JointType.HandRight);
                 drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.X - 10, point.Y - 10, 20, 20));
             }
 
@@ -139,7 +139,7 @@ namespace InteractionUI.BusinessLogic
             Point oldPoint = default(Point);
             foreach (KinectDataPoint dataPoint in queue)
             {
-                Point newPoint = new Point(dataPoint.ColorPoint.X, dataPoint.ColorPoint.Y);
+                Point newPoint = new Point(dataPoint.X, dataPoint.Y);
 
                 if (default(Point) != oldPoint)
                 {

@@ -50,23 +50,25 @@ namespace GestureServices.Gesture
 
             for (int i = 0; i < queue.Count - minPoints; ++i)
             {
-                if (queue.ElementAt(i).TimeStamp.AddMilliseconds(maxPushPullTime) < queue.ElementAt(i + (2 * stepSize)).TimeStamp)
+                KinectDataPoint p1 = queue.ElementAt(i);
+                KinectDataPoint p3 = queue.ElementAt(i + (2 * stepSize));
+
+                if (p1.TimeStamp.AddMilliseconds(maxPushPullTime) < p3.TimeStamp)
                 {
                     break;
                 }
 
-                int d1 = queue.ElementAt(i).DepthPoint.Depth - queue.ElementAt(i + stepSize).DepthPoint.Depth;
-                int d2 = queue.ElementAt(i + stepSize).DepthPoint.Depth - queue.ElementAt(i + (2 * stepSize)).DepthPoint.Depth;
+                KinectDataPoint p2 = queue.ElementAt(i + stepSize);
+
+                int d1 = p1.Z - p2.Z;
+                int d2 = p2.Z - p3.Z;
 
                 if ((d1 >= MIN_DEPTH && d2 <= -MIN_DEPTH && pushPull == InteractionPushPull.PUSH)
                     || (d1 <= -MIN_DEPTH && d2 >= MIN_DEPTH && pushPull == InteractionPushPull.PULL))
                 {
-                    double dis1 = InteractionMath.CalcDistance(
-                        queue.ElementAt(i).ColorPoint, queue.ElementAt(i + stepSize).ColorPoint);
-                    double dis2 = InteractionMath.CalcDistance(
-                        queue.ElementAt(i).ColorPoint, queue.ElementAt(i + (2 * stepSize)).ColorPoint);
-                    double dis3 = InteractionMath.CalcDistance(
-                        queue.ElementAt(i + stepSize).ColorPoint, queue.ElementAt(i + (2 * stepSize)).ColorPoint);
+                    double dis1 = p1.CalcDistance(p2);
+                    double dis2 = p1.CalcDistance(p3);
+                    double dis3 = p2.CalcDistance(p3);
 
                     if (dis1 < MAX_PUSH_PULL_RANGE && dis2 < MAX_PUSH_PULL_RANGE && dis3 < MAX_PUSH_PULL_RANGE)
                     {

@@ -25,19 +25,6 @@ namespace KinectServices.Service.Stub
             return null;
         }
 
-        public ColorImagePoint getColorPointJoint(JointType type)
-        {
-            return jointMap[type];
-        }
-
-        public DepthImagePoint getDepthPointJoint(JointType type)
-        {
-            DepthImagePoint point = new DepthImagePoint();
-            point.Depth = KinectConsts.MIN_DISTANCE + 1;
-
-            return point;
-        }
-
         public bool hasJoint(JointType type)
         {
             return jointMap.ContainsKey(type);
