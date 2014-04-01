@@ -18,20 +18,22 @@ namespace InteractionUI.BusinessLogic
         public String GestureName { get; set; }
     }
 
-
     public class KinectInteraction
     {
         private static readonly int INTERVAL = 100;
+        private static readonly int GESTURE_TIMEOUT = 800;
+        private static readonly int CIRCLE_GESTURE_TIMEOUT = 150;
 
         public event EventHandler GestureEvent;
+
         private ISensorService sensorService;
         private IProcessService processService;
         private IShortcutService shortcutService;
         private IGestureService gestureService;
 
         private DispatcherTimer kinectTimer;
-        public String LastGesture { get; private set; }
 
+        public String LastGesture { get; private set; }
 
         public KinectInteraction(int sensorIdx)
         {
@@ -72,6 +74,7 @@ namespace InteractionUI.BusinessLogic
 
         private void kinectTimer_Tick(object sender, EventArgs e)
         {
+            int timeOut = GESTURE_TIMEOUT;
             bool detected = false;
 
             foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
@@ -85,6 +88,11 @@ namespace InteractionUI.BusinessLogic
                     else if (InteractionGesture.PullTwoHanded == gesture)
                     {
                         shortcutService.PreviousApplication();
+                    }
+                    else if (InteractionGesture.CircleClock == gesture ||
+                        InteractionGesture.CircleCounterClock == gesture)
+                    {
+                        timeOut = CIRCLE_GESTURE_TIMEOUT;
                     }
 
                     if (null != GestureEvent)
@@ -103,7 +111,7 @@ namespace InteractionUI.BusinessLogic
             if (detected)
             {
                 System.Media.SystemSounds.Exclamation.Play();
-                gestureService.setGestureTimeOut(800);
+                gestureService.setGestureTimeOut(timeOut);
             }
         }
     }

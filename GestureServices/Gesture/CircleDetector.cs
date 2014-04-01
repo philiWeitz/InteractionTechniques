@@ -74,7 +74,8 @@ namespace GestureServices.Gesture
                     if (Math.Abs(dist1 - dist2) < MAX_X_Y_GITTER && Math.Abs(dist2 - dist3) < MAX_X_Y_GITTER &&
                         Math.Abs(dist3 - dist4) < MAX_X_Y_GITTER && Math.Abs(dist4 - dist1) < MAX_X_Y_GITTER)
                     {
-                        if (getDirection(p1, p2) == direction)
+                        // TODO: improve circle direction detection
+                        if (getDirection(new KinectDataPoint[] { p1, p2, p3, p4 }) == direction)
                         {
                             return true;
                         }
@@ -85,11 +86,22 @@ namespace GestureServices.Gesture
             return false;
         }
 
-        private InteractionCircle getDirection(KinectDataPoint p1, KinectDataPoint p2)
+        private InteractionCircle getDirection(KinectDataPoint[] points)
         {
-            int dirX = p2.X - p1.X;
+            int refIdx = 0;
 
-            if (dirX >= 0)
+            for (int i = 1; i < points.Length; ++i)
+            {
+                if (points[i].Y < points[refIdx].Y)
+                {
+                    refIdx = i;
+                }
+            }
+
+            KinectDataPoint point = points[refIdx];
+            KinectDataPoint nexPoint = points[(refIdx + 1) % points.Length];
+
+            if (point.X < nexPoint.X)
             {
                 return InteractionCircle.CLOCK_WISE;
             }

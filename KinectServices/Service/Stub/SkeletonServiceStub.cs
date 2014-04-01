@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using KinectServices.Common;
 using KinectServices.Service.Interface;
-using KinectServices.Util;
 using Microsoft.Kinect;
-using Microsoft.Xna.Framework.Input;
 
 namespace KinectServices.Service.Stub
 {
@@ -11,7 +9,6 @@ namespace KinectServices.Service.Stub
     {
         private IDictionary<JointType, ColorImagePoint> jointMap =
                     new Dictionary<JointType, ColorImagePoint>();
-
 
         public void enableSkeleton(KinectSensor sensor)
         {
@@ -35,27 +32,9 @@ namespace KinectServices.Service.Stub
             return true;
         }
 
-        void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            MouseState current_mouse = Mouse.GetState();
- 
-            ColorImagePoint headImagePoint = new ColorImagePoint();
-            headImagePoint.X = current_mouse.X;
-            headImagePoint.Y = current_mouse.Y;
-
-            jointMap.Clear();
-            if (ButtonState.Pressed == current_mouse.LeftButton)
-            {
-                this.jointMap[JointType.HandLeft] = headImagePoint;
-            }
-            else if (ButtonState.Pressed == current_mouse.RightButton)
-            {
-                this.jointMap[JointType.HandRight] = headImagePoint;
-            }
-            else
-            {
-                this.jointMap[JointType.Head] = headImagePoint;
-            }
+            // TODO: not implemented
         }
     }
 }

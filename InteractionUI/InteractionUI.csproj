@@ -122,9 +122,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Content Include="Properties\ShortCuts\OpenOfficeImpress.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Properties\ShortCuts\Spotify.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
