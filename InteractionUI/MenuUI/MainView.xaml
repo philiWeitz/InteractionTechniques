@@ -26,7 +26,7 @@
         </Grid.RowDefinitions>
 
         <Button Name="startCameraButton" Content="Start Camera" Grid.Column="1" Grid.Row="1" Margin="5" Click="StartCameraButton_Click"></Button>
-        <Button Name="startStopButton" Content="Start Interaction" Grid.Column="1" Grid.Row="2" Margin="5" Grid.ColumnSpan="2" Grid.RowSpan="2" Click="StartStopButton_Click"></Button>
+        <Button Name="startStopButton" Content="Start Kinect Interaction" Grid.Column="1" Grid.Row="2" Margin="5" Grid.ColumnSpan="2" Grid.RowSpan="2" Click="StartStopButton_Click"></Button>
         <Button Name="shortcutsButton" Content="Edit Shortcuts" Grid.Column="2" Grid.Row="1" Margin="5" Click="shortcutsButton_Click"></Button>
         <Button Name="exitButton" Content="Exit" Grid.Column="4" Grid.RowSpan="2" Grid.Row="3" Click="exitButton_Click"></Button>
     </Grid>
