@@ -170,8 +170,14 @@
     <comment>Time out for continuous gestures (e.g. cycle)</comment>
   </data>
   <data name="KinectMinDistance" xml:space="preserve">
-    <value>1000</value>
+    <value>1200</value>
     <comment>Min distance to the kinect in cm</comment>
+  </data>
+  <data name="KinectResolutionHeight" xml:space="preserve">
+    <value>480</value>
+  </data>
+  <data name="KinectResolutionWidth" xml:space="preserve">
+    <value>640</value>
   </data>
   <data name="KinectStdDistance" xml:space="preserve">
     <value>2000</value>

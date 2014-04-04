@@ -8,10 +8,19 @@ using Microsoft.Kinect;
 
 namespace KinectServices.Service.Impl
 {
+    // enum for controlling the kinect elevation angle 
+    internal enum UserCenter
+    {
+        up,
+        down,
+        center
+    }
+
     internal class SkeletonServiceImpl : ISkeletonService
     {
         private static readonly int MAX_SKELETON_COUNT = 6;
 
+        private UserCenter userCenter = UserCenter.center;
         private Skeleton[] skeletons = new Skeleton[MAX_SKELETON_COUNT];
         private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();
 
@@ -104,6 +113,59 @@ namespace KinectServices.Service.Impl
                 depthFrame.Format, depthPoint, ColorImageFormat.RgbResolution640x480Fps30);
 
             return new KinectDataPoint(colorPoint, depthPoint);
+        }
+
+        public void centerUser(KinectSensor sensor)
+        {
+            if (userInRange())
+            {
+                KinectDataPoint point = getDataPoint(JointType.ShoulderCenter);
+
+                // user stands outside of the upper limit -> move kinect up
+                if (point.Y < IConsts.KinectCenterUpperLimit)
+                {
+                    userCenter = UserCenter.up;
+                }
+                // user stands outside of the lower limit -> move kinect dow
+                else if (point.Y > IConsts.KinectCenterLowerLimit)
+                {
+                    userCenter = UserCenter.down;
+                }
+
+                // centeres the user based on inner borders
+                if (userCenter == UserCenter.up && point.Y < IConsts.KinectCenterUpperLimitInner)
+                {
+                    // move kinect up
+                    if (sensor.ElevationAngle < sensor.MaxElevationAngle - 5)
+                    {
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        int newAngle = Math.Min(sensor.MaxElevationAngle, sensor.ElevationAngle + 5);
+                        sensor.ElevationAngle = newAngle;
+                    }
+                }
+                else if (userCenter == UserCenter.down && point.Y > IConsts.KinectCenterLowerLimitInner)
+                {
+                    // move kinect down
+                    if (sensor.ElevationAngle > sensor.MinElevationAngle + 5)
+                    {
+                        System.Media.SystemSounds.Asterisk.Play();
+
+                        int newAngle = Math.Max(sensor.MinElevationAngle, sensor.ElevationAngle - 5);
+                        sensor.ElevationAngle = newAngle;
+                    }
+                }
+                else
+                {
+                    // user is centered
+                    userCenter = UserCenter.center;
+                }
+            }
+            else
+            {
+                // is user out of range -> user is concidered to be centered
+                userCenter = UserCenter.center;
+            }
         }
     }
 }

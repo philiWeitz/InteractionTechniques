@@ -94,6 +94,8 @@ namespace InteractionUI.BusinessLogic
                         drawingContext.DrawImage(bitmapSource, new Rect(0, 0, bitmap.Width, bitmap.Height));
                         // draw hands
                         drawJoints(drawingContext);
+                        // draw upper and lower border for kinect elevation angle
+                        drawKinectElevationUpperLowerBound(drawingContext);
 
                         if (!skeletonService.userInRange())
                         {
@@ -146,6 +148,18 @@ namespace InteractionUI.BusinessLogic
                 }
                 oldPoint = newPoint;
             }
+        }
+
+        private void drawKinectElevationUpperLowerBound(DrawingContext drawingContext)
+        {
+            Pen pen = new Pen(Brushes.Black, 2);
+
+            drawingContext.DrawLine(pen,
+                new Point(0, IConsts.KinectCenterUpperLimit),
+                new Point(IConsts.KinectResolutionWidth, IConsts.KinectCenterUpperLimit));
+            drawingContext.DrawLine(pen,
+                new Point(0, IConsts.KinectCenterLowerLimit),
+                new Point(IConsts.KinectResolutionWidth, IConsts.KinectCenterLowerLimit));
         }
     }
 }

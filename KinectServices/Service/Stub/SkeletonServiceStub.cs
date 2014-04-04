@@ -36,5 +36,9 @@ namespace KinectServices.Service.Stub
         {
             // TODO: not implemented
         }
+
+        public void centerUser(KinectSensor sensor)
+        {
+        }
     }
 }

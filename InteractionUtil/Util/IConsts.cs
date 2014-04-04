@@ -11,6 +11,13 @@ namespace InteractionUtil.Util
         public static readonly int KinectDPIX = 96;
         public static readonly int KinectMinDistance = int.Parse(Resource.KinectMinDistance);
         public static readonly int KinectStdDistance = int.Parse(Resource.KinectStdDistance);
+        public static readonly int KinectResolutionWidth = int.Parse(Resource.KinectResolutionWidth);
+        public static readonly int KinectResolutionHeight = int.Parse(Resource.KinectResolutionHeight);
+
+        public static readonly int KinectCenterUpperLimit = (int)(KinectResolutionHeight * 0.1);
+        public static readonly int KinectCenterLowerLimit = KinectResolutionHeight - (int)(KinectResolutionHeight * 0.3);
+        public static readonly int KinectCenterUpperLimitInner = (int)(KinectResolutionHeight * 0.3);
+        public static readonly int KinectCenterLowerLimitInner = KinectResolutionHeight - (int)(KinectResolutionHeight * 0.5);
 
         public static readonly int GCircleDiameter = int.Parse(Resource.GestureCycleDiameter);
         public static readonly int GCircleGitterXY = int.Parse(Resource.GestureCycleGitterXY);

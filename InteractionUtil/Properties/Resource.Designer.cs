@@ -178,11 +178,29 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1000.
+        ///   Looks up a localized string similar to 1200.
         /// </summary>
         public static string KinectMinDistance {
             get {
                 return ResourceManager.GetString("KinectMinDistance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 480.
+        /// </summary>
+        public static string KinectResolutionHeight {
+            get {
+                return ResourceManager.GetString("KinectResolutionHeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 640.
+        /// </summary>
+        public static string KinectResolutionWidth {
+            get {
+                return ResourceManager.GetString("KinectResolutionWidth", resourceCulture);
             }
         }
         
