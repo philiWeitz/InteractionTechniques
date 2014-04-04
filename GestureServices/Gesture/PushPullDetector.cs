@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using InteractionUtil.Util;
 using KinectServices.Common;
 
 namespace GestureServices.Gesture
@@ -12,8 +13,6 @@ namespace GestureServices.Gesture
 
     internal class PushPullGestureDetector
     {
-        private static readonly int MIN_DEPTH = 100;
-        private static readonly int MAX_PUSH_PULL_RANGE = 30;
         private int maxPushPullTime;
 
         public PushPullGestureDetector(int maxPushPullTime)
@@ -63,14 +62,15 @@ namespace GestureServices.Gesture
                 int d1 = p1.Z - p2.Z;
                 int d2 = p2.Z - p3.Z;
 
-                if ((d1 >= MIN_DEPTH && d2 <= -MIN_DEPTH && pushPull == InteractionPushPull.PUSH)
-                    || (d1 <= -MIN_DEPTH && d2 >= MIN_DEPTH && pushPull == InteractionPushPull.PULL))
+                if ((d1 >= IConsts.GPushPullMinDepth && d2 <= -IConsts.GPushPullMinDepth && pushPull == InteractionPushPull.PUSH)
+                    || (d1 <= -IConsts.GPushPullMinDepth && d2 >= IConsts.GPushPullMinDepth && pushPull == InteractionPushPull.PULL))
                 {
                     double dis1 = p1.CalcDistance(p2);
                     double dis2 = p1.CalcDistance(p3);
                     double dis3 = p2.CalcDistance(p3);
 
-                    if (dis1 < MAX_PUSH_PULL_RANGE && dis2 < MAX_PUSH_PULL_RANGE && dis3 < MAX_PUSH_PULL_RANGE)
+                    if (dis1 < IConsts.GPushPullGitterXY &&
+                        dis2 < IConsts.GPushPullGitterXY && dis3 < IConsts.GPushPullGitterXY)
                     {
                         return true;
                     }

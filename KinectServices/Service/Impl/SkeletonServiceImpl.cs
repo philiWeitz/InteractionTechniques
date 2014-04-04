@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using InteractionUtil.Util;
 using KinectServices.Common;
 using KinectServices.Service.Interface;
-using KinectServices.Util;
 using Microsoft.Kinect;
 
 namespace KinectServices.Service.Impl
@@ -43,7 +43,7 @@ namespace KinectServices.Service.Impl
             if (hasJoint(JointType.ShoulderCenter))
             {
                 KinectDataPoint shoulderCenter = getDataPoint(JointType.ShoulderCenter);
-                if (shoulderCenter.Z > KinectConsts.MIN_DISTANCE)
+                if (shoulderCenter.Z > IConsts.KinectMinDistance)
                 {
                     return true;
                 }

@@ -10,7 +10,6 @@ using GestureServices.Service.Interface;
 using InteractionUtil.Util;
 using KinectServices.Common;
 using KinectServices.Service.Interface;
-using KinectServices.Util;
 using Microsoft.Kinect;
 
 namespace InteractionUI.BusinessLogic
@@ -80,11 +79,11 @@ namespace InteractionUI.BusinessLogic
                 if (null != byteArrayIn)
                 {
                     BitmapSource bitmapSource = BitmapSource.Create(
-                        cameraService.getWidth(), cameraService.getHeight(), KinectConsts.DPIX, KinectConsts.DPIX,
+                        cameraService.getWidth(), cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX,
                         PixelFormats.Bgr32, null, byteArrayIn, cameraService.getWidth() * cameraService.getBytesPerPixel());
 
                     RenderTargetBitmap bitmap = new RenderTargetBitmap(cameraService.getWidth(),
-                        cameraService.getHeight(), KinectConsts.DPIX, KinectConsts.DPIX, PixelFormats.Default);
+                        cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX, PixelFormats.Default);
 
                     DrawingVisual drawingVisual = new DrawingVisual();
 

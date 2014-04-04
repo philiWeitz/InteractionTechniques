@@ -10,11 +10,6 @@ namespace GestureServices.Gesture
 {
     internal class GestureDetector
     {
-        private static readonly int MAX_QUEUE_SIZE_IN_MS = 1000;
-        private static readonly int MAX_SWIPE_TIME_IN_MS = 500;
-        private static readonly int MAX_PUSH_PULL_TIME_IN_MS = 400;
-        private static readonly int MAX_CIRCLE_TIME_IN_MS = 1000;
-
         private KinectSensor sensor;
         private DateTime gestureTime;
         private PointQueue dataPointQueue;
@@ -119,11 +114,11 @@ namespace GestureServices.Gesture
         private void initialize(KinectSensor sensor)
         {
             this.sensor = sensor;
-            dataPointQueue = new PointQueue(MAX_QUEUE_SIZE_IN_MS);
+            dataPointQueue = new PointQueue(IConsts.GestureQueueSize);
 
-            swipeDetector = new SwipeDetector(MAX_SWIPE_TIME_IN_MS);
-            circleDetector = new CircleDetector(MAX_CIRCLE_TIME_IN_MS);
-            pushPullDetector = new PushPullGestureDetector(MAX_PUSH_PULL_TIME_IN_MS);
+            swipeDetector = new SwipeDetector(IConsts.GestureQueueSizeSwipe);
+            circleDetector = new CircleDetector(IConsts.GestureQueueSizeCycle);
+            pushPullDetector = new PushPullGestureDetector(IConsts.GestureQueueSizePush);
         }
 
         private void addDataPoint(JointType joint)

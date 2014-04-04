@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using InteractionUtil.Util;
 using KinectServices.Common;
-using KinectServices.Util;
 
 namespace GestureServices.Gesture
 {
@@ -16,9 +16,6 @@ namespace GestureServices.Gesture
 
     internal class SwipeDetector
     {
-        private static readonly int MAX_DEPTH_DIFFERENCE = 40;
-        private static readonly int MAX_X_Y_DIFFERENCE = 50;
-        private static readonly int STD_MIN_SWIPE_LENGTH = 150;
         private int maxSwipeTime;
 
         public SwipeDetector(int maxSwipeTime)
@@ -72,8 +69,8 @@ namespace GestureServices.Gesture
                     break;
                 }
 
-                int minSwipeLength =
-                    (STD_MIN_SWIPE_LENGTH * KinectConsts.STD_DISTANCE) / queue.ElementAt(i).Z;
+                int minSwipeLength = (IConsts.GSwipeMinLength *
+                    IConsts.KinectStdDistance) / queue.ElementAt(i).Z;
 
                 double length = p1.CalcDistance(p2);
 
@@ -83,7 +80,7 @@ namespace GestureServices.Gesture
                     int depthDiff = Math.Abs(
                         queue.ElementAt(i).Z - queue.ElementAt(i + stepSize).Z);
 
-                    if (maxXYDifference(p1, p2, direction) && depthDiff < MAX_DEPTH_DIFFERENCE)
+                    if (maxXYDifference(p1, p2, direction) && depthDiff < IConsts.GSwipeGitterZ)
                     {
                         return true;
                     }
@@ -114,11 +111,11 @@ namespace GestureServices.Gesture
         {
             if (direction == InteractionDirection.TO_LEFT || direction == InteractionDirection.TO_RIGHT)
             {
-                return (Math.Abs(p1.Y - p2.Y) < MAX_X_Y_DIFFERENCE);
+                return (Math.Abs(p1.Y - p2.Y) < IConsts.GSwipeGitterXY);
             }
             else
             {
-                return (Math.Abs(p1.X - p2.X) < MAX_X_Y_DIFFERENCE);
+                return (Math.Abs(p1.X - p2.X) < IConsts.GSwipeGitterXY);
             }
         }
     }
