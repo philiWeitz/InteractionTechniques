@@ -80,7 +80,7 @@ namespace InteractionUI.MenuUI
         {
             nameTextBox.ClearValue(TextBox.BorderBrushProperty);
 
-            if (nameTextBox.Text == String.Empty)
+            if (String.IsNullOrEmpty(String.Empty))
             {
                 nameTextBox.BorderBrush = Brushes.Red;
                 return false;

@@ -16,7 +16,7 @@ namespace InteractionUI.BusinessLogic
 {
     public class KinectCamera
     {
-        private static readonly int INTERVAL = 100;
+        private static readonly int INTERVAL = 10;
 
         private ISensorService sensorService;
         private ICameraService cameraService;
@@ -112,16 +112,17 @@ namespace InteractionUI.BusinessLogic
 
         private void drawJoints(DrawingContext drawingContext)
         {
+            drawJointDataQueue(drawingContext);
+
             if (skeletonService.hasJoint(JointType.HandLeft))
             {
                 KinectDataPoint point = skeletonService.getDataPoint(JointType.HandLeft);
-                drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.X - 10, point.Y - 10, 20, 20));
-                drawJointDataQueue(drawingContext, JointType.HandLeft);
+                drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
             }
             if (skeletonService.hasJoint(JointType.HandRight))
             {
                 KinectDataPoint point = skeletonService.getDataPoint(JointType.HandRight);
-                drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.X - 10, point.Y - 10, 20, 20));
+                drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
             }
 
             FormattedText formattedText = new FormattedText(lastGesture, CultureInfo.GetCultureInfo("en-us"),
@@ -130,17 +131,17 @@ namespace InteractionUI.BusinessLogic
             drawingContext.DrawText(formattedText, new Point(10, 10));
         }
 
-        private void drawJointDataQueue(DrawingContext drawingContext, JointType joint)
+        private void drawJointDataQueue(DrawingContext drawingContext)
         {
             Pen pen = new Pen(Brushes.Black, 5);
             pen.Freeze();
 
-            List<KinectDataPoint> queue = gestureService.getDataPointQueue(joint);
+            List<KinectDataPoint> queue = gestureService.getActiveUserDataPointQueue();
 
             Point oldPoint = default(Point);
             foreach (KinectDataPoint dataPoint in queue)
             {
-                Point newPoint = new Point(dataPoint.X, dataPoint.Y);
+                Point newPoint = new Point(dataPoint.ScreenX, dataPoint.ScreenY);
 
                 if (default(Point) != oldPoint)
                 {

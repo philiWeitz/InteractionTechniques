@@ -27,8 +27,8 @@ namespace InteractionUtil.Util
         public static readonly int GestureQueueSizeCycle = int.Parse(Resource.GestureQueueSizeCycle);
         public static readonly int GestureQueueSizePush = int.Parse(Resource.GestureQueueSizePush);
         public static readonly int GestureQueueSizeSwipe = int.Parse(Resource.GestureQueueSizeSwipe);
-        public static readonly int GSwipeGitterXY = int.Parse(Resource.GestureSwipeGitterXY);
-        public static readonly int GSwipeGitterZ = int.Parse(Resource.GestureSwipeGitterZ);
+        public static readonly int GSwipeDepthAngle = int.Parse(Resource.GestureSwipeDepthAngle);
+        public static readonly int GSwipeHorizontalAngle = int.Parse(Resource.GestureSwipeHorizontalAngle);
         public static readonly int GSwipeMinLength = int.Parse(Resource.GestureSwipeMinLength);
         public static readonly int GestureTimeOut = int.Parse(Resource.GestureTimeOut);
         public static readonly int GestureTimeOutContinuous = int.Parse(Resource.GestureTimeOutContinuous);

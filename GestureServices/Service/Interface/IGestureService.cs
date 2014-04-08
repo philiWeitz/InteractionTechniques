@@ -11,8 +11,10 @@ namespace GestureServices.Service.Interface
 
         void setGestureTimeOut(int gestureTimeOut);
 
-        bool checkGesture(InteractionGesture gesture);
+        InteractionGesture checkAllGestures();
 
-        List<KinectDataPoint> getDataPointQueue(JointType joint);
+        void focuseCurrentUser();
+
+        List<KinectDataPoint> getActiveUserDataPointQueue();
     }
 }

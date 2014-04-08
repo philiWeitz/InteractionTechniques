@@ -13,6 +13,6 @@ namespace KinectServices.Service.Interface
 
         bool userInRange();
 
-        void centerUser(KinectSensor sensor);
+        int getUserBodyAngle();
     }
 }

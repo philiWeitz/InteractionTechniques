@@ -79,7 +79,7 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 25.
+        ///   Looks up a localized string similar to 30.
         /// </summary>
         public static string GesturePushPullGitterXY {
             get {
@@ -88,7 +88,7 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 100.
+        ///   Looks up a localized string similar to 10.
         /// </summary>
         public static string GesturePushPullMinDepth {
             get {
@@ -115,7 +115,7 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 400.
+        ///   Looks up a localized string similar to 500.
         /// </summary>
         public static string GestureQueueSizePush {
             get {
@@ -133,25 +133,25 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 50.
+        ///   Looks up a localized string similar to 15.
         /// </summary>
-        public static string GestureSwipeGitterXY {
+        public static string GestureSwipeDepthAngle {
             get {
-                return ResourceManager.GetString("GestureSwipeGitterXY", resourceCulture);
+                return ResourceManager.GetString("GestureSwipeDepthAngle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 40.
+        ///   Looks up a localized string similar to 15.
         /// </summary>
-        public static string GestureSwipeGitterZ {
+        public static string GestureSwipeHorizontalAngle {
             get {
-                return ResourceManager.GetString("GestureSwipeGitterZ", resourceCulture);
+                return ResourceManager.GetString("GestureSwipeHorizontalAngle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 150.
+        ///   Looks up a localized string similar to 30.
         /// </summary>
         public static string GestureSwipeMinLength {
             get {
@@ -178,7 +178,7 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1200.
+        ///   Looks up a localized string similar to 140.
         /// </summary>
         public static string KinectMinDistance {
             get {

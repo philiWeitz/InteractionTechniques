@@ -34,11 +34,6 @@ namespace GestureServices.Gesture
             return getQueue(joint);
         }
 
-        public void ClearQueue(JointType joint)
-        {
-            getQueue(joint).Clear();
-        }
-
         public void ClearQueue()
         {
             foreach (List<KinectDataPoint> q in jointPoints.Values)

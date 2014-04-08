@@ -61,12 +61,12 @@ namespace GestureServices.Gesture
                 KinectDataPoint p2 = queue.ElementAt(i + stepSize);
                 KinectDataPoint p3 = queue.ElementAt(i + (2 * stepSize));
 
-                double diag1 = p1.CalcDistance(p3);
-                double diag2 = p2.CalcDistance(p4);
-                double dist1 = p1.CalcDistance(p2);
-                double dist2 = p2.CalcDistance(p3);
-                double dist3 = p3.CalcDistance(p4);
-                double dist4 = p4.CalcDistance(p1);
+                double diag1 = p1.CalcScreenDistance(p3);
+                double diag2 = p2.CalcScreenDistance(p4);
+                double dist1 = p1.CalcScreenDistance(p2);
+                double dist2 = p2.CalcScreenDistance(p3);
+                double dist3 = p3.CalcScreenDistance(p4);
+                double dist4 = p4.CalcScreenDistance(p1);
 
                 if (diag1 > IConsts.GCircleDiameter && diag2 > IConsts.GCircleDiameter)
                 {
@@ -91,7 +91,7 @@ namespace GestureServices.Gesture
 
             for (int i = 1; i < points.Length; ++i)
             {
-                if (points[i].Y < points[refIdx].Y)
+                if (points[i].ScreenY < points[refIdx].ScreenY)
                 {
                     refIdx = i;
                 }
@@ -100,7 +100,7 @@ namespace GestureServices.Gesture
             KinectDataPoint point = points[refIdx];
             KinectDataPoint nexPoint = points[(refIdx + 1) % points.Length];
 
-            if (point.X < nexPoint.X)
+            if (point.ScreenX < nexPoint.ScreenX)
             {
                 return InteractionCircle.CLOCK_WISE;
             }

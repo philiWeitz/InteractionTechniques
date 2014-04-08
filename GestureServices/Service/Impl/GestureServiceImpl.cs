@@ -29,14 +29,19 @@ namespace GestureServices.Service.Impl
             gestureDetector.setGestureTimeOut(gestureTimeOut);
         }
 
-        public bool checkGesture(InteractionGesture gesture)
+        public InteractionGesture checkAllGestures()
         {
-            return gestureDetector.CheckGesture(gesture);
+            return gestureDetector.checkAllGestures();
         }
 
-        public List<KinectDataPoint> getDataPointQueue(JointType joint)
+        public void focuseCurrentUser()
         {
-            return gestureDetector.getDataPointQueue(joint);
+            gestureDetector.focuseCurrentUser();
+        }
+
+        public List<KinectDataPoint> getActiveUserDataPointQueue()
+        {
+            return gestureDetector.getActiveUserDataPointQueue();
         }
 
         private void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)

@@ -119,19 +119,19 @@
   </resheader>
   <data name="GestureCycleDiameter" xml:space="preserve">
     <value>50</value>
-    <comment>Std cycle diameter (in pixel)</comment>
+    <comment>Std cycle diameter (in px)</comment>
   </data>
   <data name="GestureCycleGitterXY" xml:space="preserve">
     <value>25</value>
-    <comment>Std cycle gitter (in pixel)</comment>
+    <comment>Std cycle gitter (in px)</comment>
   </data>
   <data name="GesturePushPullGitterXY" xml:space="preserve">
-    <value>25</value>
-    <comment>Std push / pull gitter (in pixel)</comment>
+    <value>30</value>
+    <comment>Std push / pull gitter (in px)</comment>
   </data>
   <data name="GesturePushPullMinDepth" xml:space="preserve">
-    <value>100</value>
-    <comment>Min push / pull depth (in cm) </comment>
+    <value>10</value>
+    <comment>Min push / pull depth (in px) </comment>
   </data>
   <data name="GestureQueueSize" xml:space="preserve">
     <value>1000</value>
@@ -142,36 +142,36 @@
     <comment>Max time points are stored for cycles (in ms)</comment>
   </data>
   <data name="GestureQueueSizePush" xml:space="preserve">
-    <value>400</value>
+    <value>500</value>
     <comment>Max time points are stored for pushes (in ms)</comment>
   </data>
   <data name="GestureQueueSizeSwipe" xml:space="preserve">
     <value>500</value>
     <comment>Max time points are stored for swipes (in ms)</comment>
   </data>
-  <data name="GestureSwipeGitterXY" xml:space="preserve">
-    <value>50</value>
-    <comment>Std swipe XY gitter (in pixel)</comment>
+  <data name="GestureSwipeDepthAngle" xml:space="preserve">
+    <value>15</value>
+    <comment>Max gitter for depth angle (in degree)</comment>
   </data>
-  <data name="GestureSwipeGitterZ" xml:space="preserve">
-    <value>40</value>
-    <comment>Std swipe depth gitter (in cm)</comment>
+  <data name="GestureSwipeHorizontalAngle" xml:space="preserve">
+    <value>15</value>
+    <comment>Max gitter for horizontal angle (in degree)</comment>
   </data>
   <data name="GestureSwipeMinLength" xml:space="preserve">
-    <value>150</value>
-    <comment>Min swipe length (in pixel)</comment>
+    <value>30</value>
+    <comment>Min swipe length (in cm)</comment>
   </data>
   <data name="GestureTimeOut" xml:space="preserve">
     <value>800</value>
-    <comment>Time out after a gesture was recognized </comment>
+    <comment>Time out after a gesture was recognized (in ms)</comment>
   </data>
   <data name="GestureTimeOutContinuous" xml:space="preserve">
     <value>150</value>
-    <comment>Time out for continuous gestures (e.g. cycle)</comment>
+    <comment>Time out for continuous gestures e.g. cycle (in ms)</comment>
   </data>
   <data name="KinectMinDistance" xml:space="preserve">
-    <value>1200</value>
-    <comment>Min distance to the kinect in cm</comment>
+    <value>140</value>
+    <comment>Min distance to the kinect (in cm)</comment>
   </data>
   <data name="KinectResolutionHeight" xml:space="preserve">
     <value>480</value>

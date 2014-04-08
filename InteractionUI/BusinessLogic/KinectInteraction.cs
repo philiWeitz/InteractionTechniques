@@ -21,8 +21,6 @@ namespace InteractionUI.BusinessLogic
     public class KinectInteraction
     {
         private static readonly int INTERVAL = 100;
-        private static readonly int GESTURE_TIMEOUT = 800;
-        private static readonly int CIRCLE_GESTURE_TIMEOUT = 150;
 
         public event EventHandler GestureEvent;
 
@@ -30,7 +28,6 @@ namespace InteractionUI.BusinessLogic
         private IProcessService processService;
         private IShortcutService shortcutService;
         private IGestureService gestureService;
-        private ISkeletonService skeletonService;
 
         private int sensorIdx;
         private DispatcherTimer kinectTimer;
@@ -65,12 +62,10 @@ namespace InteractionUI.BusinessLogic
             sensorService = SpringUtil.getService<ISensorService>();
             shortcutService = SpringUtil.getService<IShortcutService>();
             gestureService = SpringUtil.getService<IGestureService>();
-            skeletonService = SpringUtil.getService<ISkeletonService>();
 
             this.sensorIdx = sensorIdx;
             sensorService.startSensor(sensorIdx);
             gestureService.enableGestureService(sensorService.getSensor(sensorIdx));
-            skeletonService.enableSkeleton(sensorService.getSensor(sensorIdx));
 
             kinectTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
             kinectTimer.Tick += new EventHandler(kinectTimer_Tick);
@@ -79,50 +74,31 @@ namespace InteractionUI.BusinessLogic
 
         private void kinectTimer_Tick(object sender, EventArgs e)
         {
-            int timeOut = GESTURE_TIMEOUT;
-            bool detected = false;
+            InteractionGesture gesture = gestureService.checkAllGestures();
 
-            if (skeletonService.userInRange())
+            if (InteractionGesture.None != gesture)
             {
-                foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
+                int timeOut = IConsts.GestureTimeOut;
+
+                if (InteractionGesture.CircleClock == gesture ||
+                        InteractionGesture.CircleCounterClock == gesture)
                 {
-                    if (gestureService.checkGesture(gesture))
-                    {
-                        if (InteractionGesture.PushTwoHanded == gesture)
-                        {
-                            shortcutService.NextApplication();
-                        }
-                        else if (InteractionGesture.PullTwoHanded == gesture)
-                        {
-                            shortcutService.PreviousApplication();
-                        }
-                        else if (InteractionGesture.CircleClock == gesture ||
-                            InteractionGesture.CircleCounterClock == gesture)
-                        {
-                            timeOut = CIRCLE_GESTURE_TIMEOUT;
-                        }
-
-                        if (null != GestureEvent)
-                        {
-                            GestureEvent.Invoke(this, new KinectInteractionArg(gesture.ToString()));
-                        }
-
-                        String shortCut = shortcutService.GetShortcut(gesture);
-                        processService.SendKeyToProcess(shortcutService.GetProcessName(), shortCut);
-
-                        detected = true;
-                        break;
-                    }
+                    timeOut = IConsts.GestureTimeOutContinuous;
                 }
 
-                if (detected)
+                if (null != GestureEvent)
                 {
-                    System.Media.SystemSounds.Exclamation.Play();
-                    gestureService.setGestureTimeOut(timeOut);
+                    GestureEvent.Invoke(this, new KinectInteractionArg(gesture.ToString()));
                 }
 
-                skeletonService.centerUser(sensorService.getSensor(sensorIdx));
+                String shortCut = shortcutService.GetShortcut(gesture);
+                processService.SendKeyToProcess(shortcutService.GetProcessName(), shortCut);
+
+                System.Media.SystemSounds.Exclamation.Play();
+                gestureService.setGestureTimeOut(timeOut);
             }
+
+            gestureService.focuseCurrentUser();
         }
     }
 }

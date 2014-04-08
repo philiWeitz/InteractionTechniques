@@ -37,8 +37,9 @@ namespace KinectServices.Service.Stub
             // TODO: not implemented
         }
 
-        public void centerUser(KinectSensor sensor)
+        public int getUserBodyAngle()
         {
+            return 0;
         }
     }
 }
