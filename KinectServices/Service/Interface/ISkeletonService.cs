@@ -1,4 +1,5 @@
-﻿using KinectServices.Common;
+﻿using System.Collections.Generic;
+using KinectServices.Common;
 using Microsoft.Kinect;
 
 namespace KinectServices.Service.Interface
@@ -7,12 +8,12 @@ namespace KinectServices.Service.Interface
     {
         void enableSkeleton(KinectSensor sensor);
 
-        KinectDataPoint getDataPoint(JointType type);
+        KinectDataPoint getDataPoint(JointType type, KinectUser user);
 
-        bool hasJoint(JointType type);
+        bool hasJoint(JointType type, KinectUser user);
 
-        bool userInRange();
+        List<KinectUser> userInRange();
 
-        int getUserBodyAngle();
+        int getUserBodyAngle(KinectUser user);
     }
 }

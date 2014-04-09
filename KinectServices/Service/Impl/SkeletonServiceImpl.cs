@@ -12,11 +12,21 @@ namespace KinectServices.Service.Impl
     {
         private static readonly int MAX_SKELETON_COUNT = 6;
 
-        private Skeleton[] skeletons = new Skeleton[MAX_SKELETON_COUNT];
+        private Skeleton[] skeletonArray = new Skeleton[MAX_SKELETON_COUNT];
         private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();
 
-        private IDictionary<JointType, KinectDataPoint> jointDataPointMap =
-            new Dictionary<JointType, KinectDataPoint>();
+        private IDictionary<int, KinectUser> idToUserMap = new Dictionary<int, KinectUser>();
+
+        private IDictionary<KinectUser, IDictionary<JointType, KinectDataPoint>> userDataPointMap =
+            new Dictionary<KinectUser, IDictionary<JointType, KinectDataPoint>>();
+
+        public SkeletonServiceImpl()
+        {
+            foreach (KinectUser user in Enum.GetValues(typeof(KinectUser)))
+            {
+                userDataPointMap[user] = new Dictionary<JointType, KinectDataPoint>();
+            }
+        }
 
         public void enableSkeleton(KinectSensor sensor)
         {
@@ -28,33 +38,38 @@ namespace KinectServices.Service.Impl
             }
         }
 
-        public KinectDataPoint getDataPoint(JointType type)
+        public KinectDataPoint getDataPoint(JointType type, KinectUser user)
         {
-            return jointDataPointMap[type];
+            return userDataPointMap[user][type];
         }
 
-        public bool hasJoint(JointType type)
+        public bool hasJoint(JointType type, KinectUser user)
         {
-            return jointDataPointMap.ContainsKey(type);
+            return userDataPointMap[user].ContainsKey(type);
         }
 
-        public bool userInRange()
+        public List<KinectUser> userInRange()
         {
-            if (hasJoint(JointType.ShoulderCenter))
+            List<KinectUser> result = new List<KinectUser>();
+
+            foreach (KinectUser user in Enum.GetValues(typeof(KinectUser)))
             {
-                KinectDataPoint shoulderCenter = getDataPoint(JointType.ShoulderCenter);
-                if (shoulderCenter.Z > IConsts.KinectMinDistance)
+                if (hasJoint(JointType.ShoulderCenter, user))
                 {
-                    return true;
+                    KinectDataPoint shoulderCenter = getDataPoint(JointType.ShoulderCenter, user);
+                    if (shoulderCenter.Z > IConsts.KinectMinDistance)
+                    {
+                        result.Add(user);
+                    }
                 }
             }
-            return false;
+            return result;
         }
 
-        public int getUserBodyAngle()
+        public int getUserBodyAngle(KinectUser user)
         {
-            KinectDataPoint sLeft = jointDataPointMap[JointType.ShoulderLeft];
-            KinectDataPoint sRight = jointDataPointMap[JointType.ShoulderRight];
+            KinectDataPoint sLeft = userDataPointMap[user][JointType.ShoulderLeft];
+            KinectDataPoint sRight = userDataPointMap[user][JointType.ShoulderRight];
 
             return sRight.CalcDepthAngle(sLeft);
         }
@@ -69,32 +84,44 @@ namespace KinectServices.Service.Impl
                     return;
                 }
 
-                skeletonFrame.CopySkeletonDataTo(skeletons);
+                skeletonFrame.CopySkeletonDataTo(skeletonArray);
 
-                Skeleton first = (
-                    from s in skeletons
-                    where s.TrackingState == SkeletonTrackingState.Tracked
-                    select s).FirstOrDefault();
+                List<Skeleton> skeletons = (
+                    from s in skeletonArray
+                    where s != null && s.TrackingState == SkeletonTrackingState.Tracked
+                    select s).ToList();
 
                 // clear last joint points
-                jointDataPointMap.Clear();
-
-                if (null != first)
+                foreach (Dictionary<JointType, KinectDataPoint> map in userDataPointMap.Values)
                 {
-                    KinectSensor sensor = (KinectSensor)sender;
-                    CoordinateMapper coordinateMapper = new CoordinateMapper(sensor);
+                    map.Clear();
+                }
 
-                    jointDataPointMap[JointType.HandLeft] =
-                        getDataPointRelativeToBody(first.Joints, JointType.HandLeft, coordinateMapper);
-                    jointDataPointMap[JointType.HandRight] =
-                        getDataPointRelativeToBody(first.Joints, JointType.HandRight, coordinateMapper);
+                updateUserToTrackingId(skeletons);
 
-                    jointDataPointMap[JointType.ShoulderCenter] =
-                        getDataPointAbsolut(first.Joints, JointType.ShoulderCenter, coordinateMapper);
-                    jointDataPointMap[JointType.ShoulderLeft] =
-                        getDataPointAbsolut(first.Joints, JointType.ShoulderLeft, coordinateMapper);
-                    jointDataPointMap[JointType.ShoulderRight] =
-                        getDataPointAbsolut(first.Joints, JointType.ShoulderRight, coordinateMapper);
+                KinectSensor sensor = (KinectSensor)sender;
+                CoordinateMapper coordinateMapper = new CoordinateMapper(sensor);
+
+                foreach (Skeleton skeleton in skeletons)
+                {
+                    if (!idToUserMap.ContainsKey(skeleton.TrackingId))
+                    {
+                        continue;
+                    }
+
+                    KinectUser user = idToUserMap[skeleton.TrackingId];
+
+                    userDataPointMap[user][JointType.HandLeft] =
+                        getDataPointRelativeToBody(skeleton.Joints, JointType.HandLeft, coordinateMapper);
+                    userDataPointMap[user][JointType.HandRight] =
+                        getDataPointRelativeToBody(skeleton.Joints, JointType.HandRight, coordinateMapper);
+
+                    userDataPointMap[user][JointType.ShoulderCenter] =
+                        getDataPointAbsolut(skeleton.Joints, JointType.ShoulderCenter, coordinateMapper);
+                    userDataPointMap[user][JointType.ShoulderLeft] =
+                        getDataPointAbsolut(skeleton.Joints, JointType.ShoulderLeft, coordinateMapper);
+                    userDataPointMap[user][JointType.ShoulderRight] =
+                        getDataPointAbsolut(skeleton.Joints, JointType.ShoulderRight, coordinateMapper);
                 }
             }
         }
@@ -115,6 +142,52 @@ namespace KinectServices.Service.Impl
                 joints[joint].Position, ColorImageFormat.RgbResolution640x480Fps30);
 
             return new KinectDataPoint(colorPoint, joints[joint].Position, joints[JointType.ShoulderCenter].Position);
+        }
+
+        private void updateUserToTrackingId(List<Skeleton> skeletons)
+        {
+            if (skeletons.Count > 0)
+            {
+                // get all current skeleton ids
+                HashSet<int> currSkeletonIds = new HashSet<int>();
+                foreach (Skeleton s in skeletons)
+                {
+                    currSkeletonIds.Add(s.TrackingId);
+                }
+
+                // remove all old ids and get a list of all available users
+                HashSet<KinectUser> availableUsers = new
+                    HashSet<KinectUser>(Enum.GetValues(typeof(KinectUser)).Cast<KinectUser>());
+
+                List<Skeleton> availableSkeletons = new List<Skeleton>();
+
+                foreach (KeyValuePair<int, KinectUser> item in new Dictionary<int, KinectUser>(idToUserMap))
+                {
+                    if (currSkeletonIds.Contains(item.Key))
+                    {
+                        availableUsers.Remove(item.Value);
+                    }
+                    else
+                    {
+                        idToUserMap.Remove(item.Key);
+                    }
+                }
+
+                // add new user - skeleton mapping
+                foreach (Skeleton s in skeletons)
+                {
+                    if (availableUsers.Count <= 0)
+                    {
+                        break;
+                    }
+
+                    if (!idToUserMap.ContainsKey(s.TrackingId))
+                    {
+                        idToUserMap[s.TrackingId] = availableUsers.First();
+                        availableUsers.Remove(availableUsers.First());
+                    }
+                }
+            }
         }
     }
 }

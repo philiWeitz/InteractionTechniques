@@ -90,14 +90,16 @@ namespace InteractionUI.BusinessLogic
                     // add draw context in here
                     using (DrawingContext drawingContext = drawingVisual.RenderOpen())
                     {
+                        List<KinectUser> users = skeletonService.userInRange();
+
                         // draw camera stream
                         drawingContext.DrawImage(bitmapSource, new Rect(0, 0, bitmap.Width, bitmap.Height));
                         // draw hands
-                        drawJoints(drawingContext);
+                        drawJoints(drawingContext, users);
                         // draw upper and lower border for kinect elevation angle
                         drawKinectElevationUpperLowerBound(drawingContext);
 
-                        if (!skeletonService.userInRange())
+                        if (users.Count <= 0)
                         {
                             drawingContext.PushOpacity(0.2);
                             drawingContext.DrawRectangle(Brushes.Red, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
@@ -110,19 +112,22 @@ namespace InteractionUI.BusinessLogic
             }
         }
 
-        private void drawJoints(DrawingContext drawingContext)
+        private void drawJoints(DrawingContext drawingContext, List<KinectUser> users)
         {
             drawJointDataQueue(drawingContext);
 
-            if (skeletonService.hasJoint(JointType.HandLeft))
+            foreach (KinectUser user in users)
             {
-                KinectDataPoint point = skeletonService.getDataPoint(JointType.HandLeft);
-                drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
-            }
-            if (skeletonService.hasJoint(JointType.HandRight))
-            {
-                KinectDataPoint point = skeletonService.getDataPoint(JointType.HandRight);
-                drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
+                if (skeletonService.hasJoint(JointType.HandLeft, user))
+                {
+                    KinectDataPoint point = skeletonService.getDataPoint(JointType.HandLeft, user);
+                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
+                }
+                if (skeletonService.hasJoint(JointType.HandRight, user))
+                {
+                    KinectDataPoint point = skeletonService.getDataPoint(JointType.HandRight, user);
+                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
+                }
             }
 
             FormattedText formattedText = new FormattedText(lastGesture, CultureInfo.GetCultureInfo("en-us"),

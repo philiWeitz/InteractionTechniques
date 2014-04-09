@@ -17,19 +17,19 @@ namespace KinectServices.Service.Stub
             timer.Start();
         }
 
-        public KinectDataPoint getDataPoint(JointType type)
+        public KinectDataPoint getDataPoint(JointType type, KinectUser user)
         {
             return null;
         }
 
-        public bool hasJoint(JointType type)
+        public bool hasJoint(JointType type, KinectUser user)
         {
             return jointMap.ContainsKey(type);
         }
 
-        public bool userInRange()
+        public List<KinectUser> userInRange()
         {
-            return true;
+            return new List<KinectUser>();
         }
 
         private void timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -37,7 +37,7 @@ namespace KinectServices.Service.Stub
             // TODO: not implemented
         }
 
-        public int getUserBodyAngle()
+        public int getUserBodyAngle(KinectUser user)
         {
             return 0;
         }
