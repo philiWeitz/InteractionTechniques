@@ -4,5 +4,7 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          
+    	<Color x:Key="color_buttonhover">#FF00A14B</Color>
+         
     </Application.Resources>
 </Application>

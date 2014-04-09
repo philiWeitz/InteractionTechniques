@@ -22,11 +22,11 @@ namespace InteractionUI
 
         public void initialize()
         {
-            MainView view = new MainView();
+            A_MainView view = new A_MainView();
             _mainFrame.Navigate(view);
 
-            Background = new ImageBrush(new BitmapImage(
-                new Uri(BaseUriHelper.GetBaseUri(this), BACKGROUND_IMG)));
+            //Background = new ImageBrush(new BitmapImage(
+            //    new Uri(BaseUriHelper.GetBaseUri(this), BACKGROUND_IMG)));
         }
     }
 }
