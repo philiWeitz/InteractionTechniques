@@ -1,8 +1,8 @@
-﻿
-namespace InteractionUtil.Common
+﻿namespace InteractionUtil.Common
 {
     public enum InteractionGesture
     {
+        None = -1,
         CircleClock = 0,
         CircleCounterClock = 1,
         PushTwoHanded = 2,

@@ -23,7 +23,7 @@ namespace InteractionUtil.Service.Impl
 
         public ShortcutReaderWriterImpl()
         {
-            shortCutPath = Directory.GetCurrentDirectory() + @"\" + InteractionConsts.SHORT_CUT_DIRECTORY;
+            shortCutPath = Directory.GetCurrentDirectory() + @"\" + IConsts.SHORT_CUT_DIRECTORY;
         }
 
         public List<ShortcutDefinition> GetShortCutList()

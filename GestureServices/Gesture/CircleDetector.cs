@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using InteractionUtil.Util;
 using KinectServices.Common;
 
 namespace GestureServices.Gesture
@@ -13,8 +14,6 @@ namespace GestureServices.Gesture
 
     internal class CircleDetector
     {
-        private static readonly int MIN_DIAMETER = 50;
-        private static readonly int MAX_X_Y_GITTER = 25;
         private int maxCircleTime;
 
         public CircleDetector(int maxCircleTime)
@@ -62,17 +61,17 @@ namespace GestureServices.Gesture
                 KinectDataPoint p2 = queue.ElementAt(i + stepSize);
                 KinectDataPoint p3 = queue.ElementAt(i + (2 * stepSize));
 
-                double diag1 = p1.CalcDistance(p3);
-                double diag2 = p2.CalcDistance(p4);
-                double dist1 = p1.CalcDistance(p2);
-                double dist2 = p2.CalcDistance(p3);
-                double dist3 = p3.CalcDistance(p4);
-                double dist4 = p4.CalcDistance(p1);
+                double diag1 = p1.CalcScreenDistance(p3);
+                double diag2 = p2.CalcScreenDistance(p4);
+                double dist1 = p1.CalcScreenDistance(p2);
+                double dist2 = p2.CalcScreenDistance(p3);
+                double dist3 = p3.CalcScreenDistance(p4);
+                double dist4 = p4.CalcScreenDistance(p1);
 
-                if (diag1 > MIN_DIAMETER && diag2 > MIN_DIAMETER)
+                if (diag1 > IConsts.GCircleDiameter && diag2 > IConsts.GCircleDiameter)
                 {
-                    if (Math.Abs(dist1 - dist2) < MAX_X_Y_GITTER && Math.Abs(dist2 - dist3) < MAX_X_Y_GITTER &&
-                        Math.Abs(dist3 - dist4) < MAX_X_Y_GITTER && Math.Abs(dist4 - dist1) < MAX_X_Y_GITTER)
+                    if (Math.Abs(dist1 - dist2) < IConsts.GCircleGitterXY && Math.Abs(dist2 - dist3) < IConsts.GCircleGitterXY &&
+                        Math.Abs(dist3 - dist4) < IConsts.GCircleGitterXY && Math.Abs(dist4 - dist1) < IConsts.GCircleGitterXY)
                     {
                         // TODO: improve circle direction detection
                         if (getDirection(new KinectDataPoint[] { p1, p2, p3, p4 }) == direction)
@@ -92,7 +91,7 @@ namespace GestureServices.Gesture
 
             for (int i = 1; i < points.Length; ++i)
             {
-                if (points[i].Y < points[refIdx].Y)
+                if (points[i].ScreenY < points[refIdx].ScreenY)
                 {
                     refIdx = i;
                 }
@@ -101,7 +100,7 @@ namespace GestureServices.Gesture
             KinectDataPoint point = points[refIdx];
             KinectDataPoint nexPoint = points[(refIdx + 1) % points.Length];
 
-            if (point.X < nexPoint.X)
+            if (point.ScreenX < nexPoint.ScreenX)
             {
                 return InteractionCircle.CLOCK_WISE;
             }

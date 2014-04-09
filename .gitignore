@@ -1,4 +1,7 @@
 bin/
 obj/
 
+*.vsp
+*.psess
+
 packages

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using InteractionUtil.Util;
 using KinectServices.Common;
 using KinectServices.Service.Interface;
-using KinectServices.Util;
 using Microsoft.Kinect;
 
 namespace KinectServices.Service.Impl
@@ -43,12 +43,20 @@ namespace KinectServices.Service.Impl
             if (hasJoint(JointType.ShoulderCenter))
             {
                 KinectDataPoint shoulderCenter = getDataPoint(JointType.ShoulderCenter);
-                if (shoulderCenter.Z > KinectConsts.MIN_DISTANCE)
+                if (shoulderCenter.Z > IConsts.KinectMinDistance)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        public int getUserBodyAngle()
+        {
+            KinectDataPoint sLeft = jointDataPointMap[JointType.ShoulderLeft];
+            KinectDataPoint sRight = jointDataPointMap[JointType.ShoulderRight];
+
+            return sRight.CalcDepthAngle(sLeft);
         }
 
         private void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
@@ -73,37 +81,40 @@ namespace KinectServices.Service.Impl
 
                 if (null != first)
                 {
-                    using (DepthImageFrame depthFrame = e.OpenDepthImageFrame())
-                    {
-                        // can happen that we have to drop frames
-                        if (null == depthFrame)
-                        {
-                            return;
-                        }
+                    KinectSensor sensor = (KinectSensor)sender;
+                    CoordinateMapper coordinateMapper = new CoordinateMapper(sensor);
 
-                        KinectSensor sensor = (KinectSensor)sender;
-                        CoordinateMapper coordinateMapper = new CoordinateMapper(sensor);
+                    jointDataPointMap[JointType.HandLeft] =
+                        getDataPointRelativeToBody(first.Joints, JointType.HandLeft, coordinateMapper);
+                    jointDataPointMap[JointType.HandRight] =
+                        getDataPointRelativeToBody(first.Joints, JointType.HandRight, coordinateMapper);
 
-                        jointDataPointMap[JointType.HandLeft] =
-                            getDataPoint(first.Joints, JointType.HandLeft, coordinateMapper, depthFrame);
-                        jointDataPointMap[JointType.HandRight] =
-                            getDataPoint(first.Joints, JointType.HandRight, coordinateMapper, depthFrame);
-                        jointDataPointMap[JointType.ShoulderCenter] =
-                            getDataPoint(first.Joints, JointType.ShoulderCenter, coordinateMapper, depthFrame);
-                    }
+                    jointDataPointMap[JointType.ShoulderCenter] =
+                        getDataPointAbsolut(first.Joints, JointType.ShoulderCenter, coordinateMapper);
+                    jointDataPointMap[JointType.ShoulderLeft] =
+                        getDataPointAbsolut(first.Joints, JointType.ShoulderLeft, coordinateMapper);
+                    jointDataPointMap[JointType.ShoulderRight] =
+                        getDataPointAbsolut(first.Joints, JointType.ShoulderRight, coordinateMapper);
                 }
             }
         }
 
-        private KinectDataPoint getDataPoint(JointCollection joints, JointType joint,
-            CoordinateMapper coordinateMapper, DepthImageFrame depthFrame)
+        private KinectDataPoint getDataPointAbsolut(JointCollection joints,
+            JointType joint, CoordinateMapper coordinateMapper)
         {
-            DepthImagePoint depthPoint = coordinateMapper.
-                MapSkeletonPointToDepthPoint(joints[joint].Position, depthFrame.Format);
-            ColorImagePoint colorPoint = coordinateMapper.MapDepthPointToColorPoint(
-                depthFrame.Format, depthPoint, ColorImageFormat.RgbResolution640x480Fps30);
+            ColorImagePoint colorPoint = coordinateMapper.MapSkeletonPointToColorPoint(
+                joints[joint].Position, ColorImageFormat.RgbResolution640x480Fps30);
 
-            return new KinectDataPoint(colorPoint, depthPoint);
+            return new KinectDataPoint(colorPoint, joints[joint].Position);
+        }
+
+        private KinectDataPoint getDataPointRelativeToBody(JointCollection joints,
+            JointType joint, CoordinateMapper coordinateMapper)
+        {
+            ColorImagePoint colorPoint = coordinateMapper.MapSkeletonPointToColorPoint(
+                joints[joint].Position, ColorImageFormat.RgbResolution640x480Fps30);
+
+            return new KinectDataPoint(colorPoint, joints[joint].Position, joints[JointType.ShoulderCenter].Position);
         }
     }
 }

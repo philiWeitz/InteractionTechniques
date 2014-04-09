@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using InteractionUtil.Util;
 using KinectServices.Common;
-using KinectServices.Util;
 
 namespace GestureServices.Gesture
 {
@@ -16,9 +16,6 @@ namespace GestureServices.Gesture
 
     internal class SwipeDetector
     {
-        private static readonly int MAX_DEPTH_DIFFERENCE = 40;
-        private static readonly int MAX_X_Y_DIFFERENCE = 50;
-        private static readonly int STD_MIN_SWIPE_LENGTH = 150;
         private int maxSwipeTime;
 
         public SwipeDetector(int maxSwipeTime)
@@ -26,31 +23,31 @@ namespace GestureServices.Gesture
             this.maxSwipeTime = maxSwipeTime;
         }
 
-        public bool CheckToLeftSwipeGesture(List<KinectDataPoint> queue)
+        public bool CheckToLeftSwipeGesture(int bodyAngle, List<KinectDataPoint> queue)
         {
-            return checkSwipeGesture(queue, InteractionDirection.TO_LEFT);
+            return checkSwipeGesture(bodyAngle, queue, InteractionDirection.TO_LEFT);
         }
 
-        public bool CheckToRightSwipeGesture(List<KinectDataPoint> queue)
+        public bool CheckToRightSwipeGesture(int bodyAngle, List<KinectDataPoint> queue)
         {
-            return checkSwipeGesture(queue, InteractionDirection.TO_RIGHT);
+            return checkSwipeGesture(bodyAngle, queue, InteractionDirection.TO_RIGHT);
         }
 
-        public bool CheckUpSwipeGesture(List<KinectDataPoint> queue)
+        public bool CheckUpSwipeGesture(int bodyAngle, List<KinectDataPoint> queue)
         {
-            return checkSwipeGesture(queue, InteractionDirection.UP);
+            return checkSwipeGesture(bodyAngle, queue, InteractionDirection.UP);
         }
 
-        public bool CheckDownSwipeGesture(List<KinectDataPoint> queue)
+        public bool CheckDownSwipeGesture(int bodyAngle, List<KinectDataPoint> queue)
         {
-            return checkSwipeGesture(queue, InteractionDirection.DOWN);
+            return checkSwipeGesture(bodyAngle, queue, InteractionDirection.DOWN);
         }
 
-        private bool checkSwipeGesture(List<KinectDataPoint> queue, InteractionDirection direction)
+        private bool checkSwipeGesture(int bodyAngle, List<KinectDataPoint> queue, InteractionDirection direction)
         {
-            for (int i = 0; i < queue.Count; ++i)
+            for (int i = (queue.Count / 2); i < queue.Count; ++i)
             {
-                if (checkSwipeGesture(queue, i, direction))
+                if (checkSwipeGesture(bodyAngle, queue, i, direction))
                 {
                     return true;
                 }
@@ -58,7 +55,7 @@ namespace GestureServices.Gesture
             return false;
         }
 
-        private bool checkSwipeGesture(List<KinectDataPoint> queue, int stepSize, InteractionDirection direction)
+        private bool checkSwipeGesture(int bodyAngle, List<KinectDataPoint> queue, int stepSize, InteractionDirection direction)
         {
             int minPoints = stepSize + 1;
 
@@ -72,54 +69,71 @@ namespace GestureServices.Gesture
                     break;
                 }
 
-                int minSwipeLength =
-                    (STD_MIN_SWIPE_LENGTH * KinectConsts.STD_DISTANCE) / queue.ElementAt(i).Z;
+                double length = p1.CalcDistance3D(p2);
 
-                double length = p1.CalcDistance(p2);
-
-                if (length >= minSwipeLength &&
-                    (getLeftRightDirection(p1, p2) == direction || getUpDownDirection(p1, p2) == direction))
+                if (length >= IConsts.GSwipeMinLength)
                 {
-                    int depthDiff = Math.Abs(
-                        queue.ElementAt(i).Z - queue.ElementAt(i + stepSize).Z);
+                    int horizontalAngle = p1.CalcHorizontalAngle(p2);
+                    int depthAngle = p1.CalcDepthAngle(p2);
 
-                    if (maxXYDifference(p1, p2, direction) && depthDiff < MAX_DEPTH_DIFFERENCE)
+                    if (checkUpDown(p1, p2, depthAngle, horizontalAngle, direction) ||
+                        checkLeftRight(p1, p2, depthAngle, horizontalAngle, bodyAngle, direction))
                     {
                         return true;
                     }
+                }
+                else
+                {
+                    break;
                 }
             }
             return false;
         }
 
-        private InteractionDirection getLeftRightDirection(KinectDataPoint p1, KinectDataPoint p2)
+        private bool checkUpDown(KinectDataPoint p1, KinectDataPoint p2, int depthAngle,
+            int horizontalAngle, InteractionDirection direction)
         {
-            if (p1.X < p2.X)
+            if (direction == InteractionDirection.UP || direction == InteractionDirection.DOWN)
             {
-                return InteractionDirection.TO_RIGHT;
+                if (depthAngle < IConsts.GSwipeDepthAngle)
+                {
+                    bool directionOk;
+
+                    if (direction == InteractionDirection.UP)
+                    {
+                        directionOk = (p1.ScreenY > p2.ScreenY);
+                    }
+                    else
+                    {
+                        directionOk = (p1.ScreenY < p2.ScreenY);
+                    }
+                    return ((90 - horizontalAngle) < IConsts.GSwipeHorizontalAngle) && directionOk;
+                }
             }
-            return InteractionDirection.TO_LEFT;
+            return false;
         }
 
-        private InteractionDirection getUpDownDirection(KinectDataPoint p1, KinectDataPoint p2)
-        {
-            if (p1.Y < p2.Y)
-            {
-                return InteractionDirection.DOWN;
-            }
-            return InteractionDirection.UP;
-        }
-
-        private bool maxXYDifference(KinectDataPoint p1, KinectDataPoint p2, InteractionDirection direction)
+        private bool checkLeftRight(KinectDataPoint p1, KinectDataPoint p2, int depthAngle,
+            int horizontalAngle, int bodyAngle, InteractionDirection direction)
         {
             if (direction == InteractionDirection.TO_LEFT || direction == InteractionDirection.TO_RIGHT)
             {
-                return (Math.Abs(p1.Y - p2.Y) < MAX_X_Y_DIFFERENCE);
+                if (Math.Abs(bodyAngle - depthAngle) < IConsts.GSwipeDepthAngle)
+                {
+                    bool directionOk;
+
+                    if (direction == InteractionDirection.TO_LEFT)
+                    {
+                        directionOk = (p1.ScreenX > p2.ScreenX);
+                    }
+                    else
+                    {
+                        directionOk = (p1.ScreenX < p2.ScreenX);
+                    }
+                    return (horizontalAngle < IConsts.GSwipeHorizontalAngle) && directionOk;
+                }
             }
-            else
-            {
-                return (Math.Abs(p1.X - p2.X) < MAX_X_Y_DIFFERENCE);
-            }
+            return false;
         }
     }
 }

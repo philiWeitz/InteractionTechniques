@@ -21,8 +21,6 @@ namespace InteractionUI.BusinessLogic
     public class KinectInteraction
     {
         private static readonly int INTERVAL = 100;
-        private static readonly int GESTURE_TIMEOUT = 800;
-        private static readonly int CIRCLE_GESTURE_TIMEOUT = 150;
 
         public event EventHandler GestureEvent;
 
@@ -31,6 +29,7 @@ namespace InteractionUI.BusinessLogic
         private IShortcutService shortcutService;
         private IGestureService gestureService;
 
+        private int sensorIdx;
         private DispatcherTimer kinectTimer;
 
         public String LastGesture { get; private set; }
@@ -64,6 +63,7 @@ namespace InteractionUI.BusinessLogic
             shortcutService = SpringUtil.getService<IShortcutService>();
             gestureService = SpringUtil.getService<IGestureService>();
 
+            this.sensorIdx = sensorIdx;
             sensorService.startSensor(sensorIdx);
             gestureService.enableGestureService(sensorService.getSensor(sensorIdx));
 
@@ -74,45 +74,31 @@ namespace InteractionUI.BusinessLogic
 
         private void kinectTimer_Tick(object sender, EventArgs e)
         {
-            int timeOut = GESTURE_TIMEOUT;
-            bool detected = false;
+            InteractionGesture gesture = gestureService.checkAllGestures();
 
-            foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
+            if (InteractionGesture.None != gesture)
             {
-                if (gestureService.checkGesture(gesture))
-                {
-                    if (InteractionGesture.PushTwoHanded == gesture)
-                    {
-                        shortcutService.NextApplication();
-                    }
-                    else if (InteractionGesture.PullTwoHanded == gesture)
-                    {
-                        shortcutService.PreviousApplication();
-                    }
-                    else if (InteractionGesture.CircleClock == gesture ||
+                int timeOut = IConsts.GestureTimeOut;
+
+                if (InteractionGesture.CircleClock == gesture ||
                         InteractionGesture.CircleCounterClock == gesture)
-                    {
-                        timeOut = CIRCLE_GESTURE_TIMEOUT;
-                    }
-
-                    if (null != GestureEvent)
-                    {
-                        GestureEvent.Invoke(this, new KinectInteractionArg(gesture.ToString()));
-                    }
-
-                    String shortCut = shortcutService.GetShortcut(gesture);
-                    processService.SendKeyToProcess(shortcutService.GetProcessName(), shortCut);
-
-                    detected = true;
-                    break;
+                {
+                    timeOut = IConsts.GestureTimeOutContinuous;
                 }
-            }
 
-            if (detected)
-            {
+                if (null != GestureEvent)
+                {
+                    GestureEvent.Invoke(this, new KinectInteractionArg(gesture.ToString()));
+                }
+
+                String shortCut = shortcutService.GetShortcut(gesture);
+                processService.SendKeyToProcess(shortcutService.GetProcessName(), shortCut);
+
                 System.Media.SystemSounds.Exclamation.Play();
                 gestureService.setGestureTimeOut(timeOut);
             }
+
+            gestureService.focuseCurrentUser();
         }
     }
 }

@@ -8,12 +8,18 @@ using Microsoft.Kinect;
 
 namespace GestureServices.Gesture
 {
+    // enum for controlling the kinect elevation angle
+    internal enum UserCenter
+    {
+        up,
+        down,
+        center
+    }
+
     internal class GestureDetector
     {
-        private static readonly int MAX_QUEUE_SIZE_IN_MS = 1000;
-        private static readonly int MAX_SWIPE_TIME_IN_MS = 500;
-        private static readonly int MAX_PUSH_PULL_TIME_IN_MS = 400;
-        private static readonly int MAX_CIRCLE_TIME_IN_MS = 1000;
+        private ISkeletonService skeletonService = null;
+        private UserCenter userCenter = UserCenter.center;
 
         private KinectSensor sensor;
         private DateTime gestureTime;
@@ -21,7 +27,6 @@ namespace GestureServices.Gesture
         private SwipeDetector swipeDetector;
         private CircleDetector circleDetector;
         private PushPullGestureDetector pushPullDetector;
-        private ISkeletonService skeletonService = null;
 
         public GestureDetector(KinectSensor sensor)
         {
@@ -37,11 +42,18 @@ namespace GestureServices.Gesture
             }
         }
 
-        public List<KinectDataPoint> getDataPointQueue(JointType joint)
+        public List<KinectDataPoint> getActiveUserDataPointQueue()
         {
-            if (getSekeltonService().userInRange())
+            if (getSekeltonService().userInRange() && !isTimeOut())
             {
-                return dataPointQueue.GetQueue(joint);
+                if (JointType.HandLeft == isGestureActive())
+                {
+                    return dataPointQueue.GetQueue(JointType.HandRight);
+                }
+                else if (JointType.HandRight == isGestureActive())
+                {
+                    return dataPointQueue.GetQueue(JointType.HandLeft);
+                }
             }
             return new List<KinectDataPoint>();
         }
@@ -51,79 +63,86 @@ namespace GestureServices.Gesture
             gestureTime = DateTime.Now.AddMilliseconds(gestureTimeOut);
         }
 
-        public bool CheckGesture(InteractionGesture gesture)
+        public InteractionGesture checkAllGestures()
         {
-            bool result = false;
-
             if (getSekeltonService().userInRange() && !isTimeOut())
             {
-                switch (gesture)
+                int bodyAngle = getSekeltonService().getUserBodyAngle();
+
+                /*----- two handed gestures -----*/
+                InteractionGesture twoHandedGesture = checkTwoHandedGestures(bodyAngle);
+
+                if (InteractionGesture.None != twoHandedGesture)
                 {
-                    case InteractionGesture.CircleCounterClock:
-                        result = circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.CircleClock:
-                        result = circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.PullOneHanded:
-                        result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.PullTwoHanded:
-                        result = pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            && pushPullDetector.CheckPullGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.PushOneHanded:
-                        result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.PushTwoHanded:
-                        result = pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            && pushPullDetector.CheckPushGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.SwipeToLeft:
-                        result = swipeDetector.CheckToLeftSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || swipeDetector.CheckToLeftSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.SwipeToRight:
-                        result = swipeDetector.CheckToRightSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || swipeDetector.CheckToRightSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.SwipeUp:
-                        result = swipeDetector.CheckUpSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || swipeDetector.CheckUpSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    case InteractionGesture.SwipeDown:
-                        result = swipeDetector.CheckDownSwipeGesture(dataPointQueue.GetQueue(JointType.HandLeft))
-                            || swipeDetector.CheckDownSwipeGesture(dataPointQueue.GetQueue(JointType.HandRight));
-                        break;
-
-                    default:
-                        break;
+                    return twoHandedGesture;
+                }
+                else if (JointType.HandLeft == isGestureActive())
+                {
+                    return checkOneHandedGestures(JointType.HandRight, bodyAngle);
+                }
+                else if (JointType.HandRight == isGestureActive())
+                {
+                    return checkOneHandedGestures(JointType.HandLeft, bodyAngle);
                 }
             }
-            return result;
+
+            return InteractionGesture.None;
+        }
+
+        private InteractionGesture checkTwoHandedGestures(int bodyAngle)
+        {
+            bool gestureFound = false;
+
+            /*----- push / pull gestures -----*/
+            gestureFound = pushPullDetector.CheckPushGesture(bodyAngle, dataPointQueue.GetQueue(JointType.HandLeft))
+                && pushPullDetector.CheckPushGesture(bodyAngle, dataPointQueue.GetQueue(JointType.HandRight));
+            if (gestureFound) return InteractionGesture.PushTwoHanded;
+
+            return InteractionGesture.None;
+        }
+
+        private InteractionGesture checkOneHandedGestures(JointType joint, int bodyAngle)
+        {
+            bool gestureFound = false;
+
+            /*----- circle gestures -----*/
+            gestureFound = circleDetector.CheckCircleClockGesture(dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.CircleClock;
+
+            gestureFound = circleDetector.CheckCircleCounterClockGesture(dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.CircleCounterClock;
+
+            /*----- push / pull gestures -----*/
+            gestureFound = pushPullDetector.CheckPushGesture(bodyAngle, dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.PushOneHanded;
+
+            gestureFound = pushPullDetector.CheckPullGesture(bodyAngle, dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.PullOneHanded;
+
+            /*----- swipe gestures -----*/
+            gestureFound = swipeDetector.CheckToLeftSwipeGesture(bodyAngle, dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.SwipeToLeft;
+
+            gestureFound = swipeDetector.CheckToRightSwipeGesture(bodyAngle, dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.SwipeToRight;
+
+            gestureFound = swipeDetector.CheckUpSwipeGesture(bodyAngle, dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.SwipeUp;
+
+            gestureFound = swipeDetector.CheckDownSwipeGesture(bodyAngle, dataPointQueue.GetQueue(joint));
+            if (gestureFound) return InteractionGesture.SwipeDown;
+
+            return InteractionGesture.None;
         }
 
         private void initialize(KinectSensor sensor)
         {
             this.sensor = sensor;
-            dataPointQueue = new PointQueue(MAX_QUEUE_SIZE_IN_MS);
+            dataPointQueue = new PointQueue(IConsts.GestureQueueSize);
 
-            swipeDetector = new SwipeDetector(MAX_SWIPE_TIME_IN_MS);
-            circleDetector = new CircleDetector(MAX_CIRCLE_TIME_IN_MS);
-            pushPullDetector = new PushPullGestureDetector(MAX_PUSH_PULL_TIME_IN_MS);
+            swipeDetector = new SwipeDetector(IConsts.GestureQueueSizeSwipe);
+            circleDetector = new CircleDetector(IConsts.GestureQueueSizeCycle);
+            pushPullDetector = new PushPullGestureDetector(IConsts.GestureQueueSizePush);
         }
 
         private void addDataPoint(JointType joint)
@@ -131,6 +150,95 @@ namespace GestureServices.Gesture
             if (getSekeltonService().hasJoint(joint))
             {
                 dataPointQueue.AddPoint(getSekeltonService().getDataPoint(joint), joint);
+            }
+        }
+
+        private JointType isGestureActive()
+        {
+            if (getSekeltonService().hasJoint(JointType.HandLeft)
+                && getSekeltonService().hasJoint(JointType.HandRight)
+                && getSekeltonService().hasJoint(JointType.ShoulderCenter))
+            {
+                KinectDataPoint handLeft = getSekeltonService().getDataPoint(JointType.HandLeft);
+                KinectDataPoint handRight = getSekeltonService().getDataPoint(JointType.HandRight);
+                KinectDataPoint shoulder = getSekeltonService().getDataPoint(JointType.ShoulderCenter);
+
+                if (handLeft.ScreenY < shoulder.ScreenY && handLeft.ScreenY < handRight.ScreenY)
+                {
+                    return JointType.HandLeft;
+                }
+                else if (handRight.ScreenY < shoulder.ScreenY && handRight.ScreenY < handLeft.ScreenY)
+                {
+                    return JointType.HandRight;
+                }
+            }
+
+            return default(JointType);
+        }
+
+        private bool isTimeOut()
+        {
+            if (gestureTime > DateTime.Now)
+            {
+                dataPointQueue.ClearQueue();
+                return true;
+            }
+            return false;
+        }
+
+        public void focuseCurrentUser()
+        {
+            if (getSekeltonService().userInRange() && !isTimeOut())
+            {
+                if (isGestureActive() != default(JointType))
+                {
+                    KinectDataPoint point = getSekeltonService().getDataPoint(JointType.ShoulderCenter);
+
+                    // user stands outside of the upper limit -> move kinect up
+                    if (point.ScreenY < IConsts.KinectCenterUpperLimit)
+                    {
+                        userCenter = UserCenter.up;
+                    }
+                    // user stands outside of the lower limit -> move kinect dow
+                    else if (point.ScreenY > IConsts.KinectCenterLowerLimit)
+                    {
+                        userCenter = UserCenter.down;
+                    }
+
+                    // centeres the user based on inner borders
+                    if (userCenter == UserCenter.up && point.ScreenY < IConsts.KinectCenterUpperLimitInner)
+                    {
+                        // move kinect up
+                        if (sensor.ElevationAngle < sensor.MaxElevationAngle - 5)
+                        {
+                            System.Media.SystemSounds.Asterisk.Play();
+
+                            int newAngle = Math.Min(sensor.MaxElevationAngle, sensor.ElevationAngle + 5);
+                            sensor.ElevationAngle = newAngle;
+                        }
+                    }
+                    else if (userCenter == UserCenter.down && point.ScreenY > IConsts.KinectCenterLowerLimitInner)
+                    {
+                        // move kinect down
+                        if (sensor.ElevationAngle > sensor.MinElevationAngle + 5)
+                        {
+                            System.Media.SystemSounds.Asterisk.Play();
+
+                            int newAngle = Math.Max(sensor.MinElevationAngle, sensor.ElevationAngle - 5);
+                            sensor.ElevationAngle = newAngle;
+                        }
+                    }
+                    else
+                    {
+                        // user is centered
+                        userCenter = UserCenter.center;
+                    }
+                }
+                else
+                {
+                    // is user out of range -> user is concidered to be centered
+                    userCenter = UserCenter.center;
+                }
             }
         }
 
@@ -142,16 +250,6 @@ namespace GestureServices.Gesture
                 skeletonService.enableSkeleton(sensor);
             }
             return skeletonService;
-        }
-
-        private bool isTimeOut()
-        {
-            if (gestureTime > DateTime.Now)
-            {
-                dataPointQueue.ClearQueue();
-                return true;
-            }
-            return false;
         }
     }
 }

@@ -36,5 +36,10 @@ namespace KinectServices.Service.Stub
         {
             // TODO: not implemented
         }
+
+        public int getUserBodyAngle()
+        {
+            return 0;
+        }
     }
 }
