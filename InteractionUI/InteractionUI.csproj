@@ -110,6 +110,12 @@
     <Compile Include="MenuUI\Controls\button_shortcutControl.xaml.cs">
       <DependentUpon>button_shortcutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuUI\Controls\symbol_nokinectControl.xaml.cs">
+      <DependentUpon>symbol_nokinectControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuUI\Controls\symbol_nopersonControl.xaml.cs">
+      <DependentUpon>symbol_nopersonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuUI\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -179,6 +185,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MenuUI\Controls\symbol_nokinectControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuUI\Controls\symbol_nopersonControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MenuUI\MainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -206,6 +220,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Images\hand1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\hand2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Content Include="Properties\ShortCuts\Spotify.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

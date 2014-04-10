@@ -18,7 +18,7 @@ namespace InteractionUI.BusinessLogic
 
         public bool Enabled { get; set; }
 
-        public String LastGesture { get; private set; }
+        public String LastGesture { get; set; }
 
         public KinectInteractionControl(int sensorIdx)
         {
@@ -42,8 +42,6 @@ namespace InteractionUI.BusinessLogic
 
         public void checkGesture()
         {
-            LastGesture = String.Empty;
-
             if (Enabled)
             {
                 InteractionGesture gesture = gestureService.checkAllGestures();

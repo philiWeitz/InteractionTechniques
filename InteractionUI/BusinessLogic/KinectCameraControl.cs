@@ -80,8 +80,8 @@ namespace InteractionUI.BusinessLogic
 
                             if (users.Count <= 0)
                             {
-                                drawingContext.PushOpacity(0.2);
-                                drawingContext.DrawRectangle(Brushes.Red, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
+                                drawingContext.PushOpacity(0.5);
+                                drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
                             }
                         }
                     }
@@ -114,7 +114,7 @@ namespace InteractionUI.BusinessLogic
             }
 
             FormattedText formattedText = new FormattedText(LastGesture, CultureInfo.GetCultureInfo("en-us"),
-                FlowDirection.LeftToRight, new Typeface("Verdana"), 32, Brushes.Black);
+                FlowDirection.LeftToRight, new Typeface("Bellota-Regular"), 28, Brushes.Black);
 
             drawingContext.DrawText(formattedText, new Point(10, 10));
         }
