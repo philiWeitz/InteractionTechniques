@@ -72,6 +72,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="bubble_infobarControl.xaml.cs">
+      <DependentUpon>bubble_infobarControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BusinessLogic\KinectCamera.cs" />
     <Compile Include="BusinessLogic\KinectInteraction.cs" />
     <Compile Include="MenuUI\A_MainView.xaml.cs">
@@ -128,6 +131,10 @@
     <Compile Include="symbol_hand_animationControl.xaml.cs">
       <DependentUpon>symbol_hand_animationControl.xaml</DependentUpon>
     </Compile>
+    <Page Include="bubble_infobarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

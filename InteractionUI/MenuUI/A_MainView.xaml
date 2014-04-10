@@ -166,9 +166,10 @@
 			<InteractionUI:button_playControl x:Name="button_playControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" ToolTip="Start the recognition of Kinect gestures"/>
 			<InteractionUI:button_cameraoffControl x:Name="button_cameraoffControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" ToolTip="Turn the picture from Kinect camera off"/>
 			<InteractionUI:button_cameraonControl x:Name="button_cameraonControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" Visibility="Hidden" ToolTip="Turn the picture from Kinect camera on"/>
-			<InteractionUI:symbol_nokinectControl Height="89.826" Canvas.Left="194.183" Canvas.Top="198.44" Width="250.527" Visibility="Hidden"/>
-			<InteractionUI:symbol_nopersonControl Height="166.491" Canvas.Left="242.593" Canvas.Top="151.595" Width="166.492" Visibility="Hidden"/>
-			<InteractionUI:symbol_hand_animationControl x:Name="symbol_hand_animation" Height="5" Canvas.Left="242.593" Canvas.Top="193.44" Width="5"/>
+			<InteractionUI:symbol_nokinectControl x:Name="symbol_nokinectControl" Height="89.826" Canvas.Left="194.183" Canvas.Top="198.44" Width="250.527" Visibility="Hidden"/>
+			<InteractionUI:symbol_nopersonControl x:Name="symbol_nopersonControl" Height="166.491" Canvas.Left="242.593" Canvas.Top="151.595" Width="166.492" Visibility="Hidden"/>
+			<InteractionUI:symbol_hand_animationControl x:Name="symbol_hand_animationControl" Height="5" Canvas.Left="242.593" Canvas.Top="193.44" Width="5" Visibility="Hidden"/>
+			<InteractionUI:bubble_infobarControl x:Name="bubble_infobarControl" Height="41" Canvas.Left="117" Width="396.5"/>
 		</Canvas>
 	</Grid>
 </Page>
