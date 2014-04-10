@@ -72,8 +72,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusinessLogic\KinectCamera.cs" />
-    <Compile Include="BusinessLogic\KinectInteraction.cs" />
+    <Compile Include="BusinessLogic\KinectCameraControl.cs" />
+    <Compile Include="BusinessLogic\KinectInteractionControl.cs" />
     <Compile Include="MenuUI\A_MainView.xaml.cs">
       <DependentUpon>A_MainView.xaml</DependentUpon>
     </Compile>
@@ -209,7 +209,6 @@
     <Content Include="Properties\ShortCuts\Spotify.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Content\Images\BackgroundMainWindow.png" />
     <Content Include="Properties\ShortCuts\Firefox.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

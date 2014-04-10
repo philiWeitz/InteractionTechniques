@@ -20,7 +20,7 @@ namespace InteractionUI.MenuUI
 
         private ShortCutsMainView shortCutsMainView;
         private DispatcherTimer sensorCheckTimer;
-        private KinectInteraction interaction;
+        private KinectInteractionControl interaction;
         private CameraWindow cameraView;
 
 
@@ -59,7 +59,6 @@ namespace InteractionUI.MenuUI
                 // stop interaction service
                 if (null != interaction)
                 {
-                    interaction.Stop();
                     interaction = null;
                 }
                 
@@ -81,16 +80,6 @@ namespace InteractionUI.MenuUI
 
         private void StartStopButton_Click(object sender, RoutedEventArgs e)
         {
-            if (getKinectInteraction().isEnabled())
-            {
-                startStopButton.Content = "Start Interaction";
-                getKinectInteraction().Stop();
-            }
-            else
-            {
-                startStopButton.Content = "Stop Interaction";
-                getKinectInteraction().Start();
-            }
         }
 
 
@@ -100,18 +89,17 @@ namespace InteractionUI.MenuUI
             {
                 Cursor = Cursors.Wait;
                 cameraView = new CameraWindow(SENSOR_IDX);
-                cameraView.KinectCamera.AddGestureTextEvent(getKinectInteraction());
                 Cursor = Cursors.Arrow;
             }
             return cameraView;
         }
 
-        private KinectInteraction getKinectInteraction()
+        private KinectInteractionControl getKinectInteraction()
         {
             if (null == interaction)
             {   
                 Cursor = Cursors.Wait;
-                interaction = new KinectInteraction(SENSOR_IDX);
+                interaction = new KinectInteractionControl(SENSOR_IDX);
                 Cursor = Cursors.Arrow;
             }
             return interaction;

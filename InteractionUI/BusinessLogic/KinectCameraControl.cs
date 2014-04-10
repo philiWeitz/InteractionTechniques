@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Threading;
 using GestureServices.Service.Interface;
 using InteractionUtil.Util;
 using KinectServices.Common;
@@ -14,42 +13,29 @@ using Microsoft.Kinect;
 
 namespace InteractionUI.BusinessLogic
 {
-    public class KinectCamera
+    public class KinectCameraControl
     {
-        private static readonly int INTERVAL = 10;
-
         private ISensorService sensorService;
         private ICameraService cameraService;
         private ISkeletonService skeletonService;
         private IGestureService gestureService;
 
-        private DispatcherTimer cameraTimer;
-        private String lastGesture = "";
+        public bool Enabled { get; set; }
+
+        public String LastGesture { get; set; }
 
         public Image ScreenImage { get; set; }
 
-        public KinectCamera(int sensorIdx)
+        public KinectCameraControl(int sensorIdx)
         {
             initialize(sensorIdx);
         }
 
-        public void Start()
-        {
-            cameraTimer.Start();
-        }
-
-        public void Stop()
-        {
-            cameraTimer.Stop();
-        }
-
-        public void AddGestureTextEvent(KinectInteraction interaction)
-        {
-            interaction.GestureEvent += new EventHandler(interaction_GestureEvent);
-        }
-
         private void initialize(int sensorIdx)
         {
+            Enabled = true;
+            LastGesture = String.Empty;
+
             cameraService = SpringUtil.getService<ICameraService>();
             sensorService = SpringUtil.getService<ISensorService>();
             skeletonService = SpringUtil.getService<ISkeletonService>();
@@ -59,18 +45,9 @@ namespace InteractionUI.BusinessLogic
             cameraService.enableCamera(sensorService.getSensor(sensorIdx));
             skeletonService.enableSkeleton(sensorService.getSensor(sensorIdx));
             gestureService.enableGestureService(sensorService.getSensor(sensorIdx));
-
-            cameraTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
-            cameraTimer.Tick += new EventHandler(cameraTimer_Tick);
-            cameraTimer.Interval = TimeSpan.FromMilliseconds(INTERVAL);
         }
 
-        private void interaction_GestureEvent(object sender, EventArgs e)
-        {
-            lastGesture = ((KinectInteractionArg)e).GestureName;
-        }
-
-        private void cameraTimer_Tick(object sender, EventArgs e)
+        public bool UpdateCamera()
         {
             if (null != ScreenImage)
             {
@@ -87,29 +64,35 @@ namespace InteractionUI.BusinessLogic
 
                     DrawingVisual drawingVisual = new DrawingVisual();
 
-                    // add draw context in here
-                    using (DrawingContext drawingContext = drawingVisual.RenderOpen())
+                    if (Enabled)
                     {
-                        List<KinectUser> users = skeletonService.userInRange();
-
-                        // draw camera stream
-                        drawingContext.DrawImage(bitmapSource, new Rect(0, 0, bitmap.Width, bitmap.Height));
-                        // draw hands
-                        drawJoints(drawingContext, users);
-                        // draw upper and lower border for kinect elevation angle
-                        drawKinectElevationUpperLowerBound(drawingContext);
-
-                        if (users.Count <= 0)
+                        // add draw context in here
+                        using (DrawingContext drawingContext = drawingVisual.RenderOpen())
                         {
-                            drawingContext.PushOpacity(0.2);
-                            drawingContext.DrawRectangle(Brushes.Red, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
+                            List<KinectUser> users = skeletonService.userInRange();
+
+                            // draw camera stream
+                            drawingContext.DrawImage(bitmapSource, new Rect(0, 0, bitmap.Width, bitmap.Height));
+                            // draw hands
+                            drawJoints(drawingContext, users);
+                            // draw upper and lower border for kinect elevation angle
+                            drawKinectElevationUpperLowerBound(drawingContext);
+
+                            if (users.Count <= 0)
+                            {
+                                drawingContext.PushOpacity(0.2);
+                                drawingContext.DrawRectangle(Brushes.Red, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
+                            }
                         }
                     }
 
                     bitmap.Render(drawingVisual);
                     ScreenImage.Source = bitmap;
+
+                    return true;
                 }
             }
+            return false;
         }
 
         private void drawJoints(DrawingContext drawingContext, List<KinectUser> users)
@@ -130,7 +113,7 @@ namespace InteractionUI.BusinessLogic
                 }
             }
 
-            FormattedText formattedText = new FormattedText(lastGesture, CultureInfo.GetCultureInfo("en-us"),
+            FormattedText formattedText = new FormattedText(LastGesture, CultureInfo.GetCultureInfo("en-us"),
                 FlowDirection.LeftToRight, new Typeface("Verdana"), 32, Brushes.Black);
 
             drawingContext.DrawText(formattedText, new Point(10, 10));
