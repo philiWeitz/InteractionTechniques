@@ -1,8 +1,4 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+﻿using System.Windows;
 using InteractionUI.MenuUI;
 
 namespace InteractionUI
@@ -12,8 +8,6 @@ namespace InteractionUI
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static readonly String BACKGROUND_IMG = "Content/Images/BackgroundMainWindow.png";
-
         public MainWindow()
         {
             InitializeComponent();
@@ -22,11 +16,8 @@ namespace InteractionUI
 
         public void initialize()
         {
-            MainView view = new MainView();
+            A_MainView view = new A_MainView();
             _mainFrame.Navigate(view);
-
-            Background = new ImageBrush(new BitmapImage(
-                new Uri(BaseUriHelper.GetBaseUri(this), BACKGROUND_IMG)));
         }
     }
 }
