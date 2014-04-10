@@ -116,6 +116,12 @@
     <Compile Include="MenuUI\Controls\button_shortcutControl.xaml.cs">
       <DependentUpon>button_shortcutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuUI\Controls\symbol_nokinectControl.xaml.cs">
+      <DependentUpon>symbol_nokinectControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuUI\Controls\symbol_nopersonControl.xaml.cs">
+      <DependentUpon>symbol_nopersonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuUI\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
@@ -182,6 +188,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="MenuUI\Controls\button_shortcutControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuUI\Controls\symbol_nokinectControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MenuUI\Controls\symbol_nopersonControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
