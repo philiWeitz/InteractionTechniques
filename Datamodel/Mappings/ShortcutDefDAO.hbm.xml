@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Datamodel"
+                   namespace="Datamodel.Model">
+
+  <class name="ShortcutDefDAO" table="shortcutdefs">
+    <id name="Id">
+      <generator class="guid" />
+    </id>
+    
+    <property name="Name" />
+    <property name="Idx" />
+    <property name="Active" />
+    <property name="ProcessName" />
+
+    <map name="GestureMap" table="GestureMaps">
+      <key column="GestureMapId"/>
+      <index column="InteractionGesture" type="System.String"/>
+      <element column="Shortcut" type="System.String"/>
+    </map>
+
+  </class>
+
+</hibernate-mapping>

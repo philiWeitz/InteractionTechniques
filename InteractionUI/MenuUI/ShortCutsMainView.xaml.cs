@@ -94,7 +94,7 @@ namespace InteractionUI.MenuUI
         private void checkBoxChanged(object sender, RoutedEventArgs e)
         {
             ShortcutDefinition item = (ShortcutDefinition)((CheckBox)sender).Tag;
-            shortCutReaderWriter.UpdateShortcutDefinition(item);
+            shortCutReaderWriter.SaveOrUpdateShortcutDefinition(item);
         }
 
         private void editView_OnSaveEvent(object sender, EventArgs e)

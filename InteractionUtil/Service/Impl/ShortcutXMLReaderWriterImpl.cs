@@ -9,7 +9,7 @@ using InteractionUtil.Util;
 
 namespace InteractionUtil.Service.Impl
 {
-    internal class ShortcutReaderWriterImpl : IShortcutReaderWriterService
+    internal class ShortcutXMLReaderWriterImpl : IShortcutReaderWriterService
     {
         private static readonly String ROOT = "root";
         private static readonly String NODE_IDX = "Index"; 
@@ -21,7 +21,7 @@ namespace InteractionUtil.Service.Impl
         private List<ShortcutDefinition> activeShortcutList = null;
 
 
-        public ShortcutReaderWriterImpl()
+        public ShortcutXMLReaderWriterImpl()
         {
             shortCutPath = Directory.GetCurrentDirectory() + @"\" + IConsts.SHORT_CUT_DIRECTORY;
         }
@@ -52,7 +52,7 @@ namespace InteractionUtil.Service.Impl
             }
         }
 
-        public void UpdateShortcutDefinition(ShortcutDefinition item)
+        public void SaveOrUpdateShortcutDefinition(ShortcutDefinition item)
         {
             if (item.OldName != null && item.OldName != item.Name)
             {

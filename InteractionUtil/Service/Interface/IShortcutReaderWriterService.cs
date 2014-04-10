@@ -7,10 +7,15 @@ namespace InteractionUtil.Service.Interface
     public interface IShortcutReaderWriterService
     {
         void AddShortcutDefinition(String name);
-        void UpdateShortcutDefinition(ShortcutDefinition item);
+
+        void SaveOrUpdateShortcutDefinition(ShortcutDefinition item);
+
         void RemoveShortcutDefinition(ShortcutDefinition item);
+
         List<ShortcutDefinition> ReadDefinitionsFromDirectory();
+
         List<ShortcutDefinition> GetShortCutList();
+
         List<ShortcutDefinition> GetActiveShortCutList();
     }
 }

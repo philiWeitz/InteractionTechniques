@@ -99,7 +99,7 @@ namespace InteractionUI.MenuUI
             if (isValid())
             {
                 commit();
-                shortcutReaderWriter.UpdateShortcutDefinition(item);
+                shortcutReaderWriter.SaveOrUpdateShortcutDefinition(item);
 
                 if (null != OnSaveEvent)
                 {
