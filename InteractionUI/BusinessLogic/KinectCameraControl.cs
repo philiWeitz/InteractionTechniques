@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -22,8 +20,6 @@ namespace InteractionUI.BusinessLogic
 
         public bool Enabled { get; set; }
 
-        public String LastGesture { get; set; }
-
         public Image ScreenImage { get; set; }
 
         public KinectCameraControl(int sensorIdx)
@@ -34,7 +30,6 @@ namespace InteractionUI.BusinessLogic
         private void initialize(int sensorIdx)
         {
             Enabled = true;
-            LastGesture = String.Empty;
 
             cameraService = SpringUtil.getService<ICameraService>();
             sensorService = SpringUtil.getService<ISensorService>();
@@ -112,11 +107,6 @@ namespace InteractionUI.BusinessLogic
                     drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
                 }
             }
-
-            FormattedText formattedText = new FormattedText(LastGesture, CultureInfo.GetCultureInfo("en-us"),
-                FlowDirection.LeftToRight, new Typeface("Bellota-Regular"), 28, Brushes.Black);
-
-            drawingContext.DrawText(formattedText, new Point(10, 10));
         }
 
         private void drawJointDataQueue(DrawingContext drawingContext)

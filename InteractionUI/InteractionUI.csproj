@@ -54,6 +54,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -79,6 +80,9 @@
     </Compile>
     <Compile Include="MenuUI\CameraWindow.xaml.cs">
       <DependentUpon>CameraWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuUI\Controls\bubble_infobarControl.xaml.cs">
+      <DependentUpon>bubble_infobarControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="MenuUI\Controls\bubble_settingsControl.xaml.cs">
       <DependentUpon>bubble_settingsControl.xaml</DependentUpon>
@@ -125,6 +129,13 @@
     <Compile Include="MenuUI\ShortCutsMainView.xaml.cs">
       <DependentUpon>ShortCutsMainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuUI\Controls\symbol_hand_animationControl.xaml.cs">
+      <DependentUpon>symbol_hand_animationControl.xaml</DependentUpon>
+    </Compile>
+    <Page Include="MenuUI\Controls\bubble_infobarControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -205,6 +216,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="MenuUI\Controls\symbol_hand_animationControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -220,12 +235,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Images\hand1.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Images\hand2.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
     <Content Include="Properties\ShortCuts\Spotify.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

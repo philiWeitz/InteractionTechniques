@@ -68,10 +68,15 @@ namespace KinectServices.Service.Impl
 
         public int getUserBodyAngle(KinectUser user)
         {
-            KinectDataPoint sLeft = userDataPointMap[user][JointType.ShoulderLeft];
-            KinectDataPoint sRight = userDataPointMap[user][JointType.ShoulderRight];
+            if (hasJoint(JointType.ShoulderLeft, user) && hasJoint(JointType.ShoulderRight, user))
+            {
+                KinectDataPoint sLeft = userDataPointMap[user][JointType.ShoulderLeft];
+                KinectDataPoint sRight = userDataPointMap[user][JointType.ShoulderRight];
 
-            return sRight.CalcDepthAngle(sLeft);
+                return sRight.CalcDepthAngle(sLeft);
+            }
+
+            return 0;
         }
 
         private void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
