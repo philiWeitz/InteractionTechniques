@@ -52,7 +52,9 @@ namespace InteractionUI.MenuUI
                 if (kinectReady)
                 {
                     kinectControl.checkGesture();
+
                     cameraControl.UpdateCamera();
+                    cameraControl.CheckActiveUserChange(symbol_hand_animationControl);
 
                     if (kinectControl.Enabled && skeletonService.userInRange().Count <= 0)
                     {
@@ -82,6 +84,7 @@ namespace InteractionUI.MenuUI
         {
             cameraControl = new KinectCameraControl(SENSOR_IDX);
             cameraControl.ScreenImage = cameraImage;
+            cameraControl.Enabled = true;
 
             kinectControl = new KinectInteractionControl(SENSOR_IDX);
             kinectControl.Enabled = false;

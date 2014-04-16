@@ -44,6 +44,11 @@ namespace GestureServices.Service.Impl
             return gestureDetector.getActiveUserDataPointQueue();
         }
 
+        public KinectUser? getActiveKinectUser()
+        {
+            return gestureDetector.getActiveKinectUser();
+        }
+
         private void sensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
             gestureDetector.Update();

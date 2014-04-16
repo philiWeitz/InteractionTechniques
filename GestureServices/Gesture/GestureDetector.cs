@@ -106,6 +106,11 @@ namespace GestureServices.Gesture
             return InteractionGesture.None;
         }
 
+        public KinectUser? getActiveKinectUser()
+        {
+            return lastActiveUser;
+        }
+
         private InteractionGesture checkTwoHandedGestures(int bodyAngle, KinectUser user)
         {
             bool gestureFound = false;

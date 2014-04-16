@@ -1,33 +1,45 @@
-﻿using KinectServices.Service.Interface;
+﻿using InteractionUtil.Util;
+using KinectServices.Service.Interface;
 using Microsoft.Kinect;
 
 namespace KinectServices.Service.Stub
 {
     internal class CameraServiceStub : ICameraService
     {
+        private byte[] image;
+
+        public CameraServiceStub()
+        {
+            image = new byte[IConsts.KinectResolutionWidth * IConsts.KinectResolutionHeight * 8];
+
+            for (int i = 0; i < image.Length; ++i)
+            {
+                image[i] = 200;
+            }
+        }
+
         public void enableCamera(KinectSensor sensor)
         {
-            
         }
 
         public byte[] getImage()
         {
-            return null;
+            return image;
         }
 
         public int getWidth()
         {
-            return 0;
+            return IConsts.KinectResolutionWidth;
         }
 
         public int getHeight()
         {
-            return 0;
+            return IConsts.KinectResolutionHeight;
         }
 
         public int getBytesPerPixel()
         {
-            return 0;
+            return 8;
         }
     }
 }

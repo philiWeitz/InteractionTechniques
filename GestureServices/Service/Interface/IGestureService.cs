@@ -16,5 +16,7 @@ namespace GestureServices.Service.Interface
         void focuseCurrentUser();
 
         List<KinectDataPoint> getActiveUserDataPointQueue();
+
+        KinectUser? getActiveKinectUser();
     }
 }

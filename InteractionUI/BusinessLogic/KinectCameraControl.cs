@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using GestureServices.Service.Interface;
 using InteractionUtil.Util;
@@ -17,6 +18,8 @@ namespace InteractionUI.BusinessLogic
         private ICameraService cameraService;
         private ISkeletonService skeletonService;
         private IGestureService gestureService;
+
+        private KinectUser? activeUser = null;
 
         public bool Enabled { get; set; }
 
@@ -88,6 +91,39 @@ namespace InteractionUI.BusinessLogic
                 }
             }
             return false;
+        }
+
+        public void CheckActiveUserChange(symbol_hand_animationControl handAnimation)
+        {
+            if (Enabled)
+            {
+                KinectUser? curr = gestureService.getActiveKinectUser();
+
+                if (null != curr && activeUser != curr)
+                {
+                    if (skeletonService.hasJoint(JointType.HandLeft, curr.Value)
+                        && skeletonService.hasJoint(JointType.HandRight, curr.Value))
+                    {
+                        KinectDataPoint point;
+                        KinectDataPoint handLeft = skeletonService.getDataPoint(JointType.HandLeft, curr.Value);
+                        KinectDataPoint handRight = skeletonService.getDataPoint(JointType.HandLeft, curr.Value);
+
+                        if (handLeft.Y < handRight.Y)
+                            point = handRight;
+                        else
+                            point = handLeft;
+
+                        Canvas.SetTop(handAnimation, point.ScreenY);
+                        Canvas.SetLeft(handAnimation, point.ScreenX);
+
+                        Storyboard board = (Storyboard)handAnimation.Resources["story_hand_expand"];
+                        handAnimation.Visibility = Visibility.Visible;
+                        handAnimation.BeginStoryboard(board);
+                    }
+                }
+
+                activeUser = curr;
+            }
         }
 
         private void drawJoints(DrawingContext drawingContext, List<KinectUser> users)

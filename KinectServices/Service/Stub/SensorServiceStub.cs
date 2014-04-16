@@ -7,7 +7,7 @@ namespace KinectServices.Service.Stub
     {
         public bool sensorAvailable(int idx)
         {
-            return false;
+            return true;
         }
 
         public void startSensor(int idx)
