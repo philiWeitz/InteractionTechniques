@@ -51,6 +51,8 @@ namespace InteractionUI.MenuUI
             {
                 if (kinectReady)
                 {
+                    setKinectButtonVisibility(true);
+
                     kinectControl.checkGesture();
 
                     cameraControl.UpdateCamera();
@@ -77,14 +79,23 @@ namespace InteractionUI.MenuUI
                 kinectReady = false;
                 cameraImage.Source = null;
                 symbol_nokinectControl.Visibility = Visibility.Visible;
+
+                setKinectButtonVisibility(false);
             }
+        }
+
+        private void setKinectButtonVisibility(bool visible)
+        {
+            button_cameraoffControl.IsEnabled = visible;
+            button_cameraonControl.IsEnabled = visible;
+            button_playControl.IsEnabled = visible;
+            button_pauseControl.IsEnabled = visible;
         }
 
         private void addKinectConnection()
         {
             cameraControl = new KinectCameraControl(SENSOR_IDX);
             cameraControl.ScreenImage = cameraImage;
-            cameraControl.Enabled = true;
 
             kinectControl = new KinectInteractionControl(SENSOR_IDX);
             kinectControl.Enabled = false;
@@ -116,6 +127,20 @@ namespace InteractionUI.MenuUI
         private void button_pauseControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             kinectControl.Enabled = true;
+        }
+
+        private void kinect_control_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            ContentControl control = (ContentControl)sender; 
+
+            if (true == (bool) e.NewValue)
+            {
+                control.Opacity = 1;
+            }
+            else
+            {
+                control.Opacity = 0.5;
+            }
         }
     }
 }

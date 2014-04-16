@@ -168,10 +168,10 @@
 			<InteractionUI:button_shortcutControl x:Name="button_shortcutControl" Height="91.5" Canvas.Left="406" Canvas.Top="388.5" Width="107.5"/>
 			<InteractionUI:bubble_shortcutControl x:Name="bubble_shortcutControl" Height="373.382" Canvas.Left="27" Canvas.Top="9" Width="602" Visibility="Hidden"/>
 			<InteractionUI:button_shortcutcloseControl x:Name="button_shortcutcloseControl" Height="44" Canvas.Left="589.5" Canvas.Top="5.5" Width="44" Visibility="Hidden"/>
-            <InteractionUI:button_pauseControl x:Name="button_pauseControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" Visibility="Hidden" Foreground="#FFF0F0F0" ToolTip="Pause the recognition of Kinect gestures" MouseLeftButtonUp="button_pauseControl_MouseLeftButtonUp"/>
-            <InteractionUI:button_playControl x:Name="button_playControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" ToolTip="Start the recognition of Kinect gestures" MouseLeftButtonUp="button_playControl_MouseLeftButtonUp"/>
-            <InteractionUI:button_cameraoffControl x:Name="button_cameraoffControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" ToolTip="Turn the picture from Kinect camera off" MouseLeftButtonUp="button_cameraoffControl_MouseLeftButtonUp"/>
-            <InteractionUI:button_cameraonControl x:Name="button_cameraonControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" Visibility="Hidden" ToolTip="Turn the picture from Kinect camera on" MouseLeftButtonUp="button_cameraonControl_MouseLeftButtonUp"/>
+            <InteractionUI:button_pauseControl x:Name="button_pauseControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" Visibility="Hidden" Foreground="#FFF0F0F0" ToolTip="Pause the recognition of Kinect gestures" MouseLeftButtonUp="button_pauseControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
+            <InteractionUI:button_playControl x:Name="button_playControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" ToolTip="Start the recognition of Kinect gestures" MouseLeftButtonUp="button_playControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
+            <InteractionUI:button_cameraoffControl x:Name="button_cameraoffControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" ToolTip="Turn the picture from Kinect camera off" MouseLeftButtonUp="button_cameraoffControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
+            <InteractionUI:button_cameraonControl x:Name="button_cameraonControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" Visibility="Hidden" ToolTip="Turn the picture from Kinect camera on" MouseLeftButtonUp="button_cameraonControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
 		</Canvas>
 	</Grid>
 </Page>
