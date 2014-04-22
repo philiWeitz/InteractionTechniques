@@ -19,15 +19,31 @@ namespace InteractionUI.BusinessLogic
         private ISkeletonService skeletonService;
         private IGestureService gestureService;
 
+        private bool _enabled = true;
         private KinectUser? activeUser = null;
-
-        public bool Enabled { get; set; }
 
         public Image ScreenImage { get; set; }
 
         public KinectCameraControl(int sensorIdx)
         {
             initialize(sensorIdx);
+        }
+
+        public bool Enabled
+        {
+            get
+            {
+                return _enabled;
+            }
+
+            set
+            {
+                if (null != cameraService)
+                {
+                    cameraService.Enabled = value;
+                }
+                _enabled = value;
+            }
         }
 
         private void initialize(int sensorIdx)
@@ -40,7 +56,7 @@ namespace InteractionUI.BusinessLogic
             gestureService = SpringUtil.getService<IGestureService>();
 
             sensorService.startSensor(sensorIdx);
-            cameraService.enableCamera(sensorService.getSensor(sensorIdx));
+            cameraService.startCameraService(sensorService.getSensor(sensorIdx));
             skeletonService.enableSkeleton(sensorService.getSensor(sensorIdx));
             gestureService.enableGestureService(sensorService.getSensor(sensorIdx));
         }
@@ -49,21 +65,21 @@ namespace InteractionUI.BusinessLogic
         {
             if (null != ScreenImage)
             {
-                byte[] byteArrayIn = cameraService.getImage();
-
-                if (null != byteArrayIn)
+                if (Enabled)
                 {
-                    BitmapSource bitmapSource = BitmapSource.Create(
-                        cameraService.getWidth(), cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX,
-                        PixelFormats.Bgr32, null, byteArrayIn, cameraService.getWidth() * cameraService.getBytesPerPixel());
+                    byte[] byteArrayIn = cameraService.getImage();
 
-                    RenderTargetBitmap bitmap = new RenderTargetBitmap(cameraService.getWidth(),
-                        cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX, PixelFormats.Default);
-
-                    DrawingVisual drawingVisual = new DrawingVisual();
-
-                    if (Enabled)
+                    if (null != byteArrayIn)
                     {
+                        BitmapSource bitmapSource = BitmapSource.Create(
+                            cameraService.getWidth(), cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX,
+                            PixelFormats.Bgr32, null, byteArrayIn, cameraService.getWidth() * cameraService.getBytesPerPixel());
+
+                        RenderTargetBitmap bitmap = new RenderTargetBitmap(cameraService.getWidth(),
+                            cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX, PixelFormats.Default);
+
+                        DrawingVisual drawingVisual = new DrawingVisual();
+
                         // add draw context in here
                         using (DrawingContext drawingContext = drawingVisual.RenderOpen())
                         {
@@ -81,12 +97,18 @@ namespace InteractionUI.BusinessLogic
                                 drawingContext.PushOpacity(0.5);
                                 drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
                             }
+                            drawingContext.Close();
                         }
+
+                        bitmap.Render(drawingVisual);
+                        ScreenImage.Source = bitmap;
+
+                        return true;
                     }
-
-                    bitmap.Render(drawingVisual);
-                    ScreenImage.Source = bitmap;
-
+                }
+                else
+                {
+                    ScreenImage.Source = null;
                     return true;
                 }
             }
@@ -95,7 +117,7 @@ namespace InteractionUI.BusinessLogic
 
         public void CheckActiveUserChange(symbol_hand_animationControl handAnimation)
         {
-            if (Enabled)
+            if (Enabled && skeletonService.userInRange().Count > 0)
             {
                 KinectUser? curr = gestureService.getActiveKinectUser();
 
@@ -106,12 +128,12 @@ namespace InteractionUI.BusinessLogic
                     {
                         KinectDataPoint point;
                         KinectDataPoint handLeft = skeletonService.getDataPoint(JointType.HandLeft, curr.Value);
-                        KinectDataPoint handRight = skeletonService.getDataPoint(JointType.HandLeft, curr.Value);
+                        KinectDataPoint handRight = skeletonService.getDataPoint(JointType.HandRight, curr.Value);
 
                         if (handLeft.Y < handRight.Y)
-                            point = handRight;
-                        else
                             point = handLeft;
+                        else
+                            point = handRight;
 
                         Canvas.SetTop(handAnimation, point.ScreenY);
                         Canvas.SetLeft(handAnimation, point.ScreenX);

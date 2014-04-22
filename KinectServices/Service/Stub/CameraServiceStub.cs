@@ -8,6 +8,8 @@ namespace KinectServices.Service.Stub
     {
         private byte[] image;
 
+        public bool Enabled { get; set; }
+
         public CameraServiceStub()
         {
             image = new byte[IConsts.KinectResolutionWidth * IConsts.KinectResolutionHeight * 8];
@@ -18,7 +20,7 @@ namespace KinectServices.Service.Stub
             }
         }
 
-        public void enableCamera(KinectSensor sensor)
+        public void startCameraService(KinectSensor sensor)
         {
         }
 

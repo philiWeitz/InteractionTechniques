@@ -14,8 +14,14 @@ namespace KinectServices.Service.Impl
         private byte[] imageBuffer;
         private HashSet<KinectSensor> sensorSet = new HashSet<KinectSensor>();
 
+        public bool Enabled { get; set; }
 
-        public void enableCamera(KinectSensor sensor)
+        public CameraServiceImpl()
+        {
+            Enabled = true;
+        }
+
+        public void startCameraService(KinectSensor sensor)
         {
             if (null != sensor && !sensorSet.Contains(sensor))
             {
@@ -25,18 +31,15 @@ namespace KinectServices.Service.Impl
             }
         }
 
-
         public byte[] getImage()
         {
             return imageBuffer;
         }
 
-
         public int getWidth()
         {
             return width;
         }
-
 
         public int getHeight()
         {
@@ -50,20 +53,28 @@ namespace KinectServices.Service.Impl
 
         private void sensor_ColorFrameReady(object sender, ColorImageFrameReadyEventArgs e)
         {
-            using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
+            if (Enabled)
             {
-                // can happen that we have to drop frames
-                if (null == colorFrame)
+                using (ColorImageFrame colorFrame = e.OpenColorImageFrame())
                 {
-                    return;
+                    // can happen that we have to drop frames
+                    if (null == colorFrame)
+                    {
+                        return;
+                    }
+
+                    height = colorFrame.Height;
+                    width = colorFrame.Width;
+                    bytesPerPixel = colorFrame.BytesPerPixel;
+
+                    // TODO: does this remove the need to allocate the same space over and over again?
+                    if (null == imageBuffer || imageBuffer.Length != colorFrame.PixelDataLength)
+                    {
+                        this.imageBuffer = new byte[colorFrame.PixelDataLength];
+                    }
+
+                    colorFrame.CopyPixelDataTo(this.imageBuffer);
                 }
-
-                height = colorFrame.Height;
-                width = colorFrame.Width;
-                bytesPerPixel = colorFrame.BytesPerPixel;
-
-                this.imageBuffer = new byte[colorFrame.PixelDataLength];
-                colorFrame.CopyPixelDataTo(this.imageBuffer);
             }
         }
     }

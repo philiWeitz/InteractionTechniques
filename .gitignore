@@ -1,6 +1,7 @@
 bin/
 obj/
 
+*.user
 *.suo
 *.vsp
 *.psess

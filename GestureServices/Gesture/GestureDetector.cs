@@ -55,11 +55,11 @@ namespace GestureServices.Gesture
                 {
                     if (JointType.HandLeft == isGestureActive(user))
                     {
-                        return dataPointMap[user].GetQueue(JointType.HandLeft);
+                        return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandLeft));
                     }
                     else if (JointType.HandRight == isGestureActive(user))
                     {
-                        return dataPointMap[user].GetQueue(JointType.HandRight);
+                        return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandRight));
                     }
                 }
             }
