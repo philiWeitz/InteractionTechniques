@@ -150,8 +150,8 @@ namespace InteractionUI.BusinessLogic
 
         private void drawJoints(DrawingContext drawingContext, List<KinectUser> users)
         {
-            //drawJointDataQueue(drawingContext);
-            drawJointDataQueueAsPoints(drawingContext);
+            drawJointDataQueue(drawingContext);
+            //drawJointDataQueueAsPoints(drawingContext);
 
             foreach (KinectUser user in users)
             {

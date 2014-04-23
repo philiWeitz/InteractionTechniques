@@ -128,28 +128,28 @@
 		</Storyboard>
 	</Page.Resources>
 	<Page.Triggers>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_playControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_playControl">
 			<BeginStoryboard x:Name="story_from_play_to_pause_BeginStoryboard" Storyboard="{StaticResource story_from_play_to_pause}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_pauseControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_pauseControl">
 			<BeginStoryboard x:Name="story_from_pause_to_play_BeginStoryboard" Storyboard="{StaticResource story_from_pause_to_play}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_settingsControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_settingsControl">
 			<BeginStoryboard x:Name="story_show_settings_bubble_BeginStoryboard" Storyboard="{StaticResource story_show_settings_bubble}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_shortcutControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_shortcutControl">
 			<BeginStoryboard x:Name="story_show_shortcut_bubble_BeginStoryboard" Storyboard="{StaticResource story_show_shortcut_bubble}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_shortcutcloseControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_shortcutcloseControl">
 			<BeginStoryboard x:Name="story_hide_shortcut_bubble_BeginStoryboard" Storyboard="{StaticResource story_hide_shortcut_bubble}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_cameraoffControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_cameraoffControl">
 			<BeginStoryboard x:Name="story_from_cameraoff_to_cameraon_BeginStoryboard" Storyboard="{StaticResource story_from_cameraoff_to_cameraon}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_cameraonControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_cameraonControl">
 			<BeginStoryboard x:Name="story_from_cameraon_to_cameraoff_BeginStoryboard" Storyboard="{StaticResource story_from_cameraon_to_cameraoff}"/>
 		</EventTrigger>
-		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonDown" SourceName="button_settingscloseControl">
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_settingscloseControl">
 			<BeginStoryboard x:Name="story_hide_settings_bubble_BeginStoryboard" Storyboard="{StaticResource story_hide_settings_bubble}"/>
 		</EventTrigger>
 	</Page.Triggers>

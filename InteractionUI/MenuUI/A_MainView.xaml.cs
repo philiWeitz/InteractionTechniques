@@ -108,25 +108,25 @@ namespace InteractionUI.MenuUI
 
         private void button_cameraoffControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            cameraControl.Enabled = true;
+            cameraControl.Enabled = false;
         }
 
         private void button_cameraonControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            cameraControl.Enabled = false;
+            cameraControl.Enabled = true;
         }
 
         private void button_playControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            kinectControl.Enabled = true;
+        }
+
+        private void button_pauseControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             kinectControl.Enabled = false;
             kinectControl.LastGesture = String.Empty;
 
             symbol_nopersonControl.Visibility = Visibility.Hidden;
-        }
-
-        private void button_pauseControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            kinectControl.Enabled = true;
         }
 
         private void kinect_control_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
