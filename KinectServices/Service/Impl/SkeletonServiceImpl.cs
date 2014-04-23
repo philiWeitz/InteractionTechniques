@@ -40,12 +40,10 @@ namespace KinectServices.Service.Impl
 
         public KinectDataPoint getDataPoint(JointType type, KinectUser user)
         {
-            return userDataPointMap[user][type];
-        }
+            KinectDataPoint result = null;
+            userDataPointMap[user].TryGetValue(type, out result);
 
-        public bool hasJoint(JointType type, KinectUser user)
-        {
-            return userDataPointMap[user].ContainsKey(type);
+            return result;
         }
 
         public List<KinectUser> userInRange()
@@ -54,13 +52,11 @@ namespace KinectServices.Service.Impl
 
             foreach (KinectUser user in Enum.GetValues(typeof(KinectUser)))
             {
-                if (hasJoint(JointType.ShoulderCenter, user))
+                KinectDataPoint shoulderCenter = getDataPoint(JointType.ShoulderCenter, user);
+
+                if (null != shoulderCenter && shoulderCenter.Z > IConsts.KinectMinDistance)
                 {
-                    KinectDataPoint shoulderCenter = getDataPoint(JointType.ShoulderCenter, user);
-                    if (shoulderCenter.Z > IConsts.KinectMinDistance)
-                    {
-                        result.Add(user);
-                    }
+                    result.Add(user);
                 }
             }
             return result;
@@ -68,11 +64,11 @@ namespace KinectServices.Service.Impl
 
         public int getUserBodyAngle(KinectUser user)
         {
-            if (hasJoint(JointType.ShoulderLeft, user) && hasJoint(JointType.ShoulderRight, user))
-            {
-                KinectDataPoint sLeft = userDataPointMap[user][JointType.ShoulderLeft];
-                KinectDataPoint sRight = userDataPointMap[user][JointType.ShoulderRight];
+            KinectDataPoint sLeft = getDataPoint(JointType.ShoulderLeft, user);
+            KinectDataPoint sRight = getDataPoint(JointType.ShoulderRight, user);
 
+            if (null != sLeft && null != sRight)
+            {
                 return sRight.CalcDepthAngle(sLeft);
             }
 

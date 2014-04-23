@@ -45,7 +45,7 @@ namespace GestureServices.Gesture
 
         private bool checkSwipeGesture(int bodyAngle, List<KinectDataPoint> queue, InteractionDirection direction)
         {
-            for (int i = (queue.Count / 2); i < queue.Count; ++i)
+            for (int i = 0; i < queue.Count; ++i)
             {
                 if (checkSwipeGesture(bodyAngle, queue, i, direction))
                 {

@@ -20,12 +20,10 @@ namespace KinectServices.Service.Stub
 
         public KinectDataPoint getDataPoint(JointType type, KinectUser user)
         {
-            return jointMap[type];
-        }
+            KinectDataPoint result = null;
+            jointMap.TryGetValue(type, out result);
 
-        public bool hasJoint(JointType type, KinectUser user)
-        {
-            return jointMap.ContainsKey(type);
+            return result;
         }
 
         public List<KinectUser> userInRange()

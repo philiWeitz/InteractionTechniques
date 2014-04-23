@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using Common.Logging;
 using KinectServices.Service.Interface;
 using Microsoft.Kinect;
@@ -16,7 +16,7 @@ namespace KinectServices.Service.Impl
 
         public bool sensorAvailable(int idx)
         {
-            return (KinectSensor.KinectSensors.Count > idx && 
+            return (KinectSensor.KinectSensors.Count > idx &&
                 KinectSensor.KinectSensors[idx].Status == KinectStatus.Connected);
         }
 
@@ -44,7 +44,14 @@ namespace KinectServices.Service.Impl
                     sensor.SkeletonStream.EnableTrackingInNearRange = true;
                     sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
 
-                    sensor.Start();
+                    try
+                    {
+                        sensor.Start();
+                    }
+                    catch (Exception e)
+                    {
+                        logger.Error("Error while starting kinect sensor!", e);
+                    }
                 }
                 else
                 {

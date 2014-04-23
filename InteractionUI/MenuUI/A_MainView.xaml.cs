@@ -131,9 +131,9 @@ namespace InteractionUI.MenuUI
 
         private void kinect_control_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            ContentControl control = (ContentControl)sender; 
+            ContentControl control = (ContentControl)sender;
 
-            if (true == (bool) e.NewValue)
+            if (true == (bool)e.NewValue)
             {
                 control.Opacity = 1;
             }

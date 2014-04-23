@@ -123,12 +123,12 @@ namespace InteractionUI.BusinessLogic
 
                 if (null != curr && activeUser != curr)
                 {
-                    if (skeletonService.hasJoint(JointType.HandLeft, curr.Value)
-                        && skeletonService.hasJoint(JointType.HandRight, curr.Value))
+                    KinectDataPoint handLeft = skeletonService.getDataPoint(JointType.HandLeft, curr.Value);
+                    KinectDataPoint handRight = skeletonService.getDataPoint(JointType.HandRight, curr.Value);
+
+                    if (null != handLeft && null != handRight)
                     {
                         KinectDataPoint point;
-                        KinectDataPoint handLeft = skeletonService.getDataPoint(JointType.HandLeft, curr.Value);
-                        KinectDataPoint handRight = skeletonService.getDataPoint(JointType.HandRight, curr.Value);
 
                         if (handLeft.Y < handRight.Y)
                             point = handLeft;
@@ -150,19 +150,21 @@ namespace InteractionUI.BusinessLogic
 
         private void drawJoints(DrawingContext drawingContext, List<KinectUser> users)
         {
-            drawJointDataQueue(drawingContext);
+            //drawJointDataQueue(drawingContext);
+            drawJointDataQueueAsPoints(drawingContext);
 
             foreach (KinectUser user in users)
             {
-                if (skeletonService.hasJoint(JointType.HandLeft, user))
+                KinectDataPoint handLeft = skeletonService.getDataPoint(JointType.HandLeft, user);
+                KinectDataPoint handRight = skeletonService.getDataPoint(JointType.HandRight, user);
+
+                if (null != handLeft)
                 {
-                    KinectDataPoint point = skeletonService.getDataPoint(JointType.HandLeft, user);
-                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
+                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(handLeft.ScreenX - 10, handLeft.ScreenY - 10, 20, 20));
                 }
-                if (skeletonService.hasJoint(JointType.HandRight, user))
+                if (null != handRight)
                 {
-                    KinectDataPoint point = skeletonService.getDataPoint(JointType.HandRight, user);
-                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(point.ScreenX - 10, point.ScreenY - 10, 20, 20));
+                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(handRight.ScreenX - 10, handRight.ScreenY - 10, 20, 20));
                 }
             }
         }
@@ -184,6 +186,17 @@ namespace InteractionUI.BusinessLogic
                     drawingContext.DrawLine(pen, oldPoint, newPoint);
                 }
                 oldPoint = newPoint;
+            }
+        }
+
+        private void drawJointDataQueueAsPoints(DrawingContext drawingContext)
+        {
+            List<KinectDataPoint> queue = gestureService.getActiveUserDataPointQueue();
+
+            foreach (KinectDataPoint dataPoint in queue)
+            {
+                drawingContext.DrawRectangle(
+                    Brushes.Red, null, new Rect(dataPoint.ScreenX - 5, dataPoint.ScreenY - 5, 10, 10));
             }
         }
 

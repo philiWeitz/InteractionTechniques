@@ -10,8 +10,6 @@ namespace KinectServices.Service.Interface
 
         KinectDataPoint getDataPoint(JointType type, KinectUser user);
 
-        bool hasJoint(JointType type, KinectUser user);
-
         List<KinectUser> userInRange();
 
         int getUserBodyAngle(KinectUser user);

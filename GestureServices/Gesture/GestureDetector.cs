@@ -173,22 +173,22 @@ namespace GestureServices.Gesture
 
         private void addDataPoint(JointType joint, KinectUser user)
         {
-            if (getSekeltonService().hasJoint(joint, user))
+            KinectDataPoint point = getSekeltonService().getDataPoint(joint, user);
+
+            if (null != point)
             {
-                dataPointMap[user].AddPoint(getSekeltonService().getDataPoint(joint, user), joint);
+                dataPointMap[user].AddPoint(point, joint);
             }
         }
 
         private JointType isGestureActive(KinectUser user)
         {
-            if (getSekeltonService().hasJoint(JointType.HandLeft, user)
-                && getSekeltonService().hasJoint(JointType.HandRight, user)
-                && getSekeltonService().hasJoint(JointType.ShoulderCenter, user))
-            {
-                KinectDataPoint handLeft = getSekeltonService().getDataPoint(JointType.HandLeft, user);
-                KinectDataPoint handRight = getSekeltonService().getDataPoint(JointType.HandRight, user);
-                KinectDataPoint shoulder = getSekeltonService().getDataPoint(JointType.ShoulderCenter, user);
+            KinectDataPoint handLeft = getSekeltonService().getDataPoint(JointType.HandLeft, user);
+            KinectDataPoint handRight = getSekeltonService().getDataPoint(JointType.HandRight, user);
+            KinectDataPoint shoulder = getSekeltonService().getDataPoint(JointType.ShoulderCenter, user);
 
+            if (null != handLeft && null != handRight && null != shoulder)
+            {
                 JointType? result = null;
 
                 if (handLeft.ScreenY < shoulder.ScreenY && handLeft.ScreenY < handRight.ScreenY)

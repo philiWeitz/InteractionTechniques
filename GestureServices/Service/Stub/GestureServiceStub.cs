@@ -40,7 +40,7 @@ namespace GestureServices.Service.Stub
 
         public KinectUser? getActiveKinectUser()
         {
-            if (service.hasJoint(JointType.ShoulderCenter, KinectUser.User1))
+            if (null != service.getDataPoint(JointType.ShoulderCenter, KinectUser.User1))
             {
                 return KinectUser.User1;
             }
