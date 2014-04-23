@@ -237,7 +237,7 @@ namespace GestureServices.Gesture
         {
             if (!isTimeOut())
             {
-                foreach (KinectUser user in Enum.GetValues(typeof(KinectUser)))
+                foreach (KinectUser user in getSekeltonService().userInRange())
                 {
                     if (default(JointType) != isGestureActive(user))
                     {

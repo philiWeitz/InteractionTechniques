@@ -178,7 +178,7 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 140.
+        ///   Looks up a localized string similar to 200.
         /// </summary>
         public static string KinectMinDistance {
             get {
@@ -201,15 +201,6 @@ namespace InteractionUtil.Properties {
         public static string KinectResolutionWidth {
             get {
                 return ResourceManager.GetString("KinectResolutionWidth", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2000.
-        /// </summary>
-        public static string KinectStdDistance {
-            get {
-                return ResourceManager.GetString("KinectStdDistance", resourceCulture);
             }
         }
     }

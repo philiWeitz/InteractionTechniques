@@ -30,9 +30,9 @@ namespace KinectServices.Service.Impl
                 if (sensor.Status == KinectStatus.Connected && !sensor.IsRunning)
                 {
                     TransformSmoothParameters smooth = new TransformSmoothParameters();
-                    smooth.Smoothing = 0.75f;
-                    smooth.Correction = 0.0f;
-                    smooth.Prediction = 0.0f;
+                    smooth.Smoothing = 0.5f;
+                    smooth.Correction = 0.5f;
+                    smooth.Prediction = 0.5f;
                     smooth.JitterRadius = 0.05f;
                     smooth.MaxDeviationRadius = 0.04f;
 
@@ -40,8 +40,8 @@ namespace KinectServices.Service.Impl
                     sensor.DepthStream.Enable();
                     sensor.SkeletonStream.Enable(smooth);
 
-                    sensor.DepthStream.Range = DepthRange.Near;
-                    sensor.SkeletonStream.EnableTrackingInNearRange = true;
+                    sensor.DepthStream.Range = DepthRange.Default;
+                    sensor.SkeletonStream.EnableTrackingInNearRange = false;
                     sensor.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
 
                     try

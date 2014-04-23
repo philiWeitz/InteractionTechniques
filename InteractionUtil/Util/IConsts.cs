@@ -10,7 +10,6 @@ namespace InteractionUtil.Util
 
         public static readonly int KinectDPIX = 96;
         public static readonly int KinectMinDistance = int.Parse(Resource.KinectMinDistance);
-        public static readonly int KinectStdDistance = int.Parse(Resource.KinectStdDistance);
         public static readonly int KinectResolutionWidth = int.Parse(Resource.KinectResolutionWidth);
         public static readonly int KinectResolutionHeight = int.Parse(Resource.KinectResolutionHeight);
 
