@@ -2,11 +2,11 @@
   <ProcessName>firefox</ProcessName>
   <Active>True</Active>
   <Index>1</Index>
-  <CircleClock></CircleClock>
-  <CircleCounterClock></CircleCounterClock>
+  <CircleClock>{PGDN}</CircleClock>
+  <CircleCounterClock>{PGUP}</CircleCounterClock>
   <PushTwoHanded>{Home}</PushTwoHanded>
   <PullTwoHanded></PullTwoHanded>
-  <PushOneHanded>{ENTER}</PushOneHanded>
+  <PushOneHanded></PushOneHanded>
   <PullOneHanded></PullOneHanded>
   <SwipeToLeft>^{PGUP}</SwipeToLeft>
   <SwipeToRight>^{PGDN}</SwipeToRight>

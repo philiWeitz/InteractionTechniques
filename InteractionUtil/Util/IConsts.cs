@@ -6,6 +6,7 @@ namespace InteractionUtil.Util
     public static class IConsts
     {
         public static readonly String IMAGE_DIRECTORY = @"Properties\Images\";
+        public static readonly String SOUND_DIRECTORY = @"Properties\Sounds\"; 
         public static readonly String SHORT_CUT_DIRECTORY = @"Properties\ShortCuts\";
 
         public static readonly int KinectDPIX = 96;

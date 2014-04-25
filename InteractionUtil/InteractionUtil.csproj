@@ -54,7 +54,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Common\MediaManager.cs" />
     <Compile Include="Common\InteractionGesture.cs" />
     <Compile Include="Common\ShortcutDefinition.cs" />
     <Compile Include="Database\DatabaseConverter.cs" />

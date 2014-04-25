@@ -78,6 +78,7 @@
     </ApplicationDefinition>
     <Compile Include="BusinessLogic\KinectCameraControl.cs" />
     <Compile Include="BusinessLogic\KinectInteractionControl.cs" />
+    <Compile Include="BusinessLogic\MediaManager.cs" />
     <Compile Include="MenuUI\A_MainView.xaml.cs">
       <DependentUpon>A_MainView.xaml</DependentUpon>
     </Compile>
@@ -228,6 +229,11 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Properties\Sounds.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sounds.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -251,10 +257,9 @@
     <Content Include="Properties\ShortCuts\Firefox.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Properties\Sounds\Pull.mp3" />
-    <Content Include="Properties\Sounds\Push.mp3" />
-    <Content Include="Properties\Sounds\ToLeft.mp3" />
-    <Content Include="Properties\Sounds\ToRight.mp3" />
+    <Content Include="Properties\Sounds\Push.wav" />
+    <Content Include="Properties\Sounds\ToLeft.wav" />
+    <Content Include="Properties\Sounds\ToRight.wav" />
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -303,6 +308,12 @@
       <Project>{CFC33FFA-D7E0-44D6-BD96-8BBD9578D129}</Project>
       <Name>KinectServices</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Sounds.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Sounds.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

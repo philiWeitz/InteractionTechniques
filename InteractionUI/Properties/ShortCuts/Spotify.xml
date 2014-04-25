@@ -7,7 +7,7 @@
   <PushTwoHanded>{HOME}</PushTwoHanded>
   <PullTwoHanded></PullTwoHanded>
   <PushOneHanded>" "</PushOneHanded>
-  <PullOneHanded>{TAB}</PullOneHanded>
+  <PullOneHanded></PullOneHanded>
   <SwipeToLeft>^{LEFT}</SwipeToLeft>
   <SwipeToRight>^{RIGHT}</SwipeToRight>
   <SwipeUp>^{UP}</SwipeUp>

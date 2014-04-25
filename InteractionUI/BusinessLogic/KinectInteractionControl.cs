@@ -54,7 +54,11 @@ namespace InteractionUI.BusinessLogic
                 {
                     int timeOut = IConsts.GestureTimeOut;
 
-                    if (InteractionGesture.CircleClock == gesture ||
+                    if (InteractionGesture.PushTwoHanded == gesture)
+                    {
+                        shortcutService.NextApplication();
+                    }
+                    else if (InteractionGesture.CircleClock == gesture ||
                             InteractionGesture.CircleCounterClock == gesture)
                     {
                         timeOut = IConsts.GestureTimeOutContinuous;
@@ -63,7 +67,7 @@ namespace InteractionUI.BusinessLogic
                     String shortCut = shortcutService.GetShortcut(gesture);
                     processService.SendKeyToProcess(shortcutService.GetProcessName(), shortCut);
 
-                    System.Media.SystemSounds.Exclamation.Play();
+                    MediaManager.PlayTrack(gesture);
                     gestureService.setGestureTimeOut(timeOut);
 
                     LastGesture = gesture.ToString();
