@@ -29,9 +29,7 @@
                     </TabItem.Content>
                 </TabItem>
             </TabControl>
-        </TabControl>-->
-
-
+        </TabControl>
 
         <ListView Visibility="Hidden" x:Name="shortcutDefinitionList" FontSize="13.333" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="31" Background="Transparent" BorderThickness="0" FontFamily="/InteractionUI;component/Fonts/#Bellota">
 
@@ -82,7 +80,7 @@
 			</ListView.View>
 
 
-        </ListView>
+        </ListView>-->
     </Canvas>
 
 </UserControl>
