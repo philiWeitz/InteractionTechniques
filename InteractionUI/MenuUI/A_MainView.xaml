@@ -1,177 +1,177 @@
 ﻿<Page
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:InteractionUI="clr-namespace:InteractionUI" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="InteractionUI.MenuUI.A_MainView"
-      mc:Ignorable="d"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:InteractionUI="clr-namespace:InteractionUI" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" x:Class="InteractionUI.MenuUI.A_MainView" 
+      mc:Ignorable="d" 
       d:DesignHeight="480" d:DesignWidth="640"
 	Title="A_MainView">
-    <Page.Resources>
-        <Storyboard x:Key="story_from_play_to_pause">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_playControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_pauseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="story_from_pause_to_play">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_pauseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_playControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="story_show_settings_bubble">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_settingsControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="bubble_settingsControl">
-                <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="True" />
-            </BooleanAnimationUsingKeyFrames>
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_settingsControl">
-                <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="False" />
-            </BooleanAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_settingscloseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_shortcutControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_shortcutcloseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_shortcutControl">
-                <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
-            </BooleanAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="story_show_shortcut_bubble">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_shortcutControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_shortcutControl">
-                <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="False" />
-            </BooleanAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_shortcutcloseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_settingsControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_settingscloseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_settingsControl">
-                <DiscreteBooleanKeyFrame KeyTime="0" Value="True" />
-            </BooleanAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="story_hide_shortcut_bubble">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_shortcutcloseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_shortcutControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_shortcutControl">
-                <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="True" />
-            </BooleanAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="story_from_cameraoff_to_cameraon">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraoffControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraonControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="story_from_cameraon_to_cameraoff">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraonControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraoffControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}" />
-            </ObjectAnimationUsingKeyFrames>
-        </Storyboard>
-        <Storyboard x:Key="story_hide_settings_bubble">
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_settingscloseControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_settingsControl">
-                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
-                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}" />
-            </ObjectAnimationUsingKeyFrames>
-            <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_settingsControl">
-                <DiscreteBooleanKeyFrame KeyTime="0" Value="False" />
-                <DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="True" />
-            </BooleanAnimationUsingKeyFrames>
-        </Storyboard>
-    </Page.Resources>
-    <Page.Triggers>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_playControl">
-            <BeginStoryboard x:Name="story_from_play_to_pause_BeginStoryboard" Storyboard="{StaticResource story_from_play_to_pause}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_pauseControl">
-            <BeginStoryboard x:Name="story_from_pause_to_play_BeginStoryboard" Storyboard="{StaticResource story_from_pause_to_play}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_settingsControl">
-            <BeginStoryboard x:Name="story_show_settings_bubble_BeginStoryboard" Storyboard="{StaticResource story_show_settings_bubble}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_shortcutControl">
-            <BeginStoryboard x:Name="story_show_shortcut_bubble_BeginStoryboard" Storyboard="{StaticResource story_show_shortcut_bubble}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_shortcutcloseControl">
-            <BeginStoryboard x:Name="story_hide_shortcut_bubble_BeginStoryboard" Storyboard="{StaticResource story_hide_shortcut_bubble}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_cameraoffControl">
-            <BeginStoryboard x:Name="story_from_cameraoff_to_cameraon_BeginStoryboard" Storyboard="{StaticResource story_from_cameraoff_to_cameraon}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_cameraonControl">
-            <BeginStoryboard x:Name="story_from_cameraon_to_cameraoff_BeginStoryboard" Storyboard="{StaticResource story_from_cameraon_to_cameraoff}" />
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_settingscloseControl">
-            <BeginStoryboard x:Name="story_hide_settings_bubble_BeginStoryboard" Storyboard="{StaticResource story_hide_settings_bubble}" />
-        </EventTrigger>
-    </Page.Triggers>
+	<Page.Resources>
+		<Storyboard x:Key="story_from_play_to_pause">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_playControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_pauseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_from_pause_to_play">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_pauseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_playControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_show_settings_bubble">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_settingsControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="bubble_settingsControl">
+				<DiscreteBooleanKeyFrame KeyTime="0" Value="True"/>
+				<DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="True"/>
+			</BooleanAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_settingsControl">
+				<DiscreteBooleanKeyFrame KeyTime="0" Value="True"/>
+				<DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="False"/>
+			</BooleanAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_settingscloseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_shortcutControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_shortcutcloseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_shortcutControl">
+				<DiscreteBooleanKeyFrame KeyTime="0" Value="True"/>
+			</BooleanAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_show_shortcut_bubble">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_shortcutControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_shortcutControl">
+				<DiscreteBooleanKeyFrame KeyTime="0" Value="True"/>
+				<DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="False"/>
+			</BooleanAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_shortcutcloseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_settingsControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_settingscloseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_settingsControl">
+				<DiscreteBooleanKeyFrame KeyTime="0" Value="True"/>
+			</BooleanAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_hide_shortcut_bubble">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_shortcutcloseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_shortcutControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_shortcutControl">
+				<DiscreteBooleanKeyFrame KeyTime="0" Value="False"/>
+				<DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="True"/>
+			</BooleanAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_from_cameraoff_to_cameraon">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraoffControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraonControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_from_cameraon_to_cameraoff">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraonControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_cameraoffControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Hidden}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+			</ObjectAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_hide_settings_bubble">
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="button_settingscloseControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="bubble_settingsControl">
+				<DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+				<DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Hidden}"/>
+			</ObjectAnimationUsingKeyFrames>
+			<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.IsEnabled)" Storyboard.TargetName="button_settingsControl">
+				<DiscreteBooleanKeyFrame KeyTime="0" Value="False"/>
+				<DiscreteBooleanKeyFrame KeyTime="0:0:0.1" Value="True"/>
+			</BooleanAnimationUsingKeyFrames>
+		</Storyboard>
+	</Page.Resources>
+	<Page.Triggers>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_playControl">
+			<BeginStoryboard x:Name="story_from_play_to_pause_BeginStoryboard" Storyboard="{StaticResource story_from_play_to_pause}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_pauseControl">
+			<BeginStoryboard x:Name="story_from_pause_to_play_BeginStoryboard" Storyboard="{StaticResource story_from_pause_to_play}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_settingsControl">
+			<BeginStoryboard x:Name="story_show_settings_bubble_BeginStoryboard" Storyboard="{StaticResource story_show_settings_bubble}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_shortcutControl">
+			<BeginStoryboard x:Name="story_show_shortcut_bubble_BeginStoryboard" Storyboard="{StaticResource story_show_shortcut_bubble}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_shortcutcloseControl">
+			<BeginStoryboard x:Name="story_hide_shortcut_bubble_BeginStoryboard" Storyboard="{StaticResource story_hide_shortcut_bubble}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_cameraoffControl">
+			<BeginStoryboard x:Name="story_from_cameraoff_to_cameraon_BeginStoryboard" Storyboard="{StaticResource story_from_cameraoff_to_cameraon}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_cameraonControl">
+			<BeginStoryboard x:Name="story_from_cameraon_to_cameraoff_BeginStoryboard" Storyboard="{StaticResource story_from_cameraon_to_cameraoff}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="UIElement.MouseLeftButtonUp" SourceName="button_settingscloseControl">
+			<BeginStoryboard x:Name="story_hide_settings_bubble_BeginStoryboard" Storyboard="{StaticResource story_hide_settings_bubble}"/>
+		</EventTrigger>
+	</Page.Triggers>
 
-    <Grid>
+	<Grid>
         <Image Name="cameraImage" Height="480" Width="640" Margin="0" />
-
+        
         <Canvas x:Name="InteractionTechniques_1" HorizontalAlignment="Left" Height="480" UseLayoutRounding="False" VerticalAlignment="Top" Width="640">
-            <InteractionUI:symbol_nokinectControl x:Name="symbol_nokinectControl" Height="89.826" Canvas.Left="194.183" Canvas.Top="198.44" Width="250.527" Visibility="Hidden" />
-            <InteractionUI:symbol_nopersonControl x:Name="symbol_nopersonControl" Height="166.491" Canvas.Left="242.593" Canvas.Top="151.595" Width="166.492" Visibility="Hidden" />
-            <InteractionUI:symbol_hand_animationControl x:Name="symbol_hand_animationControl" Height="5" Canvas.Left="242.593" Canvas.Top="193.44" Width="5" Visibility="Hidden" />
-            <InteractionUI:bubble_infobarControl x:Name="bubble_infobarControl" Height="41" Canvas.Left="117" Width="396.5" />
-            <InteractionUI:button_settingsControl x:Name="button_settingsControl" Height="91.5" Canvas.Left="334.875" Canvas.Top="388.5" Width="71.125" />
-            <InteractionUI:bubble_settingsControl x:Name="bubble_settingsControl" Height="373.382" Canvas.Left="27" Canvas.Top="9" Width="602" Visibility="Hidden" />
-            <InteractionUI:button_settingscloseControl x:Name="button_settingscloseControl" Height="44" Canvas.Left="589.5" Canvas.Top="5.5" Width="44" Visibility="Hidden" />
-            <InteractionUI:button_shortcutControl x:Name="button_shortcutControl" Height="91.5" Canvas.Left="406" Canvas.Top="388.5" Width="107.5" />
-            <InteractionUI:bubble_shortcutControl x:Name="bubble_shortcutControl" Height="373.382" Canvas.Left="27" Canvas.Top="9" Width="602" Visibility="Hidden" />
-            <InteractionUI:button_shortcutcloseControl x:Name="button_shortcutcloseControl" Height="44" Canvas.Left="589.5" Canvas.Top="5.5" Width="44" Visibility="Hidden" />
-            <InteractionUI:button_pauseControl x:Name="button_pauseControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" Visibility="Hidden" Foreground="#FFF0F0F0" ToolTip="Pause the recognition of Kinect gestures" MouseLeftButtonUp="button_pauseControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged" />
-            <InteractionUI:button_playControl x:Name="button_playControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" ToolTip="Start the recognition of Kinect gestures" MouseLeftButtonUp="button_playControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged" />
-            <InteractionUI:button_cameraoffControl x:Name="button_cameraoffControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" ToolTip="Turn the picture from Kinect camera off" MouseLeftButtonUp="button_cameraoffControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged" />
-            <InteractionUI:button_cameraonControl x:Name="button_cameraonControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" Visibility="Hidden" ToolTip="Turn the picture from Kinect camera on" MouseLeftButtonUp="button_cameraonControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged" />
-        </Canvas>
-    </Grid>
+            <InteractionUI:symbol_nokinectControl x:Name="symbol_nokinectControl" Height="89.826" Canvas.Left="194.183" Canvas.Top="198.44" Width="250.527" Visibility="Hidden"/>
+            <InteractionUI:symbol_nopersonControl x:Name="symbol_nopersonControl" Height="166.491" Canvas.Left="242.593" Canvas.Top="151.595" Width="166.492" Visibility="Hidden"/>
+            <InteractionUI:symbol_hand_animationControl x:Name="symbol_hand_animationControl" Height="5" Canvas.Left="242.593" Canvas.Top="193.44" Width="5" Visibility="Hidden"/>
+            <InteractionUI:bubble_infobarControl x:Name="bubble_infobarControl" Height="41" Canvas.Left="117" Width="396.5"/>
+            <InteractionUI:button_settingsControl Visibility="Hidden" x:Name="button_settingsControl" Height="91.5" Canvas.Left="334.875" Canvas.Top="388.5" Width="71.125"/>
+			<InteractionUI:bubble_settingsControl x:Name="bubble_settingsControl" Height="373.382" Canvas.Left="27" Canvas.Top="9" Width="602" Visibility="Hidden"/>
+			<InteractionUI:button_settingscloseControl x:Name="button_settingscloseControl" Height="44" Canvas.Left="589.5" Canvas.Top="5.5" Width="44" Visibility="Hidden"/>
+			<InteractionUI:button_shortcutControl Visibility="Hidden" x:Name="button_shortcutControl" Height="91.5" Canvas.Left="406" Canvas.Top="388.5" Width="107.5"/>
+			<InteractionUI:bubble_shortcutControl x:Name="bubble_shortcutControl" Height="373.382" Canvas.Left="27" Canvas.Top="9" Width="602" Visibility="Hidden"/>
+			<InteractionUI:button_shortcutcloseControl x:Name="button_shortcutcloseControl" Height="44" Canvas.Left="589.5" Canvas.Top="5.5" Width="44" Visibility="Hidden"/>
+            <InteractionUI:button_pauseControl x:Name="button_pauseControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" Visibility="Hidden" Foreground="#FFF0F0F0" ToolTip="Pause the recognition of Kinect gestures" MouseLeftButtonUp="button_pauseControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
+            <InteractionUI:button_playControl x:Name="button_playControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" ToolTip="Start the recognition of Kinect gestures" MouseLeftButtonUp="button_playControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
+            <InteractionUI:button_cameraoffControl x:Name="button_cameraoffControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" ToolTip="Turn the picture from Kinect camera off" MouseLeftButtonUp="button_cameraoffControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
+            <InteractionUI:button_cameraonControl x:Name="button_cameraonControl" Height="91.5" Canvas.Left="234" Canvas.Top="388.5" Width="100.875" Visibility="Hidden" ToolTip="Turn the picture from Kinect camera on" MouseLeftButtonUp="button_cameraonControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged"/>
+		</Canvas>
+	</Grid>
 </Page>
