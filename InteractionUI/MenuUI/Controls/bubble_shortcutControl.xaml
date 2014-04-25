@@ -8,9 +8,9 @@
 	x:Name="UserControl"
 	d:DesignWidth="602" d:DesignHeight="373.382">
 
-	<Grid x:Name="LayoutRoot">
-		<Canvas x:Name="bubble_shortcut">
-			<Path Data="F1M575,2L14,2C7.373,2,2,7.373,2,14L2,323C2,329.627,7.373,335,14,335L418.578,335 431.5,357.382 444.422,335 575,335C581.627,335,587,329.627,587,323L587,14C587,7.373,581.627,2,575,2" Fill="White" Height="361.382" Canvas.Left="-2" Stroke="#FF231F20" StrokeThickness="4" Canvas.Top="16" Width="589"/>
-		</Canvas>
-	</Grid>
+    <Grid x:Name="LayoutRoot">
+        <Canvas x:Name="bubble_shortcut">
+            <Path Data="F1M575,2L14,2C7.373,2,2,7.373,2,14L2,323C2,329.627,7.373,335,14,335L418.578,335 431.5,357.382 444.422,335 575,335C581.627,335,587,329.627,587,323L587,14C587,7.373,581.627,2,575,2" Fill="White" Height="361.382" Canvas.Left="-2" Stroke="#FF231F20" StrokeThickness="4" Canvas.Top="16" Width="589" />
+        </Canvas>
+    </Grid>
 </UserControl>

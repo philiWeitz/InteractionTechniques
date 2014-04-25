@@ -24,11 +24,13 @@ namespace InteractionUtil.Util
         }
 
         private static SpringUtil Instance
-        { 
-            get {
-                if (instance == null) {
+        {
+            get
+            {
+                if (instance == null)
+                {
                     instance = new SpringUtil();
-                }    
+                }
                 return instance;
             }
         }

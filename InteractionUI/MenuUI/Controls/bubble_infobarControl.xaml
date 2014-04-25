@@ -8,14 +8,14 @@
 	x:Name="UserControl"
 	d:DesignWidth="396.5" d:DesignHeight="41">
 
-	<Grid x:Name="LayoutRoot">
-		<Grid.ColumnDefinitions>
-			<ColumnDefinition/>
-			<ColumnDefinition Width="0*"/>
-		</Grid.ColumnDefinitions>
-		<Canvas x:Name="bubble_infobar">
-			<Path Data="F1M396.5,0L396.5,29C396.5,35.627,391.127,41,384.5,41L12,41C5.373,41,0,35.627,0,29L0,0" Fill="#FF231F20" Height="41" Canvas.Left="0" Opacity="0.75" Canvas.Top="0" Width="396.5"/>
-		</Canvas>
-		<TextBlock x:Name="infotext" HorizontalAlignment="Left" Height="41" TextWrapping="Wrap" VerticalAlignment="Top" Width="396.5" FontFamily="/InteractionUI;component/Fonts/#Bellota" FontSize="26.667" Foreground="White" Margin="0" TextAlignment="Center"/>
-	</Grid>
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="0*" />
+        </Grid.ColumnDefinitions>
+        <Canvas x:Name="bubble_infobar">
+            <Path Data="F1M396.5,0L396.5,29C396.5,35.627,391.127,41,384.5,41L12,41C5.373,41,0,35.627,0,29L0,0" Fill="#FF231F20" Height="41" Canvas.Left="0" Opacity="0.75" Canvas.Top="0" Width="396.5" />
+        </Canvas>
+        <TextBlock x:Name="infotext" HorizontalAlignment="Left" Height="30" TextWrapping="Wrap" VerticalAlignment="Center" Width="396.5" FontFamily="/InteractionUI;component/Fonts/#Bellota" FontSize="17" Foreground="White" Margin="0" TextAlignment="Center" />
+    </Grid>
 </UserControl>

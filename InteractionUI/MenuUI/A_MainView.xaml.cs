@@ -58,12 +58,19 @@ namespace InteractionUI.MenuUI
                     cameraControl.UpdateCamera();
                     cameraControl.CheckActiveUserChange(symbol_hand_animationControl);
 
-                    if (kinectControl.Enabled && skeletonService.userInRange().Count <= 0)
+                    if (!kinectControl.Enabled)
+                    {
+                        bubble_infobarControl.infotext.Text = "Press the \"Play\" button to start the interaction";
+                    }
+                    else if (skeletonService.userInRange().Count <= 0)
                     {
                         symbol_nopersonControl.Visibility = Visibility.Visible;
+                        bubble_infobarControl.infotext.Text = "No user in range";
                     }
-
-                    bubble_infobarControl.infotext.Text = kinectControl.LastGesture;
+                    else
+                    {
+                        bubble_infobarControl.infotext.Text = kinectControl.LastGesture;
+                    }
                 }
                 else if (null == kinectThread || !kinectThread.IsAlive)
                 {

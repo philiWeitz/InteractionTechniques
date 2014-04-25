@@ -7,67 +7,67 @@
 	x:Class="InteractionUI.symbol_hand_animationControl"
 	x:Name="UserControl"
 	d:DesignWidth="5" d:DesignHeight="5">
-	<UserControl.Resources>
-		<Storyboard x:Key="story_hand_expand">
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="15.777777777777775"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="20">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<PowerEase EasingMode="EaseInOut"/>
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="15.777777777777775"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="20">
-					<EasingDoubleKeyFrame.EasingFunction>
-						<PowerEase EasingMode="EaseInOut"/>
-					</EasingDoubleKeyFrame.EasingFunction>
-				</EasingDoubleKeyFrame>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="ellipse_Copy">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="20"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="ellipse_Copy">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="20"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse_Copy">
-				<EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse">
-				<EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
-				<EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
-			</DoubleAnimationUsingKeyFrames>
-		</Storyboard>
-	</UserControl.Resources>
+    <UserControl.Resources>
+        <Storyboard x:Key="story_hand_expand">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="15.777777777777775" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="20">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <PowerEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="15.777777777777775" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="20">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <PowerEase EasingMode="EaseInOut" />
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="ellipse_Copy">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="20" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="ellipse_Copy">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="20" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse_Copy">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ellipse">
+                <EasingDoubleKeyFrame KeyTime="0" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1" />
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0" />
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
 
-	<Grid x:Name="LayoutRoot">
-		<Ellipse x:Name="ellipse" Fill="#FFF4F4F5" Stroke="{x:Null}" RenderTransformOrigin="0.5,0.5">
-			<Ellipse.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform/>
-					<SkewTransform/>
-					<RotateTransform/>
-					<TranslateTransform/>
-				</TransformGroup>
-			</Ellipse.RenderTransform>
-		</Ellipse>
-		<Ellipse x:Name="ellipse_Copy" Fill="Black" Stroke="{x:Null}" RenderTransformOrigin="0.5,0.5">
-			<Ellipse.RenderTransform>
-				<TransformGroup>
-					<ScaleTransform/>
-					<SkewTransform/>
-					<RotateTransform/>
-					<TranslateTransform/>
-				</TransformGroup>
-			</Ellipse.RenderTransform>
-		</Ellipse>
-	</Grid>
+    <Grid x:Name="LayoutRoot">
+        <Ellipse x:Name="ellipse" Fill="#FFF4F4F5" Stroke="{x:Null}" RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+        <Ellipse x:Name="ellipse_Copy" Fill="Black" Stroke="{x:Null}" RenderTransformOrigin="0.5,0.5">
+            <Ellipse.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform />
+                    <SkewTransform />
+                    <RotateTransform />
+                    <TranslateTransform />
+                </TransformGroup>
+            </Ellipse.RenderTransform>
+        </Ellipse>
+    </Grid>
 </UserControl>

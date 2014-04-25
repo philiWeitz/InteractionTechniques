@@ -6,20 +6,18 @@ using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
 
-
 namespace InteractionUtil.Service.Impl
 {
     internal class ShortcutXMLReaderWriterImpl : IShortcutReaderWriterService
     {
         private static readonly String ROOT = "root";
-        private static readonly String NODE_IDX = "Index"; 
-        private static readonly String NODE_ACTIVE = "Active";       
-        private static readonly String NODE_PROCESS = "ProcessName";        
-        
+        private static readonly String NODE_IDX = "Index";
+        private static readonly String NODE_ACTIVE = "Active";
+        private static readonly String NODE_PROCESS = "ProcessName";
+
         private String shortCutPath;
         private List<ShortcutDefinition> shortcutList = null;
         private List<ShortcutDefinition> activeShortcutList = null;
-
 
         public ShortcutXMLReaderWriterImpl()
         {
@@ -83,7 +81,7 @@ namespace InteractionUtil.Service.Impl
             shortcutList = new List<ShortcutDefinition>();
             activeShortcutList = new List<ShortcutDefinition>();
 
-            foreach (String file in Directory.GetFiles(shortCutPath,"*.xml"))
+            foreach (String file in Directory.GetFiles(shortCutPath, "*.xml"))
             {
                 ShortcutDefinition def = xmlToShortcutDefinition(file);
                 shortcutList.Add(def);
@@ -111,11 +109,11 @@ namespace InteractionUtil.Service.Impl
             addNode(xmlDoc, root, NODE_ACTIVE, item.Active);
             addNode(xmlDoc, root, NODE_IDX, item.Idx);
 
-            foreach (KeyValuePair<InteractionGesture,String> mapItem in item.GestureMap)
+            foreach (KeyValuePair<InteractionGesture, String> mapItem in item.GestureMap)
             {
                 addNode(xmlDoc, root, mapItem.Key.ToString(), mapItem.Value);
             }
-           
+
             return xmlDoc.InnerXml;
         }
 

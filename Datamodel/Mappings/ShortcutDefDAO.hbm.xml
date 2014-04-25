@@ -7,18 +7,16 @@
     <id name="Id">
       <generator class="guid" />
     </id>
-    
+
     <property name="Name" />
     <property name="Idx" />
     <property name="Active" />
     <property name="ProcessName" />
 
     <map name="GestureMap" table="GestureMaps">
-      <key column="GestureMapId"/>
-      <index column="InteractionGesture" type="System.String"/>
-      <element column="Shortcut" type="System.String"/>
+      <key column="GestureMapId" />
+      <index column="InteractionGesture" type="System.String" />
+      <element column="Shortcut" type="System.String" />
     </map>
-
   </class>
-
 </hibernate-mapping>

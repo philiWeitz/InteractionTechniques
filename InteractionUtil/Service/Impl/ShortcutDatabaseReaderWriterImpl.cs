@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Xml;
 using Datamodel.Model;
 using Datamodel.Service.Impl;
 using Datamodel.Service.Interface;
 using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
-using InteractionUtil.Util;
-
 
 namespace InteractionUtil.Service.Impl
 {
@@ -18,7 +14,6 @@ namespace InteractionUtil.Service.Impl
         private List<ShortcutDefinition> activeShortcutList = null;
 
         private ShortcutDefDAOService shortCutService;
-
 
         public ShortcutDatabaseReaderWriterImpl()
         {

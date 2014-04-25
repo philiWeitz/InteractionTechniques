@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Datamodel.Model;
 
 namespace InteractionUtil.Common
@@ -19,7 +16,7 @@ namespace InteractionUtil.Common
             result.Active = definition.Active;
             result.ProcessName = definition.ProcessName;
 
-            foreach(KeyValuePair<InteractionGesture,String> item in definition.GestureMap)
+            foreach (KeyValuePair<InteractionGesture, String> item in definition.GestureMap)
             {
                 result.GestureMap.Add(item.Key.ToString(), item.Value);
             }
@@ -37,7 +34,7 @@ namespace InteractionUtil.Common
             result.Active = dao.Active;
             result.ProcessName = dao.ProcessName;
 
-            foreach (KeyValuePair<String,String> item in dao.GestureMap)
+            foreach (KeyValuePair<String, String> item in dao.GestureMap)
             {
                 InteractionGesture gesture;
                 if (Enum.TryParse<InteractionGesture>(item.Key, out gesture))

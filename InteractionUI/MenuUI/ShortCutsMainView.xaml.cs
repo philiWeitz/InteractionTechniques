@@ -4,7 +4,6 @@ using System.Windows.Controls;
 using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
-using System.Collections.Generic;
 
 namespace InteractionUI.MenuUI
 {
@@ -17,7 +16,6 @@ namespace InteractionUI.MenuUI
         private ShortCutEditView editView;
         private IShortcutReaderWriterService shortCutReaderWriter;
 
-
         public ShortCutsMainView(Page parent)
         {
             InitializeComponent();
@@ -29,7 +27,7 @@ namespace InteractionUI.MenuUI
         {
             this.parent = parent;
             shortCutReaderWriter = SpringUtil.getService<IShortcutReaderWriterService>();
-            
+
             editView = new ShortCutEditView();
             editView.OnSaveEvent += new EventHandler(editView_OnSaveEvent);
         }
@@ -51,7 +49,7 @@ namespace InteractionUI.MenuUI
 
         private void editButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            ShortcutDefinition item = (ShortcutDefinition) ((Button)sender).Tag;
+            ShortcutDefinition item = (ShortcutDefinition)((Button)sender).Tag;
             editView.EditDefinition(item);
             NavigationService.Navigate(editView);
         }
@@ -60,7 +58,7 @@ namespace InteractionUI.MenuUI
         {
             MessageBoxResult result = MessageBox.Show("Do you really want to delete this itme?",
                 "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            
+
             if (result == MessageBoxResult.Yes)
             {
                 ShortcutDefinition item = (ShortcutDefinition)((Button)sender).Tag;
@@ -100,6 +98,6 @@ namespace InteractionUI.MenuUI
         private void editView_OnSaveEvent(object sender, EventArgs e)
         {
             fillListView();
-        }  
+        }
     }
 }

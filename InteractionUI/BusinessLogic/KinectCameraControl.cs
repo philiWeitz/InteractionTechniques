@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,6 +15,11 @@ namespace InteractionUI.BusinessLogic
 {
     public class KinectCameraControl
     {
+        private static readonly String IMAGE_HAND_LEFT = IConsts.IMAGE_DIRECTORY + "HandLeft.png";
+        private static readonly String IMAGE_HAND_RIGHT = IConsts.IMAGE_DIRECTORY + "HandRight.png";
+        private static readonly String IMAGE_HAND_LEFT_ACTIVE = IConsts.IMAGE_DIRECTORY + "HandLeftActive.png";
+        private static readonly String IMAGE_HAND_RIGHT_ACTIVE = IConsts.IMAGE_DIRECTORY + "HandRightActive.png";
+
         private ISensorService sensorService;
         private ICameraService cameraService;
         private ISkeletonService skeletonService;
@@ -21,6 +27,11 @@ namespace InteractionUI.BusinessLogic
 
         private bool _enabled = true;
         private KinectUser? activeUser = null;
+
+        private ImageSource imgHandRight;
+        private ImageSource imgHandLeft;
+        private ImageSource imgHandRightActive;
+        private ImageSource imgHandLeftActive;
 
         public Image ScreenImage { get; set; }
 
@@ -59,6 +70,16 @@ namespace InteractionUI.BusinessLogic
             cameraService.startCameraService(sensorService.getSensor(sensorIdx));
             skeletonService.enableSkeleton(sensorService.getSensor(sensorIdx));
             gestureService.enableGestureService(sensorService.getSensor(sensorIdx));
+
+            imgHandLeft = new BitmapImage(new Uri(Application.Current.StartupUri, IMAGE_HAND_LEFT));
+            imgHandRight = new BitmapImage(new Uri(Application.Current.StartupUri, IMAGE_HAND_RIGHT));
+            imgHandLeftActive = new BitmapImage(new Uri(Application.Current.StartupUri, IMAGE_HAND_LEFT_ACTIVE));
+            imgHandRightActive = new BitmapImage(new Uri(Application.Current.StartupUri, IMAGE_HAND_RIGHT_ACTIVE));
+
+            imgHandLeft.Freeze();
+            imgHandRight.Freeze();
+            imgHandLeftActive.Freeze();
+            imgHandRightActive.Freeze();
         }
 
         public bool UpdateCamera()
@@ -74,6 +95,7 @@ namespace InteractionUI.BusinessLogic
                         BitmapSource bitmapSource = BitmapSource.Create(
                             cameraService.getWidth(), cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX,
                             PixelFormats.Bgr32, null, byteArrayIn, cameraService.getWidth() * cameraService.getBytesPerPixel());
+                        bitmapSource.Freeze();
 
                         RenderTargetBitmap bitmap = new RenderTargetBitmap(cameraService.getWidth(),
                             cameraService.getHeight(), IConsts.KinectDPIX, IConsts.KinectDPIX, PixelFormats.Default);
@@ -160,13 +182,35 @@ namespace InteractionUI.BusinessLogic
 
                 if (null != handLeft)
                 {
-                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(handLeft.ScreenX - 10, handLeft.ScreenY - 10, 20, 20));
+                    if (activeUser == user)
+                    {
+                        drawHandImage(imgHandLeftActive, handLeft, drawingContext);
+                    }
+                    else
+                    {
+                        drawHandImage(imgHandLeft, handLeft, drawingContext);
+                    }
                 }
                 if (null != handRight)
                 {
-                    drawingContext.DrawRectangle(Brushes.Green, null, new Rect(handRight.ScreenX - 10, handRight.ScreenY - 10, 20, 20));
+                    if (activeUser == user)
+                    {
+                        drawHandImage(imgHandRightActive, handRight, drawingContext);
+                    }
+                    else
+                    {
+                        drawHandImage(imgHandRight, handRight, drawingContext);
+                    }
                 }
             }
+        }
+
+        private void drawHandImage(ImageSource source, KinectDataPoint point, DrawingContext drawingContext)
+        {
+            drawingContext.DrawImage(source, new Rect(
+            point.ScreenX - (source.Width / 2),
+            point.ScreenY - (source.Height / 2),
+            source.Width, source.Height));
         }
 
         private void drawJointDataQueue(DrawingContext drawingContext)
@@ -203,6 +247,7 @@ namespace InteractionUI.BusinessLogic
         private void drawKinectElevationUpperLowerBound(DrawingContext drawingContext)
         {
             Pen pen = new Pen(Brushes.Black, 2);
+            pen.Freeze();
 
             drawingContext.DrawLine(pen,
                 new Point(0, IConsts.KinectCenterUpperLimit),

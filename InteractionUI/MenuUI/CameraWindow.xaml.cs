@@ -9,8 +9,8 @@ namespace InteractionUI.MenuUI
     public partial class CameraWindow : Window
     {
         public bool isClosed { get; private set; }
+
         public KinectCameraControl KinectCamera { get; private set; }
-        
 
         public CameraWindow(int sensorIdx)
         {
@@ -20,12 +20,10 @@ namespace InteractionUI.MenuUI
 
         public void Start()
         {
-
         }
 
         public void Stop()
         {
-  
         }
 
         private void initialize(int sensorIdx)
@@ -37,10 +35,9 @@ namespace InteractionUI.MenuUI
             KinectCamera.ScreenImage = cameraImage;
         }
 
-        void CameraView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void CameraView_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             isClosed = true;
- 
         }
     }
 }

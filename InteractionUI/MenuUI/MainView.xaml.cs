@@ -15,14 +15,13 @@ namespace InteractionUI.MenuUI
     /// </summary>
     public partial class MainView : Page
     {
-        private static readonly int SENSOR_CHECK_INTERVAL = 1000;        
+        private static readonly int SENSOR_CHECK_INTERVAL = 1000;
         private static readonly int SENSOR_IDX = 0;
 
         private ShortCutsMainView shortCutsMainView;
         private DispatcherTimer sensorCheckTimer;
         private KinectInteractionControl interaction;
         private CameraWindow cameraView;
-
 
         public MainView()
         {
@@ -55,13 +54,13 @@ namespace InteractionUI.MenuUI
             {
                 startCameraButton.IsEnabled = false;
                 startStopButton.IsEnabled = false;
-                
+
                 // stop interaction service
                 if (null != interaction)
                 {
                     interaction = null;
                 }
-                
+
                 // close camera window
                 if (null != cameraView)
                 {
@@ -82,7 +81,6 @@ namespace InteractionUI.MenuUI
         {
         }
 
-
         private CameraWindow getCameraView()
         {
             if (null == cameraView || cameraView.isClosed)
@@ -97,7 +95,7 @@ namespace InteractionUI.MenuUI
         private KinectInteractionControl getKinectInteraction()
         {
             if (null == interaction)
-            {   
+            {
                 Cursor = Cursors.Wait;
                 interaction = new KinectInteractionControl(SENSOR_IDX);
                 Cursor = Cursors.Arrow;

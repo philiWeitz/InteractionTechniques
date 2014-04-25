@@ -9,12 +9,15 @@ namespace InteractionUI.BusinessLogic
 {
     public class KinectInteractionControl
     {
+        private static readonly int GESTURE_DISPLAY_TIME_IN_SEC = 3;
+
         private ISensorService sensorService;
         private IProcessService processService;
         private IShortcutService shortcutService;
         private IGestureService gestureService;
 
         private int sensorIdx;
+        private DateTime lastGestureTime;
 
         public bool Enabled { get; set; }
 
@@ -29,6 +32,7 @@ namespace InteractionUI.BusinessLogic
         {
             Enabled = true;
             LastGesture = String.Empty;
+            lastGestureTime = DateTime.Now;
 
             processService = SpringUtil.getService<IProcessService>();
             sensorService = SpringUtil.getService<ISensorService>();
@@ -61,9 +65,15 @@ namespace InteractionUI.BusinessLogic
 
                     System.Media.SystemSounds.Exclamation.Play();
                     gestureService.setGestureTimeOut(timeOut);
+
                     LastGesture = gesture.ToString();
+                    lastGestureTime = DateTime.Now.AddSeconds(GESTURE_DISPLAY_TIME_IN_SEC);
                 }
 
+                if (LastGesture != String.Empty && lastGestureTime < DateTime.Now)
+                {
+                    LastGesture = String.Empty;
+                }
                 gestureService.focuseCurrentUser();
             }
         }

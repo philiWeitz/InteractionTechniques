@@ -8,14 +8,13 @@ namespace InteractionUtil.Service.Impl
 {
     internal class ShortcutServiceImpl : IShortcutService
     {
-        int currIdx = 0;
-        IShortcutReaderWriterService readerWriterService = null;
-
+        private int currIdx = 0;
+        private IShortcutReaderWriterService readerWriterService = null;
 
         public string GetShortcut(InteractionGesture key)
         {
             List<ShortcutDefinition> list = getReaderWriterService().GetActiveShortCutList();
-            
+
             if (list.Count > 0)
             {
                 if (currIdx >= list.Count)
@@ -27,7 +26,6 @@ namespace InteractionUtil.Service.Impl
 
             return String.Empty;
         }
-
 
         public string GetProcessName()
         {
@@ -45,7 +43,6 @@ namespace InteractionUtil.Service.Impl
             return String.Empty;
         }
 
-
         public void NextApplication()
         {
             if (getReaderWriterService().GetActiveShortCutList().Count > 0)
@@ -57,7 +54,6 @@ namespace InteractionUtil.Service.Impl
                 currIdx = 0;
             }
         }
-
 
         public void PreviousApplication()
         {
@@ -75,7 +71,6 @@ namespace InteractionUtil.Service.Impl
             }
         }
 
-
         private IShortcutReaderWriterService getReaderWriterService()
         {
             if (null == readerWriterService)
@@ -84,6 +79,5 @@ namespace InteractionUtil.Service.Impl
             }
             return readerWriterService;
         }
-
     }
 }
