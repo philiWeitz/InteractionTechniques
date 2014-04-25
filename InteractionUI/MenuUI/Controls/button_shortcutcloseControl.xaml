@@ -3,15 +3,46 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
 	mc:Ignorable="d"
 	x:Class="InteractionUI.button_shortcutcloseControl"
 	x:Name="UserControl"
 	d:DesignWidth="44" d:DesignHeight="44">
+	<UserControl.Resources>
+		<Storyboard x:Key="story_change_color_over">
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path1">
+				<EasingColorKeyFrame KeyTime="0" Value="Black"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path">
+				<EasingColorKeyFrame KeyTime="0" Value="White"/>
+				<EasingColorKeyFrame KeyTime="0:0:0.2" Value="Black"/>
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="story_change_color_away">
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path1">
+				<SplineColorKeyFrame KeyTime="0" Value="White"/>
+				<SplineColorKeyFrame KeyTime="0:0:0.2" Value="Black"/>
+			</ColorAnimationUsingKeyFrames>
+			<ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" Storyboard.TargetName="path">
+				<SplineColorKeyFrame KeyTime="0" Value="Black"/>
+				<SplineColorKeyFrame KeyTime="0:0:0.2" Value="White"/>
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>
+	</UserControl.Resources>
 
 	<Grid x:Name="LayoutRoot">
+		<i:Interaction.Triggers>
+			<i:EventTrigger EventName="MouseLeave">
+				<ei:ControlStoryboardAction Storyboard="{StaticResource story_change_color_away}"/>
+			</i:EventTrigger>
+			<i:EventTrigger EventName="MouseEnter">
+				<ei:ControlStoryboardAction Storyboard="{StaticResource story_change_color_over}"/>
+			</i:EventTrigger>
+		</i:Interaction.Triggers>
 		<Grid x:Name="button_shortcutclose">
-			<Path Data="F1M41.916,21.168C41.916,32.858 32.532,42.336 20.958,42.336 9.384,42.336 0,32.858 0,21.168 0,9.477 9.384,0 20.958,0 32.532,0 41.916,9.477 41.916,21.168" Fill="White" Margin="1.001,0.998,1.083,0.666"/>
-			<Path Data="F1M10.485,7.656L14.728,3.414C15.508,2.633 15.508,1.366 14.728,0.586 13.947,-0.196 12.68,-0.196 11.899,0.586L7.657,4.828 3.415,0.586C2.633,-0.196 1.367,-0.196 0.586,0.586 -0.195,1.367 -0.195,2.633 0.586,3.414L4.829,7.656 0.586,11.898C-0.195,12.679 -0.195,13.945 0.586,14.726 1.367,15.508 2.633,15.508 3.415,14.726L7.657,10.484 11.899,14.726C12.68,15.508 13.947,15.508 14.728,14.726 15.508,13.945 15.508,12.678 14.728,11.898z" Fill="Black" Margin="14.343,15.344,14.344,13.343"/>
+			<Path x:Name="path" Data="F1M41.916,21.168C41.916,32.858 32.532,42.336 20.958,42.336 9.384,42.336 0,32.858 0,21.168 0,9.477 9.384,0 20.958,0 32.532,0 41.916,9.477 41.916,21.168" Fill="White" Margin="1.001,0.998,1.083,0.666"/>
+			<Path x:Name="path1" Data="F1M10.485,7.656L14.728,3.414C15.508,2.633 15.508,1.366 14.728,0.586 13.947,-0.196 12.68,-0.196 11.899,0.586L7.657,4.828 3.415,0.586C2.633,-0.196 1.367,-0.196 0.586,0.586 -0.195,1.367 -0.195,2.633 0.586,3.414L4.829,7.656 0.586,11.898C-0.195,12.679 -0.195,13.945 0.586,14.726 1.367,15.508 2.633,15.508 3.415,14.726L7.657,10.484 11.899,14.726C12.68,15.508 13.947,15.508 14.728,14.726 15.508,13.945 15.508,12.678 14.728,11.898z" Fill="Black" Margin="14.343,15.344,14.344,13.343"/>
 			<Path Data="F1M22,40C12.059,40 4,31.941 4,22 4,12.059 12.059,4 22,4 31.941,4 40,12.059 40,22 40,31.941 31.941,40 22,40 M22,0C9.85,0 0,9.85 0,22 0,34.15 9.85,44 22,44 34.15,44 44,34.15 44,22 44,9.85 34.15,0 22,0" Fill="Black"/>
 		</Grid>
 	</Grid>
