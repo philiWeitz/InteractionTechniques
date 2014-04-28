@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InteractionUI", "InteractionUI\InteractionUI.csproj", "{1A69691A-91A8-4A6C-BA15-7CB04DEBB579}"
 EndProject
@@ -12,8 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestureServices", "GestureServices\GestureServices.csproj", "{E11B48DC-4E2A-4492-B8D0-3EFE6096CCF6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{54A0A43B-6FD4-42BB-AEDE-5426D7BC51F5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Datamodel", "Datamodel\Datamodel.csproj", "{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,16 +67,6 @@ Global
 		{E11B48DC-4E2A-4492-B8D0-3EFE6096CCF6}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E11B48DC-4E2A-4492-B8D0-3EFE6096CCF6}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E11B48DC-4E2A-4492-B8D0-3EFE6096CCF6}.Release|x86.ActiveCfg = Release|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{EEDBFC6A-0B53-4240-8059-8EE2D24FD4BF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

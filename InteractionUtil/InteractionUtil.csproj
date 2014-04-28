@@ -39,7 +39,6 @@
     <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.1.2.0\lib\1.0\Common.Logging.dll</HintPath>
     </Reference>
-    <Reference Include="PresentationCore" />
     <Reference Include="Spring.Core">
       <HintPath>..\packages\Spring.Core.1.3.2\lib\net40\Spring.Core.dll</HintPath>
     </Reference>
@@ -58,14 +57,12 @@
     <Compile Include="Common\InteractionGesture.cs" />
     <Compile Include="Common\ShortcutDefinition.cs" />
     <Compile Include="Common\ShortcutItem.cs" />
-    <Compile Include="Database\DatabaseConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
-    <Compile Include="Service\Impl\ShortcutDatabaseReaderWriterImpl.cs" />
     <Compile Include="Service\Impl\ShortcutXMLReaderWriterImpl.cs" />
     <Compile Include="Service\Impl\ShortcutServiceImpl.cs" />
     <Compile Include="Service\Interface\IProcessService.cs" />
@@ -83,12 +80,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Datamodel\Datamodel.csproj">
-      <Project>{eedbfc6a-0b53-4240-8059-8ee2d24fd4bf}</Project>
-      <Name>Datamodel</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
