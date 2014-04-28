@@ -30,7 +30,5 @@ namespace InteractionUtil.Util
         public static readonly int GSwipeDepthAngle = int.Parse(Resource.GestureSwipeDepthAngle);
         public static readonly int GSwipeHorizontalAngle = int.Parse(Resource.GestureSwipeHorizontalAngle);
         public static readonly int GSwipeMinLength = int.Parse(Resource.GestureSwipeMinLength);
-        public static readonly int GestureTimeOut = int.Parse(Resource.GestureTimeOut);
-        public static readonly int GestureTimeOutContinuous = int.Parse(Resource.GestureTimeOutContinuous);
     }
 }

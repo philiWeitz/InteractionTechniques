@@ -61,6 +61,24 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 800.
+        /// </summary>
+        public static string ConfGestureTimeOut {
+            get {
+                return ResourceManager.GetString("ConfGestureTimeOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 80.
+        /// </summary>
+        public static string ConfVolumeStrength {
+            get {
+                return ResourceManager.GetString("ConfVolumeStrength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 50.
         /// </summary>
         public static string GestureCycleDiameter {
@@ -156,24 +174,6 @@ namespace InteractionUtil.Properties {
         public static string GestureSwipeMinLength {
             get {
                 return ResourceManager.GetString("GestureSwipeMinLength", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 800.
-        /// </summary>
-        public static string GestureTimeOut {
-            get {
-                return ResourceManager.GetString("GestureTimeOut", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 150.
-        /// </summary>
-        public static string GestureTimeOutContinuous {
-            get {
-                return ResourceManager.GetString("GestureTimeOutContinuous", resourceCulture);
             }
         }
         

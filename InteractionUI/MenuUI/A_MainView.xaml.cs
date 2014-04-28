@@ -87,6 +87,8 @@ namespace InteractionUI.MenuUI
             }
             else
             {
+                bubble_infobarControl.infotext.Text = "No Kinect device detected!";
+
                 kinectReady = false;
                 cameraImage.Source = null;
                 symbol_nokinectControl.Visibility = Visibility.Visible;

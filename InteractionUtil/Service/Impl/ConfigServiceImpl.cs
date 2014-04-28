@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using InteractionUtil.Properties;
 using InteractionUtil.Service.Interface;
 
 namespace InteractionUtil.Service.Impl
@@ -19,9 +20,17 @@ namespace InteractionUtil.Service.Impl
 
         private String fileName = Directory.GetCurrentDirectory() + @"\potatoConf.xml";
 
+        public int GestureTimeOut { get; set; }
+
         public int VolumeStrength { get; set; }
 
         public VolumeSpec VolumeEnabled { get; set; }
+
+        public ConfigServiceImpl()
+        {
+            GestureTimeOut = int.Parse(Resource.ConfGestureTimeOut);
+            VolumeStrength = int.Parse(Resource.ConfVolumeStrength);
+        }
 
         public void ReadConfigFromFile()
         {
@@ -46,8 +55,9 @@ namespace InteractionUtil.Service.Impl
             XmlNode root = xmlDoc.CreateElement(ROOT);
             xmlDoc.AppendChild(root);
 
-            addNode(xmlDoc, root, "VolumeEnabled", VolumeEnabled);
+            addNode(xmlDoc, root, "GestureTimeOut", GestureTimeOut);
             addNode(xmlDoc, root, "VolumeStrength", VolumeStrength);
+            addNode(xmlDoc, root, "VolumeEnabled", VolumeEnabled);
 
             return xmlDoc.InnerXml;
         }
@@ -57,8 +67,9 @@ namespace InteractionUtil.Service.Impl
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(fileName);
 
-            VolumeEnabled = getFirstNodeItem<VolumeSpec>(xmlDoc, "VolumeEnabled");
+            GestureTimeOut = getFirstNodeItem<int>(xmlDoc, "GestureTimeOut");
             VolumeStrength = getFirstNodeItem<int>(xmlDoc, "VolumeStrength");
+            VolumeEnabled = getFirstNodeItem<VolumeSpec>(xmlDoc, "VolumeEnabled");
         }
 
         private T getFirstNodeItem<T>(XmlDocument xmlDoc, String nodeName)

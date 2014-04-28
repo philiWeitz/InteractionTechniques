@@ -215,7 +215,7 @@ namespace InteractionUI.BusinessLogic
 
         private void drawJointDataQueue(DrawingContext drawingContext)
         {
-            Pen pen = new Pen(Brushes.Black, 5);
+            Pen pen = new Pen(Brushes.SkyBlue, 5);
             pen.Freeze();
 
             List<KinectDataPoint> queue = gestureService.getActiveUserDataPointQueue();

@@ -15,6 +15,7 @@ namespace InteractionUI.BusinessLogic
         private IProcessService processService;
         private IShortcutService shortcutService;
         private IGestureService gestureService;
+        private IConfigService configService;
 
         private int sensorIdx;
         private DateTime lastGestureTime;
@@ -38,6 +39,7 @@ namespace InteractionUI.BusinessLogic
             sensorService = SpringUtil.getService<ISensorService>();
             shortcutService = SpringUtil.getService<IShortcutService>();
             gestureService = SpringUtil.getService<IGestureService>();
+            configService = SpringUtil.getService<IConfigService>();
 
             this.sensorIdx = sensorIdx;
             sensorService.startSensor(sensorIdx);
@@ -52,7 +54,7 @@ namespace InteractionUI.BusinessLogic
 
                 if (InteractionGesture.None != gesture)
                 {
-                    int timeOut = IConsts.GestureTimeOut;
+                    int timeOut = configService.GestureTimeOut;
 
                     if (InteractionGesture.PushTwoHanded == gesture)
                     {
@@ -61,7 +63,7 @@ namespace InteractionUI.BusinessLogic
                     else if (InteractionGesture.CircleClock == gesture ||
                             InteractionGesture.CircleCounterClock == gesture)
                     {
-                        timeOut = IConsts.GestureTimeOutContinuous;
+                        timeOut = timeOut / 4;
                     }
 
                     ShortcutItem shortCut = shortcutService.GetShortcut(gesture);
