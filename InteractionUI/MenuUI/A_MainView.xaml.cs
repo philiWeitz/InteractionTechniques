@@ -15,10 +15,13 @@ namespace InteractionUI.MenuUI
     {
         private static readonly int INTERVAL = 50;
         private static readonly int SENSOR_IDX = 0;
+        private static readonly int NO_USER_THRESHOLD_IN_MS = 500;
 
         private bool kinectReady = false;
         private Thread kinectThread = null;
         private DispatcherTimer updateTimer;
+        private DateTime? noUserDetectedTimer = null;
+
         private ISensorService sensorService;
         private ISkeletonService skeletonService;
 
@@ -55,6 +58,7 @@ namespace InteractionUI.MenuUI
             {
                 if (kinectReady)
                 {
+                    cameraImage.Opacity = 1;
                     setKinectButtonVisibility(true);
 
                     kinectControl.checkGesture();
@@ -68,11 +72,22 @@ namespace InteractionUI.MenuUI
                     }
                     else if (skeletonService.userInRange().Count <= 0)
                     {
-                        symbol_nopersonControl.Visibility = Visibility.Visible;
                         bubble_infobarControl.infotext.Text = "No user in range";
+
+                        if (null == noUserDetectedTimer)
+                        {
+                            noUserDetectedTimer = DateTime.Now;
+                        }
+
+                        if (noUserDetectedTimer.Value.AddMilliseconds(NO_USER_THRESHOLD_IN_MS) < DateTime.Now)
+                        {
+                            cameraImage.Opacity = 0.5;
+                            symbol_nopersonControl.Visibility = Visibility.Visible;
+                        }
                     }
                     else
                     {
+                        noUserDetectedTimer = null;
                         bubble_infobarControl.infotext.Text = kinectControl.LastGesture;
                     }
                 }
@@ -137,6 +152,7 @@ namespace InteractionUI.MenuUI
         private void button_pauseControl_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             kinectControl.Enabled = false;
+            noUserDetectedTimer = DateTime.Now;
             kinectControl.LastGesture = String.Empty;
 
             symbol_nopersonControl.Visibility = Visibility.Hidden;

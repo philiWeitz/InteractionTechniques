@@ -114,11 +114,6 @@ namespace InteractionUI.BusinessLogic
                             // draw upper and lower border for kinect elevation angle
                             drawKinectElevationUpperLowerBound(drawingContext);
 
-                            if (users.Count <= 0)
-                            {
-                                drawingContext.PushOpacity(0.5);
-                                drawingContext.DrawRectangle(Brushes.Black, null, new Rect(0, 0, bitmap.Width, bitmap.Height));
-                            }
                             drawingContext.Close();
                         }
 
