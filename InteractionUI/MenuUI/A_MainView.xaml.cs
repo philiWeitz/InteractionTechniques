@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
 using InteractionUI.BusinessLogic;
+using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
 using KinectServices.Service.Interface;
 
@@ -33,6 +34,9 @@ namespace InteractionUI.MenuUI
 
         private void initialize()
         {
+            IConfigService confService = SpringUtil.getService<IConfigService>();
+            confService.ReadConfigFromFile();
+
             sensorService = SpringUtil.getService<ISensorService>();
             skeletonService = SpringUtil.getService<ISkeletonService>();
 

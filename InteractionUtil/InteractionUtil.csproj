@@ -63,8 +63,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Service\Impl\ConfigServiceImpl.cs" />
     <Compile Include="Service\Impl\ShortcutXMLReaderWriterImpl.cs" />
     <Compile Include="Service\Impl\ShortcutServiceImpl.cs" />
+    <Compile Include="Service\Interface\IConfigService.cs" />
     <Compile Include="Service\Interface\IProcessService.cs" />
     <Compile Include="Service\Interface\IShortcutReaderWriterService.cs" />
     <Compile Include="Service\Interface\IShortcutService.cs" />
