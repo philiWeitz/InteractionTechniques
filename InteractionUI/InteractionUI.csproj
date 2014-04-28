@@ -83,9 +83,6 @@
     <Compile Include="MenuUI\A_MainView.xaml.cs">
       <DependentUpon>A_MainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MenuUI\CameraWindow.xaml.cs">
-      <DependentUpon>CameraWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MenuUI\Controls\bubble_infobarControl.xaml.cs">
       <DependentUpon>bubble_infobarControl.xaml</DependentUpon>
     </Compile>
@@ -125,15 +122,6 @@
     <Compile Include="MenuUI\Controls\symbol_nopersonControl.xaml.cs">
       <DependentUpon>symbol_nopersonControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MenuUI\MainView.xaml.cs">
-      <DependentUpon>MainView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MenuUI\ShortCutEditView.xaml.cs">
-      <DependentUpon>ShortCutEditView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="MenuUI\ShortCutsMainView.xaml.cs">
-      <DependentUpon>ShortCutsMainView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MenuUI\Controls\symbol_hand_animationControl.xaml.cs">
       <DependentUpon>symbol_hand_animationControl.xaml</DependentUpon>
     </Compile>
@@ -156,10 +144,6 @@
     <Page Include="MenuUI\A_MainView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MenuUI\CameraWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuUI\Controls\bubble_settingsControl.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -208,18 +192,6 @@
     <Page Include="MenuUI\Controls\symbol_nopersonControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="MenuUI\MainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MenuUI\ShortCutEditView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MenuUI\ShortCutsMainView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MenuUI\Controls\symbol_hand_animationControl.xaml">
       <Generator>MSBuild:Compile</Generator>

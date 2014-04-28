@@ -151,7 +151,7 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 30.
+        ///   Looks up a localized string similar to 40.
         /// </summary>
         public static string GestureSwipeMinLength {
             get {

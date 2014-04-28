@@ -4,7 +4,7 @@ namespace InteractionUtil.Service.Interface
 {
     public interface IShortcutService
     {
-        string GetShortcut(InteractionGesture key);
+        ShortcutItem GetShortcut(InteractionGesture key);
 
         string GetProcessName();
 

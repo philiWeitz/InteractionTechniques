@@ -2,14 +2,14 @@
   <ProcessName>firefox</ProcessName>
   <Active>True</Active>
   <Index>1</Index>
-  <CircleClock>{PGDN}</CircleClock>
-  <CircleCounterClock>{PGUP}</CircleCounterClock>
-  <PushTwoHanded>{Home}</PushTwoHanded>
+  <CircleClock>{PGDN},1</CircleClock>
+  <CircleCounterClock>{PGUP},1</CircleCounterClock>
+  <PushTwoHanded>{Home},1</PushTwoHanded>
   <PullTwoHanded></PullTwoHanded>
   <PushOneHanded></PushOneHanded>
   <PullOneHanded></PullOneHanded>
-  <SwipeToLeft>^{PGUP}</SwipeToLeft>
-  <SwipeToRight>^{PGDN}</SwipeToRight>
-  <SwipeUp>{PGUP}</SwipeUp>
-  <SwipeDown>{PGDN}</SwipeDown>
+  <SwipeToLeft>^{PGUP},1</SwipeToLeft>
+  <SwipeToRight>^{PGDN},1</SwipeToRight>
+  <SwipeUp>{PGUP},1</SwipeUp>
+  <SwipeDown>{PGDN},1</SwipeDown>
 </root>

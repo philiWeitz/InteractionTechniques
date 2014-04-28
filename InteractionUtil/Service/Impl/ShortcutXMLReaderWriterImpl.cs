@@ -10,6 +10,8 @@ namespace InteractionUtil.Service.Impl
 {
     internal class ShortcutXMLReaderWriterImpl : IShortcutReaderWriterService
     {
+        private static readonly Char SEPARATOR = ',';
+
         private static readonly String ROOT = "root";
         private static readonly String NODE_IDX = "Index";
         private static readonly String NODE_ACTIVE = "Active";
@@ -109,9 +111,9 @@ namespace InteractionUtil.Service.Impl
             addNode(xmlDoc, root, NODE_ACTIVE, item.Active);
             addNode(xmlDoc, root, NODE_IDX, item.Idx);
 
-            foreach (KeyValuePair<InteractionGesture, String> mapItem in item.GestureMap)
+            foreach (KeyValuePair<InteractionGesture, ShortcutItem> mapItem in item.GestureMap)
             {
-                addNode(xmlDoc, root, mapItem.Key.ToString(), mapItem.Value);
+                addNode(xmlDoc, root, mapItem.Key.ToString(), mapItem.Value.Name + SEPARATOR + mapItem.Value.Strength);
             }
 
             return xmlDoc.InnerXml;
@@ -148,7 +150,12 @@ namespace InteractionUtil.Service.Impl
                 XmlNodeList nodes = xmlDoc.GetElementsByTagName(gesture.ToString());
                 if (nodes.Count > 0)
                 {
-                    result.GestureMap[gesture] = nodes.Item(0).InnerText;
+                    String[] item = nodes.Item(0).InnerText.Split(SEPARATOR);
+
+                    if (item.Length == 2)
+                    {
+                        result.GestureMap[gesture] = new ShortcutItem(item[0], int.Parse(item[1]));
+                    }
                 }
             }
 

@@ -54,8 +54,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AbstractUiItem.cs" />
     <Compile Include="Common\InteractionGesture.cs" />
     <Compile Include="Common\ShortcutDefinition.cs" />
+    <Compile Include="Common\ShortcutItem.cs" />
     <Compile Include="Database\DatabaseConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.Designer.cs">

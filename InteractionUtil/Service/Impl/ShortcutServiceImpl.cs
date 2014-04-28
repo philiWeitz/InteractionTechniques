@@ -11,7 +11,7 @@ namespace InteractionUtil.Service.Impl
         private int currIdx = 0;
         private IShortcutReaderWriterService readerWriterService = null;
 
-        public string GetShortcut(InteractionGesture key)
+        public ShortcutItem GetShortcut(InteractionGesture key)
         {
             List<ShortcutDefinition> list = getReaderWriterService().GetActiveShortCutList();
 
@@ -24,7 +24,7 @@ namespace InteractionUtil.Service.Impl
                 return list[currIdx].GestureMap[key];
             }
 
-            return String.Empty;
+            return null;
         }
 
         public string GetProcessName()

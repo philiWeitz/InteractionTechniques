@@ -64,7 +64,7 @@ namespace InteractionUI.BusinessLogic
                         timeOut = IConsts.GestureTimeOutContinuous;
                     }
 
-                    String shortCut = shortcutService.GetShortcut(gesture);
+                    ShortcutItem shortCut = shortcutService.GetShortcut(gesture);
                     processService.SendKeyToProcess(shortcutService.GetProcessName(), shortCut);
 
                     MediaManager.PlayTrack(gesture);

@@ -73,21 +73,29 @@ namespace GestureServices.Gesture
 
                 if (length >= IConsts.GSwipeMinLength)
                 {
-                    int horizontalAngle = p1.CalcHorizontalAngle(p2);
-                    int depthAngle = p1.CalcDepthAngle(p2);
-
-                    if (checkUpDown(p1, p2, depthAngle, horizontalAngle, direction) ||
-                        checkLeftRight(p1, p2, depthAngle, horizontalAngle, bodyAngle, direction))
+                    if (checkAngle(p1, p2, direction, bodyAngle))
                     {
-                        return true;
+                        KinectDataPoint pMiddle = queue.ElementAt(i + (stepSize / 2));
+
+                        if (checkAngle(p1, pMiddle, direction, bodyAngle))
+                        {
+                            return true;
+                        }
                     }
-                }
-                else
-                {
-                    break;
                 }
             }
             return false;
+        }
+
+        private bool checkAngle(KinectDataPoint p1, KinectDataPoint p2, InteractionDirection direction, int bodyAngle)
+        {
+            int horizontalAngle = p1.CalcHorizontalAngle(p2);
+            int depthAngle = p1.CalcDepthAngle(p2);
+
+            bool result = checkUpDown(p1, p2, depthAngle, horizontalAngle, direction) ||
+                checkLeftRight(p1, p2, depthAngle, horizontalAngle, bodyAngle, direction);
+
+            return result;
         }
 
         private bool checkUpDown(KinectDataPoint p1, KinectDataPoint p2, int depthAngle,

@@ -2,14 +2,14 @@
   <ProcessName>spotify</ProcessName>
   <Active>True</Active>
   <Index>0</Index>
-  <CircleClock>^{UP}</CircleClock>
-  <CircleCounterClock>^{DOWN}</CircleCounterClock>
-  <PushTwoHanded>{HOME}</PushTwoHanded>
+  <CircleClock>^{UP},1</CircleClock>
+  <CircleCounterClock>^{DOWN},1</CircleCounterClock>
+  <PushTwoHanded>{HOME},1</PushTwoHanded>
   <PullTwoHanded></PullTwoHanded>
-  <PushOneHanded>" "</PushOneHanded>
+  <PushOneHanded>" ",1</PushOneHanded>
   <PullOneHanded></PullOneHanded>
-  <SwipeToLeft>^{LEFT}</SwipeToLeft>
-  <SwipeToRight>^{RIGHT}</SwipeToRight>
-  <SwipeUp>^{UP}</SwipeUp>
-  <SwipeDown>^{DOWN}</SwipeDown>
+  <SwipeToLeft>^{LEFT},1</SwipeToLeft>
+  <SwipeToRight>^{RIGHT},1</SwipeToRight>
+  <SwipeUp>^{UP},1</SwipeUp>
+  <SwipeDown>^{DOWN},1</SwipeDown>
 </root>

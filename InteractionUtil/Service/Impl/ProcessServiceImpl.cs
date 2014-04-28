@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 
 namespace InteractionUtil.Service.Impl
@@ -21,7 +22,7 @@ namespace InteractionUtil.Service.Impl
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
-        public void SendKeyToProcess(String name, String key)
+        public void SendKeyToProcess(String name, ShortcutItem item)
         {
             using (Process process = Process.GetProcessesByName(name).FirstOrDefault())
             {
@@ -36,7 +37,10 @@ namespace InteractionUtil.Service.Impl
                         ShowWindow(h2, 4);
                     }
 
-                    SendKeys.SendWait(key);
+                    for (int i = 0; i < item.Strength; ++i)
+                    {
+                        SendKeys.SendWait(item.Name);
+                    }
                     SendKeys.Flush();
                 }
             }

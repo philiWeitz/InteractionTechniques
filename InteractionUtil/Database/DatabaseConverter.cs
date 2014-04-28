@@ -16,9 +16,9 @@ namespace InteractionUtil.Common
             result.Active = definition.Active;
             result.ProcessName = definition.ProcessName;
 
-            foreach (KeyValuePair<InteractionGesture, String> item in definition.GestureMap)
+            foreach (KeyValuePair<InteractionGesture, ShortcutItem> item in definition.GestureMap)
             {
-                result.GestureMap.Add(item.Key.ToString(), item.Value);
+                result.GestureMap.Add(item.Key.ToString(), ShortcutItemToDao(item.Value));
             }
 
             return result;
@@ -34,14 +34,36 @@ namespace InteractionUtil.Common
             result.Active = dao.Active;
             result.ProcessName = dao.ProcessName;
 
-            foreach (KeyValuePair<String, String> item in dao.GestureMap)
+            foreach (KeyValuePair<String, ShortcutItemDAO> item in dao.GestureMap)
             {
                 InteractionGesture gesture;
                 if (Enum.TryParse<InteractionGesture>(item.Key, out gesture))
                 {
-                    result.GestureMap[gesture] = item.Value;
+                    result.GestureMap[gesture] = DaoToShortcutItem(item.Value);
                 }
             }
+            return result;
+        }
+
+        public static ShortcutItemDAO ShortcutItemToDao(ShortcutItem item)
+        {
+            ShortcutItemDAO result = new ShortcutItemDAO();
+
+            result.Id = item.Id;
+            result.Name = item.Name;
+            result.Strength = item.Strength;
+
+            return result;
+        }
+
+        public static ShortcutItem DaoToShortcutItem(ShortcutItemDAO dao)
+        {
+            ShortcutItem result = new ShortcutItem();
+
+            result.Id = dao.Id;
+            result.Name = dao.Name;
+            result.Strength = dao.Strength;
+
             return result;
         }
     }

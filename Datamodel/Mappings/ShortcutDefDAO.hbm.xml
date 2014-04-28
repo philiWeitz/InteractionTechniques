@@ -16,7 +16,7 @@
     <map name="GestureMap" table="GestureMaps">
       <key column="GestureMapId" />
       <index column="InteractionGesture" type="System.String" />
-      <element column="Shortcut" type="System.String" />
+      <element column="Shortcut" type="Datamodel.Model.ShorcutItemDAO" />
     </map>
   </class>
 </hibernate-mapping>

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 
 namespace InteractionUtil.Common
 {
-    public class ShortcutDefinition : IComparable
+    public class ShortcutDefinition : AbstractUiItem, IComparable
     {
-        public Guid Id { get; set; }
-
         public int Idx { get; set; }
 
         public bool Active { get; set; }
@@ -17,7 +15,7 @@ namespace InteractionUtil.Common
 
         public String ProcessName { get; set; }
 
-        public Dictionary<InteractionGesture, String> GestureMap { get; set; }
+        public Dictionary<InteractionGesture, ShortcutItem> GestureMap { get; set; }
 
         public ShortcutDefinition()
         {
@@ -25,10 +23,10 @@ namespace InteractionUtil.Common
             Active = true;
             ProcessName = String.Empty;
 
-            GestureMap = new Dictionary<InteractionGesture, string>();
+            GestureMap = new Dictionary<InteractionGesture, ShortcutItem>();
             foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
             {
-                GestureMap.Add(gesture, String.Empty);
+                GestureMap.Add(gesture, new ShortcutItem());
             }
         }
 

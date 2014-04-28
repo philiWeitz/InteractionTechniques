@@ -158,7 +158,7 @@
     <comment>Max gitter for horizontal angle (in degree)</comment>
   </data>
   <data name="GestureSwipeMinLength" xml:space="preserve">
-    <value>30</value>
+    <value>40</value>
     <comment>Min swipe length (in cm)</comment>
   </data>
   <data name="GestureTimeOut" xml:space="preserve">

@@ -13,14 +13,14 @@ namespace Datamodel.Model
 
         public virtual String ProcessName { get; set; }
 
-        public virtual IDictionary<String, String> GestureMap { get; set; }
+        public virtual IDictionary<String, ShortcutItemDAO> GestureMap { get; set; }
 
         public ShortcutDefDAO()
         {
             Idx = 0;
             Active = true;
             ProcessName = String.Empty;
-            GestureMap = new Dictionary<String, String>();
+            GestureMap = new Dictionary<String, ShortcutItemDAO>();
         }
     }
 }
