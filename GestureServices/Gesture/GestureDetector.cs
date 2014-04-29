@@ -8,30 +8,22 @@ using Microsoft.Kinect;
 
 namespace GestureServices.Gesture
 {
-    // enum for controlling the kinect elevation angle
-    internal enum UserCenter
-    {
-        up,
-        down,
-        center
-    }
-
     internal class GestureDetector
     {
-        private static readonly int KINECT_ANGLE_TIMEOUT = 2000;
-
-        private ISkeletonService skeletonService = null;
-        private UserCenter userCenter = UserCenter.center;
-        private KinectUser? lastActiveUser = null;
+        //private static readonly int KINECT_ANGLE_TIMEOUT = 2000;
 
         private KinectSensor sensor;
         private DateTime gestureTime;
+        private ISkeletonService skeletonService = null;
+
+        private UserDetector userDetector;
         private SwipeDetector swipeDetector;
         private CircleDetector circleDetector;
         private PushPullGestureDetector pushPullDetector;
 
         private IDictionary<KinectUser, PointQueue> dataPointMap =
             new Dictionary<KinectUser, PointQueue>();
+
 
         public GestureDetector(KinectSensor sensor)
         {
@@ -108,7 +100,7 @@ namespace GestureServices.Gesture
 
         public KinectUser? getActiveKinectUser()
         {
-            return lastActiveUser;
+            return userDetector.LastActiveUser;
         }
 
         private InteractionGesture checkTwoHandedGestures(int bodyAngle, KinectUser user)
@@ -161,6 +153,7 @@ namespace GestureServices.Gesture
         {
             this.sensor = sensor;
 
+            userDetector = new UserDetector(sensor);
             swipeDetector = new SwipeDetector(IConsts.GestureQueueSizeSwipe);
             circleDetector = new CircleDetector(IConsts.GestureQueueSizeCycle);
             pushPullDetector = new PushPullGestureDetector(IConsts.GestureQueueSizePush);
@@ -183,41 +176,7 @@ namespace GestureServices.Gesture
 
         private JointType isGestureActive(KinectUser user)
         {
-            KinectDataPoint handLeft = getSekeltonService().getDataPoint(JointType.HandLeft, user);
-            KinectDataPoint handRight = getSekeltonService().getDataPoint(JointType.HandRight, user);
-            KinectDataPoint shoulder = getSekeltonService().getDataPoint(JointType.ShoulderCenter, user);
-
-            if (null != handLeft && null != handRight && null != shoulder)
-            {
-                JointType? result = null;
-
-                if (handLeft.ScreenY < shoulder.ScreenY && handLeft.ScreenY < handRight.ScreenY)
-                {
-                    result = JointType.HandRight;
-                }
-                else if (handRight.ScreenY < shoulder.ScreenY && handRight.ScreenY < handLeft.ScreenY)
-                {
-                    result = JointType.HandLeft;
-                }
-
-                if (null != result)
-                {
-                    if (null == lastActiveUser || user != lastActiveUser)
-                    {
-                        lastActiveUser = user;
-                        dataPointMap[user].GetQueue(result.Value).Clear();
-                    }
-                    return result.Value;
-                }
-            }
-
-            // if the last user is not active anymore -> set lastActiveUser to null
-            if (null != lastActiveUser && user == lastActiveUser.Value)
-            {
-                lastActiveUser = null;
-            }
-
-            return default(JointType);
+            return userDetector.isGestureActive(user, dataPointMap[user]);
         }
 
         private bool isTimeOut()
@@ -237,62 +196,10 @@ namespace GestureServices.Gesture
         {
             if (!isTimeOut())
             {
-                foreach (KinectUser user in getSekeltonService().userInRange())
-                {
-                    if (default(JointType) != isGestureActive(user))
-                    {
-                        KinectDataPoint point = getSekeltonService().getDataPoint(JointType.ShoulderCenter, user);
-
-                        // user stands outside of the upper limit -> move kinect up
-                        if (point.ScreenY < IConsts.KinectCenterUpperLimit)
-                        {
-                            userCenter = UserCenter.up;
-                        }
-                        // user stands outside of the lower limit -> move kinect dow
-                        else if (point.ScreenY > IConsts.KinectCenterLowerLimit)
-                        {
-                            userCenter = UserCenter.down;
-                        }
-
-                        // centeres the user based on inner borders
-                        if (userCenter == UserCenter.up && point.ScreenY < IConsts.KinectCenterUpperLimitInner)
-                        {
-                            // move kinect up
-                            if (sensor.ElevationAngle < sensor.MaxElevationAngle - 5)
-                            {
-                                System.Media.SystemSounds.Asterisk.Play();
-
-                                int newAngle = Math.Min(sensor.MaxElevationAngle, sensor.ElevationAngle + 5);
-                                sensor.ElevationAngle = newAngle;
-
-                                setGestureTimeOut(KINECT_ANGLE_TIMEOUT);
-                            }
-                        }
-                        else if (userCenter == UserCenter.down && point.ScreenY > IConsts.KinectCenterLowerLimitInner)
-                        {
-                            // move kinect down
-                            if (sensor.ElevationAngle > sensor.MinElevationAngle + 5)
-                            {
-                                System.Media.SystemSounds.Asterisk.Play();
-
-                                int newAngle = Math.Max(sensor.MinElevationAngle, sensor.ElevationAngle - 5);
-                                sensor.ElevationAngle = newAngle;
-
-                                setGestureTimeOut(KINECT_ANGLE_TIMEOUT);
-                            }
-                        }
-                        else
-                        {
-                            // user is centered
-                            userCenter = UserCenter.center;
-                        }
-                    }
-                    else
-                    {
-                        // is user out of range -> user is concidered to be centered
-                        userCenter = UserCenter.center;
-                    }
-                }
+                //if (userDetector.focuseCurrentUser())
+                //{
+                //    setGestureTimeOut(KINECT_ANGLE_TIMEOUT);
+                //}
             }
         }
 

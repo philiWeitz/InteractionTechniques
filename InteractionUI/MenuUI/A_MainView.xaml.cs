@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Threading;
+using GestureServices.Service.Interface;
 using InteractionUI.BusinessLogic;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
@@ -17,6 +18,8 @@ namespace InteractionUI.MenuUI
         private static readonly int SENSOR_IDX = 0;
         private static readonly int NO_USER_THRESHOLD_IN_MS = 500;
 
+        private HighlightView highlightView;
+
         private bool kinectReady = false;
         private Thread kinectThread = null;
         private DispatcherTimer updateTimer;
@@ -24,6 +27,8 @@ namespace InteractionUI.MenuUI
 
         private ISensorService sensorService;
         private ISkeletonService skeletonService;
+        private IGestureService gestureService;
+
 
         private KinectCameraControl cameraControl { get; set; }
 
@@ -42,11 +47,15 @@ namespace InteractionUI.MenuUI
 
             sensorService = SpringUtil.getService<ISensorService>();
             skeletonService = SpringUtil.getService<ISkeletonService>();
+            gestureService = SpringUtil.getService<IGestureService>();
 
             updateTimer = new DispatcherTimer(DispatcherPriority.SystemIdle);
             updateTimer.Tick += new EventHandler(updateTimer_Tick);
             updateTimer.Interval = TimeSpan.FromMilliseconds(INTERVAL);
             updateTimer.Start();
+
+            highlightView = new HighlightView();
+            highlightView.Show();
         }
 
         private void updateTimer_Tick(object sender, EventArgs e)
@@ -89,6 +98,15 @@ namespace InteractionUI.MenuUI
                     {
                         noUserDetectedTimer = null;
                         bubble_infobarControl.infotext.Text = kinectControl.LastGesture;
+
+                        if (gestureService.getActiveUserDataPointQueue().Count > 0)
+                        {
+                            highlightView.WindowHighlight.Visibility = Visibility.Visible;
+                        }
+                        else
+                        {
+                            highlightView.WindowHighlight.Visibility = Visibility.Collapsed;
+                        }
                     }
                 }
                 else if (null == kinectThread || !kinectThread.IsAlive)
@@ -130,6 +148,7 @@ namespace InteractionUI.MenuUI
 
             sensorService.startSensor(SENSOR_IDX);
             skeletonService.enableSkeleton(sensorService.getSensor(SENSOR_IDX));
+            gestureService.enableGestureService(sensorService.getSensor(SENSOR_IDX));
 
             kinectReady = true;
         }

@@ -18,6 +18,20 @@ namespace InteractionUI
         {
             A_MainView view = new A_MainView();
             _mainFrame.Navigate(view);
+
+            Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // close all open windows
+            foreach (Window w in Application.Current.Windows)
+            {
+                if (w != this)
+                {
+                    w.Close();
+                }
+            }
         }
     }
 }

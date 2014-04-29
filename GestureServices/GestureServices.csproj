@@ -57,6 +57,7 @@
     <Compile Include="Gesture\PointQueue.cs" />
     <Compile Include="Gesture\PushPullDetector.cs" />
     <Compile Include="Gesture\SwipeDetector.cs" />
+    <Compile Include="Gesture\UserDetector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Impl\GestureServiceImpl.cs" />
     <Compile Include="Service\Interface\IGestureService.cs" />

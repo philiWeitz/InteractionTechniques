@@ -10,6 +10,6 @@
   <PullOneHanded></PullOneHanded>
   <SwipeToLeft>^{LEFT},1</SwipeToLeft>
   <SwipeToRight>^{RIGHT},1</SwipeToRight>
-  <SwipeUp>^{UP},1</SwipeUp>
-  <SwipeDown>^{DOWN},1</SwipeDown>
+  <SwipeUp>^{UP},7</SwipeUp>
+  <SwipeDown>^{DOWN},7</SwipeDown>
 </root>
