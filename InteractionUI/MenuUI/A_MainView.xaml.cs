@@ -25,6 +25,7 @@ namespace InteractionUI.MenuUI
         private DispatcherTimer updateTimer;
         private DateTime? noUserDetectedTimer = null;
 
+        private IConfigService confService;
         private ISensorService sensorService;
         private ISkeletonService skeletonService;
         private IGestureService gestureService;
@@ -41,7 +42,7 @@ namespace InteractionUI.MenuUI
 
         private void initialize()
         {
-            IConfigService confService = SpringUtil.getService<IConfigService>();
+            confService = SpringUtil.getService<IConfigService>();
             confService.ReadConfigFromFile();
 
             sensorService = SpringUtil.getService<ISensorService>();
@@ -98,13 +99,16 @@ namespace InteractionUI.MenuUI
                         noUserDetectedTimer = null;
                         bubble_infobarControl.infotext.Text = kinectControl.LastGesture;
 
-                        if (gestureService.getActiveUserDataPointQueue().Count > 0)
+                        if (confService.ActiveUserFeedbackEnabled)
                         {
-                            highlightView.WindowHighlight.Visibility = Visibility.Visible;
-                        }
-                        else
-                        {
-                            highlightView.WindowHighlight.Visibility = Visibility.Collapsed;
+                            if (gestureService.getActiveUserDataPointQueue().Count > 0)
+                            {
+                                highlightView.WindowHighlight.Visibility = Visibility.Visible;
+                            }
+                            else
+                            {
+                                highlightView.WindowHighlight.Visibility = Visibility.Collapsed;
+                            }
                         }
                     }
                 }

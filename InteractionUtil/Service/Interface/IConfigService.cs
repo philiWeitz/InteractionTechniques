@@ -12,6 +12,8 @@ namespace InteractionUtil.Service.Interface
 
         bool VolumeEnabled { get; set; }
 
+        bool ActiveUserFeedbackEnabled { get; set; }
+
         void ReadConfigFromFile();
 
         void WriteConfigToFile();
