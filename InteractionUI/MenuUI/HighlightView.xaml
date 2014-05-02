@@ -10,7 +10,7 @@
     <Grid>
         <Rectangle x:Name="WindowHighlight"
                    Visibility="Collapsed"
-                   Stroke="Lime"
-                   StrokeThickness="6" />
+                   Stroke="LimeGreen"
+                   StrokeThickness="10" />
     </Grid>
 </Window>

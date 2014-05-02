@@ -29,7 +29,6 @@ namespace InteractionUI.MenuUI
         private ISkeletonService skeletonService;
         private IGestureService gestureService;
 
-
         private KinectCameraControl cameraControl { get; set; }
 
         private KinectInteractionControl kinectControl { get; set; }
@@ -71,17 +70,17 @@ namespace InteractionUI.MenuUI
                     setKinectButtonVisibility(true);
 
                     kinectControl.checkGesture();
-
                     cameraControl.UpdateCamera();
-                    cameraControl.CheckActiveUserChange(symbol_hand_animationControl);
 
                     if (!kinectControl.Enabled)
                     {
                         bubble_infobarControl.infotext.Text = "Press the \"Play\" button to start the interaction";
+                        highlightView.WindowHighlight.Visibility = Visibility.Collapsed;
                     }
                     else if (skeletonService.userInRange().Count <= 0)
                     {
                         bubble_infobarControl.infotext.Text = "No user in range";
+                        highlightView.WindowHighlight.Visibility = Visibility.Collapsed;
 
                         if (null == noUserDetectedTimer)
                         {

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using GestureServices.Service.Interface;
 using InteractionUtil.Util;
@@ -26,7 +25,6 @@ namespace InteractionUI.BusinessLogic
         private IGestureService gestureService;
 
         private bool _enabled = true;
-        private KinectUser? activeUser = null;
 
         private ImageSource imgHandRight;
         private ImageSource imgHandLeft;
@@ -132,43 +130,12 @@ namespace InteractionUI.BusinessLogic
             return false;
         }
 
-        public void CheckActiveUserChange(symbol_hand_animationControl handAnimation)
-        {
-            if (Enabled && skeletonService.userInRange().Count > 0)
-            {
-                KinectUser? curr = gestureService.getActiveKinectUser();
-
-                if (null != curr && activeUser != curr)
-                {
-                    KinectDataPoint handLeft = skeletonService.getDataPoint(JointType.HandLeft, curr.Value);
-                    KinectDataPoint handRight = skeletonService.getDataPoint(JointType.HandRight, curr.Value);
-
-                    if (null != handLeft && null != handRight)
-                    {
-                        KinectDataPoint point;
-
-                        if (handLeft.Y < handRight.Y)
-                            point = handLeft;
-                        else
-                            point = handRight;
-
-                        Canvas.SetTop(handAnimation, point.ScreenY);
-                        Canvas.SetLeft(handAnimation, point.ScreenX);
-
-                        Storyboard board = (Storyboard)handAnimation.Resources["story_hand_expand"];
-                        handAnimation.Visibility = Visibility.Visible;
-                        handAnimation.BeginStoryboard(board);
-                    }
-                }
-
-                activeUser = curr;
-            }
-        }
-
         private void drawJoints(DrawingContext drawingContext, List<KinectUser> users)
         {
             drawJointDataQueue(drawingContext);
             //drawJointDataQueueAsPoints(drawingContext);
+
+            KinectUser? activeUser = gestureService.getActiveKinectUser();
 
             foreach (KinectUser user in users)
             {
@@ -177,7 +144,7 @@ namespace InteractionUI.BusinessLogic
 
                 if (null != handLeft)
                 {
-                    if (activeUser == user)
+                    if (null != activeUser && activeUser.Value == user)
                     {
                         drawHandImage(imgHandLeftActive, handLeft, drawingContext);
                     }
@@ -188,7 +155,7 @@ namespace InteractionUI.BusinessLogic
                 }
                 if (null != handRight)
                 {
-                    if (activeUser == user)
+                    if (null != activeUser && activeUser.Value == user)
                     {
                         drawHandImage(imgHandRightActive, handRight, drawingContext);
                     }
