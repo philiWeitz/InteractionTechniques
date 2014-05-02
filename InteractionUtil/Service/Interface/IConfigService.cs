@@ -4,11 +4,13 @@ namespace InteractionUtil.Service.Interface
 {
     public interface IConfigService
     {
+        event EventHandler ConfigChanged;
+
+        void PopulateChanges();
+
         int GestureTimeOut { get; set; }
 
-        int VolumeStrength { get; set; }
-
-        VolumeSpec VolumeEnabled { get; set; }
+        bool VolumeEnabled { get; set; }
 
         void ReadConfigFromFile();
 

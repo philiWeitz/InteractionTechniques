@@ -6,30 +6,24 @@ using InteractionUtil.Service.Interface;
 
 namespace InteractionUtil.Service.Impl
 {
-    public enum VolumeSpec
-    {
-        Enabled = 0,
-        Disabled = 1,
-        EnabledOnlyLocale = 2,
-        EnabledOnlyRemote = 3
-    }
+    public delegate void EventHandler();
 
     internal class ConfigServiceImpl : IConfigService
     {
         private static readonly String ROOT = "root";
 
+        public event EventHandler ConfigChanged;
+
         private String fileName = Directory.GetCurrentDirectory() + @"\potatoConf.xml";
 
         public int GestureTimeOut { get; set; }
 
-        public int VolumeStrength { get; set; }
-
-        public VolumeSpec VolumeEnabled { get; set; }
+        public bool VolumeEnabled { get; set; }
 
         public ConfigServiceImpl()
         {
+            VolumeEnabled = true;
             GestureTimeOut = int.Parse(Resource.ConfGestureTimeOut);
-            VolumeStrength = int.Parse(Resource.ConfVolumeStrength);
         }
 
         public void ReadConfigFromFile()
@@ -38,6 +32,8 @@ namespace InteractionUtil.Service.Impl
             {
                 xmlToConf();
             }
+
+            PopulateChanges();
         }
 
         public void WriteConfigToFile()
@@ -45,6 +41,16 @@ namespace InteractionUtil.Service.Impl
             using (StreamWriter file = new StreamWriter(fileName))
             {
                 file.Write(confToXml());
+            }
+
+            PopulateChanges();
+        }
+
+        public void PopulateChanges()
+        {
+            if (null != ConfigChanged)
+            {
+                ConfigChanged.Invoke();
             }
         }
 
@@ -56,7 +62,6 @@ namespace InteractionUtil.Service.Impl
             xmlDoc.AppendChild(root);
 
             addNode(xmlDoc, root, "GestureTimeOut", GestureTimeOut);
-            addNode(xmlDoc, root, "VolumeStrength", VolumeStrength);
             addNode(xmlDoc, root, "VolumeEnabled", VolumeEnabled);
 
             return xmlDoc.InnerXml;
@@ -68,8 +73,7 @@ namespace InteractionUtil.Service.Impl
             xmlDoc.Load(fileName);
 
             GestureTimeOut = getFirstNodeItem<int>(xmlDoc, "GestureTimeOut");
-            VolumeStrength = getFirstNodeItem<int>(xmlDoc, "VolumeStrength");
-            VolumeEnabled = getFirstNodeItem<VolumeSpec>(xmlDoc, "VolumeEnabled");
+            VolumeEnabled = getFirstNodeItem<bool>(xmlDoc, "VolumeEnabled");
         }
 
         private T getFirstNodeItem<T>(XmlDocument xmlDoc, String nodeName)

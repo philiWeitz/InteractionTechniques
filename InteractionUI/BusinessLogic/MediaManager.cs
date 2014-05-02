@@ -3,6 +3,8 @@ using System.Media;
 using System.Windows.Media;
 using InteractionUI.Properties;
 using InteractionUtil.Common;
+using InteractionUtil.Service.Interface;
+using InteractionUtil.Util;
 
 namespace InteractionUI.BusinessLogic
 {
@@ -10,12 +12,11 @@ namespace InteractionUI.BusinessLogic
     {
         private static MediaManager instance;
 
+        private IConfigService configService;
         private MediaPlayer player = new MediaPlayer();
 
         private Dictionary<InteractionGesture, SoundPlayer> gestureToSoundMap =
             new Dictionary<InteractionGesture, SoundPlayer>();
-
-        public static bool Mute { get; set; }
 
         public static void PlayTrack(InteractionGesture gesture)
         {
@@ -40,6 +41,8 @@ namespace InteractionUI.BusinessLogic
 
         private void initialize()
         {
+            configService = SpringUtil.getService<IConfigService>();
+
             gestureToSoundMap[InteractionGesture.SwipeToLeft] = new SoundPlayer(Sounds.ToLeft);
             gestureToSoundMap[InteractionGesture.SwipeToRight] = new SoundPlayer(Sounds.ToRight);
             gestureToSoundMap[InteractionGesture.PushOneHanded] = new SoundPlayer(Sounds.Push);
@@ -47,7 +50,7 @@ namespace InteractionUI.BusinessLogic
 
         private void _playTrack(InteractionGesture gesture)
         {
-            if (!Mute)
+            if (configService.VolumeEnabled)
             {
                 SoundPlayer player;
 
