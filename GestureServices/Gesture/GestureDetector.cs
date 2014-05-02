@@ -17,6 +17,7 @@ namespace GestureServices.Gesture
         private ISkeletonService skeletonService = null;
 
         private UserDetector userDetector;
+        private WaveDetector waveDetector;
         private SwipeDetector swipeDetector;
         private CircleDetector circleDetector;
         private PushPullGestureDetector pushPullDetector;
@@ -115,6 +116,10 @@ namespace GestureServices.Gesture
             gestureFound = circleDetector.CheckCircleCounterClockGesture(dataPointMap[user].GetQueue(joint));
             if (gestureFound) return InteractionGesture.CircleCounterClock;
 
+            /*----- wave gesture -----*/
+            gestureFound = waveDetector.CheckWaveGesture(dataPointMap[user].GetQueue(joint));
+            if (gestureFound) return InteractionGesture.Wave;
+
             /*----- push / pull gestures -----*/
             gestureFound = pushPullDetector.CheckPushGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
             if (gestureFound) return InteractionGesture.PushOneHanded;
@@ -144,6 +149,7 @@ namespace GestureServices.Gesture
             this.sensor = sensor;
 
             userDetector = new UserDetector(sensor);
+            waveDetector = new WaveDetector(IConsts.GestureQueueSizeWave);
             swipeDetector = new SwipeDetector(IConsts.GestureQueueSizeSwipe);
             circleDetector = new CircleDetector(IConsts.GestureQueueSizeCycle);
             pushPullDetector = new PushPullGestureDetector(IConsts.GestureQueueSizePush);

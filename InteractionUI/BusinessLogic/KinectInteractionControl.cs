@@ -56,7 +56,11 @@ namespace InteractionUI.BusinessLogic
                 {
                     int timeOut = configService.GestureTimeOut;
 
-                    if (InteractionGesture.CircleClock == gesture ||
+                    if (InteractionGesture.Wave == gesture)
+                    {
+                        shortcutService.NextApplication();
+                    }
+                    else if (InteractionGesture.CircleClock == gesture ||
                             InteractionGesture.CircleCounterClock == gesture)
                     {
                         timeOut = timeOut / 4;

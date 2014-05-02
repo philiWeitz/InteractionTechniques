@@ -156,6 +156,9 @@
     <value>500</value>
     <comment>Max time points are stored for swipes (in ms)</comment>
   </data>
+  <data name="GestureQueueSizeWave" xml:space="preserve">
+    <value>1000</value>
+  </data>
   <data name="GestureSwipeDepthAngle" xml:space="preserve">
     <value>15</value>
     <comment>Max gitter for depth angle (in degree)</comment>
@@ -167,6 +170,14 @@
   <data name="GestureSwipeMinLength" xml:space="preserve">
     <value>40</value>
     <comment>Min swipe length (in cm)</comment>
+  </data>
+  <data name="GestureWaveMaxGitter" xml:space="preserve">
+    <value>10</value>
+    <comment>Max wave gitter (in cm)</comment>
+  </data>
+  <data name="GestureWaveMinLength" xml:space="preserve">
+    <value>15</value>
+    <comment>Min wave distance (in cm)</comment>
   </data>
   <data name="KinectMinDistance" xml:space="preserve">
     <value>200</value>

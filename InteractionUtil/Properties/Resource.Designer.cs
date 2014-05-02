@@ -151,6 +151,15 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1000.
+        /// </summary>
+        public static string GestureQueueSizeWave {
+            get {
+                return ResourceManager.GetString("GestureQueueSizeWave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 15.
         /// </summary>
         public static string GestureSwipeDepthAngle {
@@ -174,6 +183,24 @@ namespace InteractionUtil.Properties {
         public static string GestureSwipeMinLength {
             get {
                 return ResourceManager.GetString("GestureSwipeMinLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10.
+        /// </summary>
+        public static string GestureWaveMaxGitter {
+            get {
+                return ResourceManager.GetString("GestureWaveMaxGitter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 15.
+        /// </summary>
+        public static string GestureWaveMinLength {
+            get {
+                return ResourceManager.GetString("GestureWaveMinLength", resourceCulture);
             }
         }
         
