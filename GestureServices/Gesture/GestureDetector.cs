@@ -24,7 +24,6 @@ namespace GestureServices.Gesture
         private IDictionary<KinectUser, PointQueue> dataPointMap =
             new Dictionary<KinectUser, PointQueue>();
 
-
         public GestureDetector(KinectSensor sensor)
         {
             initialize(sensor);
@@ -34,8 +33,11 @@ namespace GestureServices.Gesture
         {
             foreach (KinectUser user in getSekeltonService().userInRange())
             {
-                addDataPoint(JointType.HandLeft, user);
-                addDataPoint(JointType.HandRight, user);
+                lock (dataPointMap)
+                {
+                    addDataPoint(JointType.HandLeft, user);
+                    addDataPoint(JointType.HandRight, user);
+                }
             }
         }
 
@@ -47,11 +49,17 @@ namespace GestureServices.Gesture
                 {
                     if (JointType.HandLeft == isGestureActive(user))
                     {
-                        return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandLeft));
+                        lock (dataPointMap)
+                        {
+                            return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandLeft));
+                        }
                     }
                     else if (JointType.HandRight == isGestureActive(user))
                     {
-                        return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandRight));
+                        lock (dataPointMap)
+                        {
+                            return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandRight));
+                        }
                     }
                 }
             }
@@ -73,15 +81,8 @@ namespace GestureServices.Gesture
                 {
                     int bodyAngle = getSekeltonService().getUserBodyAngle(user);
 
-                    /*----- two handed gestures -----*/
-                    InteractionGesture twoHandedGesture = checkTwoHandedGestures(bodyAngle, user);
-
-                    if (InteractionGesture.None != twoHandedGesture)
-                    {
-                        return twoHandedGesture;
-                    }
-
                     JointType active = isGestureActive(user);
+
                     if (default(JointType) != active)
                     {
                         if (JointType.HandLeft == active)
@@ -103,18 +104,6 @@ namespace GestureServices.Gesture
             return userDetector.LastActiveUser;
         }
 
-        private InteractionGesture checkTwoHandedGestures(int bodyAngle, KinectUser user)
-        {
-            bool gestureFound = false;
-
-            /*----- push / pull gestures -----*/
-            gestureFound = pushPullDetector.CheckPushGesture(bodyAngle, dataPointMap[user].GetQueue(JointType.HandLeft))
-                && pushPullDetector.CheckPushGesture(bodyAngle, dataPointMap[user].GetQueue(JointType.HandRight));
-            if (gestureFound) return InteractionGesture.PushTwoHanded;
-
-            return InteractionGesture.None;
-        }
-
         private InteractionGesture checkOneHandedGestures(JointType joint, int bodyAngle, KinectUser user)
         {
             bool gestureFound = false;
@@ -130,8 +119,9 @@ namespace GestureServices.Gesture
             gestureFound = pushPullDetector.CheckPushGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
             if (gestureFound) return InteractionGesture.PushOneHanded;
 
-            gestureFound = pushPullDetector.CheckPullGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.PullOneHanded;
+            // TODO: activate pull gesture
+            //gestureFound = pushPullDetector.CheckPullGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
+            //if (gestureFound) return InteractionGesture.PullOneHanded;
 
             /*----- swipe gestures -----*/
             gestureFound = swipeDetector.CheckToLeftSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));

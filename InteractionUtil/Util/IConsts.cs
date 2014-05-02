@@ -21,7 +21,7 @@ namespace InteractionUtil.Util
 
         public static readonly int GCircleDiameter = int.Parse(Resource.GestureCycleDiameter);
         public static readonly int GCircleGitterXY = int.Parse(Resource.GestureCycleGitterXY);
-        public static readonly int GPushPullGitterXY = int.Parse(Resource.GesturePushPullGitterXY);
+        public static readonly int GesturePushPullAngle = int.Parse(Resource.GesturePushPullAngle);
         public static readonly int GPushPullMinDepth = int.Parse(Resource.GesturePushPullMinDepth);
         public static readonly int GestureQueueSize = int.Parse(Resource.GestureQueueSize);
         public static readonly int GestureQueueSizeCycle = int.Parse(Resource.GestureQueueSizeCycle);

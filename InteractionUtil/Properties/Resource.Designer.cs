@@ -97,16 +97,16 @@ namespace InteractionUtil.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 30.
+        ///   Looks up a localized string similar to 20.
         /// </summary>
-        public static string GesturePushPullGitterXY {
+        public static string GesturePushPullAngle {
             get {
-                return ResourceManager.GetString("GesturePushPullGitterXY", resourceCulture);
+                return ResourceManager.GetString("GesturePushPullAngle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 10.
+        ///   Looks up a localized string similar to 30.
         /// </summary>
         public static string GesturePushPullMinDepth {
             get {

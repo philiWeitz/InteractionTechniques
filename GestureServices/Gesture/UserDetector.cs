@@ -33,17 +33,17 @@ namespace GestureServices.Gesture
         {
             KinectDataPoint handLeft = getSekeltonService().getDataPoint(JointType.HandLeft, user);
             KinectDataPoint handRight = getSekeltonService().getDataPoint(JointType.HandRight, user);
-            KinectDataPoint shoulder = getSekeltonService().getDataPoint(JointType.ShoulderCenter, user);
+            KinectDataPoint head = getSekeltonService().getDataPoint(JointType.Head, user);
 
-            if (null != handLeft && null != handRight && null != shoulder)
+            if (null != handLeft && null != handRight && null != head)
             {
                 JointType? result = null;
 
-                if (handLeft.ScreenY < shoulder.ScreenY && handLeft.ScreenY < handRight.ScreenY)
+                if (handLeft.Y > head.Y && handLeft.ScreenY < handRight.ScreenY)
                 {
                     result = JointType.HandRight;
                 }
-                else if (handRight.ScreenY < shoulder.ScreenY && handRight.ScreenY < handLeft.ScreenY)
+                else if (handRight.Y > head.Y && handRight.ScreenY < handLeft.ScreenY)
                 {
                     result = JointType.HandLeft;
                 }

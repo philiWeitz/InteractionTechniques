@@ -44,7 +44,7 @@ namespace GestureServices.Gesture
 
         private bool chekPushPullGesture(int bodyAngle, List<KinectDataPoint> queue, int stepSize, InteractionPushPull pushPull)
         {
-            int minPoints = 2 * stepSize + 1;
+            int minPoints = (2 * stepSize) + 1;
 
             for (int i = 0; i < queue.Count - minPoints; ++i)
             {
@@ -58,18 +58,22 @@ namespace GestureServices.Gesture
 
                 KinectDataPoint p2 = queue.ElementAt(i + stepSize);
 
-                int d1 = p2.Z - p1.Z;
-                int d2 = p3.Z - p2.Z;
+                bool isPush = (p1.Z < p2.Z);
+                double distance = p1.CalcDistance3D(p2);
 
-                if ((d1 >= IConsts.GPushPullMinDepth && d2 <= -IConsts.GPushPullMinDepth && pushPull == InteractionPushPull.PUSH)
-                    || (d1 <= -IConsts.GPushPullMinDepth && d2 >= IConsts.GPushPullMinDepth && pushPull == InteractionPushPull.PULL))
+                int angleDepth = 90 - p1.CalcDepthAngle(p2);
+                int angleHorizont = p1.CalcHorizontalAngle(p2);
+
+                if (distance > IConsts.GPushPullMinDepth
+                    && angleHorizont < IConsts.GesturePushPullAngle
+                    && angleDepth < IConsts.GesturePushPullAngle
+                    && (pushPull == InteractionPushPull.PUSH && isPush
+                      || pushPull == InteractionPushPull.PULL && !isPush))
                 {
-                    double dis1 = p1.CalcScreenDistance(p2);
-                    double dis2 = p1.CalcScreenDistance(p3);
-                    double dis3 = p2.CalcScreenDistance(p3);
+                    double keepDist = p2.CalcDistance3D(p3);
 
-                    if (dis1 < IConsts.GPushPullGitterXY &&
-                        dis2 < IConsts.GPushPullGitterXY && dis3 < IConsts.GPushPullGitterXY)
+                    // the hand has to stay in a radius of 10 cm
+                    if (keepDist < 10)
                     {
                         return true;
                     }

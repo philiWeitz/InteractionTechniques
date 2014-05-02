@@ -117,6 +117,8 @@ namespace KinectServices.Service.Impl
                     userDataPointMap[user][JointType.HandRight] =
                         getDataPointRelativeToBody(skeleton.Joints, JointType.HandRight, coordinateMapper);
 
+                    userDataPointMap[user][JointType.Head] =
+                        getDataPointAbsolut(skeleton.Joints, JointType.Head, coordinateMapper);
                     userDataPointMap[user][JointType.ShoulderCenter] =
                         getDataPointAbsolut(skeleton.Joints, JointType.ShoulderCenter, coordinateMapper);
                     userDataPointMap[user][JointType.ShoulderLeft] =
