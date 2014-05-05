@@ -10,6 +10,7 @@ namespace GestureServices.Gesture
 {
     internal class GestureDetector
     {
+        private Object lockObj = new Object();
         //private static readonly int KINECT_ANGLE_TIMEOUT = 2000;
 
         private KinectSensor sensor;
@@ -34,7 +35,7 @@ namespace GestureServices.Gesture
         {
             foreach (KinectUser user in getSekeltonService().userInRange())
             {
-                lock (dataPointMap)
+                lock (lockObj)
                 {
                     addDataPoint(JointType.HandLeft, user);
                     addDataPoint(JointType.HandRight, user);
@@ -50,14 +51,14 @@ namespace GestureServices.Gesture
                 {
                     if (JointType.HandLeft == isGestureActive(user))
                     {
-                        lock (dataPointMap)
+                        lock (lockObj)
                         {
                             return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandLeft));
                         }
                     }
                     else if (JointType.HandRight == isGestureActive(user))
                     {
-                        lock (dataPointMap)
+                        lock (lockObj)
                         {
                             return new List<KinectDataPoint>(dataPointMap[user].GetQueue(JointType.HandRight));
                         }
@@ -109,37 +110,40 @@ namespace GestureServices.Gesture
         {
             bool gestureFound = false;
 
-            /*----- circle gestures -----*/
-            gestureFound = circleDetector.CheckCircleClockGesture(dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.CircleClock;
+            lock (lockObj)
+            {
+                /*----- circle gestures -----*/
+                gestureFound = circleDetector.CheckCircleClockGesture(dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.CircleClock;
 
-            gestureFound = circleDetector.CheckCircleCounterClockGesture(dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.CircleCounterClock;
+                gestureFound = circleDetector.CheckCircleCounterClockGesture(dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.CircleCounterClock;
 
-            /*----- wave gesture -----*/
-            gestureFound = waveDetector.CheckWaveGesture(dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.Wave;
+                /*----- wave gesture -----*/
+                gestureFound = waveDetector.CheckWaveGesture(dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.Wave;
 
-            /*----- push / pull gestures -----*/
-            gestureFound = pushPullDetector.CheckPushGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.PushOneHanded;
+                /*----- push / pull gestures -----*/
+                gestureFound = pushPullDetector.CheckPushGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.PushOneHanded;
 
-            // TODO: activate pull gesture
-            //gestureFound = pushPullDetector.CheckPullGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
-            //if (gestureFound) return InteractionGesture.PullOneHanded;
+                // TODO: activate pull gesture
+                //gestureFound = pushPullDetector.CheckPullGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
+                //if (gestureFound) return InteractionGesture.PullOneHanded;
 
-            /*----- swipe gestures -----*/
-            gestureFound = swipeDetector.CheckToLeftSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.SwipeToLeft;
+                /*----- swipe gestures -----*/
+                gestureFound = swipeDetector.CheckToLeftSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.SwipeToLeft;
 
-            gestureFound = swipeDetector.CheckToRightSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.SwipeToRight;
+                gestureFound = swipeDetector.CheckToRightSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.SwipeToRight;
 
-            gestureFound = swipeDetector.CheckUpSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.SwipeUp;
+                gestureFound = swipeDetector.CheckUpSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.SwipeUp;
 
-            gestureFound = swipeDetector.CheckDownSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
-            if (gestureFound) return InteractionGesture.SwipeDown;
+                gestureFound = swipeDetector.CheckDownSwipeGesture(bodyAngle, dataPointMap[user].GetQueue(joint));
+                if (gestureFound) return InteractionGesture.SwipeDown;
+            }
 
             return InteractionGesture.None;
         }
@@ -172,16 +176,22 @@ namespace GestureServices.Gesture
 
         private JointType isGestureActive(KinectUser user)
         {
-            return userDetector.isGestureActive(user, dataPointMap[user]);
+            lock (lockObj)
+            {
+                return userDetector.isGestureActive(user, dataPointMap[user]);
+            }
         }
 
         private bool isTimeOut()
         {
             if (gestureTime > DateTime.Now)
             {
-                foreach (PointQueue queue in dataPointMap.Values)
+                lock (lockObj)
                 {
-                    queue.ClearQueue();
+                    foreach (PointQueue queue in dataPointMap.Values)
+                    {
+                        queue.ClearQueue();
+                    }
                 }
                 return true;
             }
@@ -192,9 +202,12 @@ namespace GestureServices.Gesture
         {
             if (!isTimeOut())
             {
-                //if (userDetector.focuseCurrentUser())
+                //lock (lockObj)
                 //{
-                //    setGestureTimeOut(KINECT_ANGLE_TIMEOUT);
+                //    if (userDetector.focuseCurrentUser(dataPointMap))
+                //    {
+                //        setGestureTimeOut(KINECT_ANGLE_TIMEOUT);
+                //    }
                 //}
             }
         }

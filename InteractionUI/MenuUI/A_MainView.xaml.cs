@@ -14,7 +14,7 @@ namespace InteractionUI.MenuUI
 {
     public partial class A_MainView : Page
     {
-        private static readonly int INTERVAL = 50;
+        private static readonly int INTERVAL = 20;
         private static readonly int SENSOR_IDX = 0;
         private static readonly int NO_USER_THRESHOLD_IN_MS = 500;
 

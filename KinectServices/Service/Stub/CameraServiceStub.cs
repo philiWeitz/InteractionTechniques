@@ -12,7 +12,7 @@ namespace KinectServices.Service.Stub
 
         public CameraServiceStub()
         {
-            image = new byte[IConsts.KinectResolutionWidth * IConsts.KinectResolutionHeight * 8];
+            image = new byte[IConsts.KinectResolutionWidth * IConsts.KinectResolutionHeight * 256];
 
             for (int i = 0; i < image.Length; ++i)
             {

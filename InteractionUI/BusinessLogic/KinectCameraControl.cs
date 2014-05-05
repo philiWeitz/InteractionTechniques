@@ -116,7 +116,12 @@ namespace InteractionUI.BusinessLogic
                         }
 
                         bitmap.Render(drawingVisual);
+                        bitmap.Freeze();
                         ScreenImage.Source = bitmap;
+
+                        // RenderTargetBitmap has a memory leak -> need to call GC (id = 489723)
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
 
                         return true;
                     }
