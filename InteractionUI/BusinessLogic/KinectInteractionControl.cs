@@ -54,7 +54,7 @@ namespace InteractionUI.BusinessLogic
 
                 if (InteractionGesture.None != gesture)
                 {
-                    int timeOut = configService.GestureTimeOut;
+                    int timeOut = (int) configService.GestureTimeOut * 1000;
 
                     if (InteractionGesture.Wave == gesture)
                     {

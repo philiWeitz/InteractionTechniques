@@ -14,10 +14,10 @@ namespace InteractionUtil.Common
             Strength = 1;
         }
 
-        public ShortcutItem(String name, int strenght)
+        public ShortcutItem(String name, int strength)
         {
             Name = name;
-            Strength = strenght;
+            Strength = strength;
         }
     }
 }

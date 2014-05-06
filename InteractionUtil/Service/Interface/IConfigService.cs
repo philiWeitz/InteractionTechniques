@@ -8,7 +8,7 @@ namespace InteractionUtil.Service.Interface
 
         void PopulateChanges();
 
-        int GestureTimeOut { get; set; }
+        double GestureTimeOut { get; set; }
 
         bool VolumeEnabled { get; set; }
 

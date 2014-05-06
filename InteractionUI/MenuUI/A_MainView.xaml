@@ -162,10 +162,10 @@
             <InteractionUI:symbol_nopersonControl x:Name="symbol_nopersonControl" Height="166.491" Canvas.Left="242.593" Canvas.Top="151.595" Width="166.492" Visibility="Hidden" />
             <InteractionUI:symbol_hand_animationControl x:Name="symbol_hand_animationControl" Height="5" Canvas.Left="242.593" Canvas.Top="193.44" Width="5" Visibility="Hidden" />
             <InteractionUI:bubble_infobarControl x:Name="bubble_infobarControl" Height="41" Canvas.Left="117" Width="396.5" />
-            <InteractionUI:button_settingsControl Visibility="Hidden" x:Name="button_settingsControl" Height="91.5" Canvas.Left="334.875" Canvas.Top="388.5" Width="71.125" />
+            <InteractionUI:button_settingsControl x:Name="button_settingsControl" Height="91.5" Canvas.Left="334.875" Canvas.Top="388.5" Width="71.125" />
             <InteractionUI:bubble_settingsControl x:Name="bubble_settingsControl" Height="373.382" Canvas.Left="27" Canvas.Top="9" Width="602" Visibility="Hidden" />
             <InteractionUI:button_settingscloseControl x:Name="button_settingscloseControl" Height="44" Canvas.Left="589.5" Canvas.Top="5.5" Width="44" Visibility="Hidden" />
-            <InteractionUI:button_shortcutControl Visibility="Hidden" x:Name="button_shortcutControl" Height="91.5" Canvas.Left="406" Canvas.Top="388.5" Width="107.5" />
+            <InteractionUI:button_shortcutControl x:Name="button_shortcutControl" Height="91.5" Canvas.Left="406" Canvas.Top="388.5" Width="107.5" />
             <InteractionUI:bubble_shortcutControl x:Name="bubble_shortcutControl" Height="373.382" Canvas.Left="27" Canvas.Top="9" Width="602" Visibility="Hidden" />
             <InteractionUI:button_shortcutcloseControl x:Name="button_shortcutcloseControl" Height="44" Canvas.Left="589.5" Canvas.Top="5.5" Width="44" Visibility="Hidden" />
             <InteractionUI:button_pauseControl x:Name="button_pauseControl" Height="91.5" Canvas.Left="126.5" Canvas.Top="388.5" Width="98.5" Visibility="Hidden" Foreground="#FFF0F0F0" ToolTip="Pause the recognition of Kinect gestures" MouseLeftButtonUp="button_pauseControl_MouseLeftButtonUp" IsEnabledChanged="kinect_control_IsEnabledChanged" />

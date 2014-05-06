@@ -16,7 +16,7 @@ namespace InteractionUtil.Service.Impl
 
         private String fileName = Directory.GetCurrentDirectory() + @"\potatoConf.xml";
 
-        public int GestureTimeOut { get; set; }
+        public double GestureTimeOut { get; set; }
 
         public bool VolumeEnabled { get; set; }
 
@@ -26,7 +26,7 @@ namespace InteractionUtil.Service.Impl
         {
             VolumeEnabled = true;
             ActiveUserFeedbackEnabled = true;
-            GestureTimeOut = int.Parse(Resource.ConfGestureTimeOut);
+            GestureTimeOut = double.Parse(Resource.ConfGestureTimeOut);
         }
 
         public void ReadConfigFromFile()
@@ -76,7 +76,7 @@ namespace InteractionUtil.Service.Impl
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(fileName);
 
-            GestureTimeOut = getFirstNodeItem<int>(xmlDoc, "GestureTimeOut");
+            GestureTimeOut = getFirstNodeItem<double>(xmlDoc, "GestureTimeOut");
             VolumeEnabled = getFirstNodeItem<bool>(xmlDoc, "VolumeEnabled");
             ActiveUserFeedbackEnabled = getFirstNodeItem<bool>(xmlDoc, "ActiveUserFeedbackEnabled");
         }

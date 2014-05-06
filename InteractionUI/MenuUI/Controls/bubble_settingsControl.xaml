@@ -6,11 +6,24 @@
 	mc:Ignorable="d"
 	x:Class="InteractionUI.bubble_settingsControl"
 	x:Name="UserControl"
-	d:DesignWidth="602" d:DesignHeight="373.382">
+	d:DesignWidth="602" d:DesignHeight="373.382" IsVisibleChanged="UserControl_IsVisibleChanged">
 
     <Grid x:Name="LayoutRoot">
         <Canvas x:Name="bubble_settings">
             <Path Data="F1M575,2L494,2 92,2 14,2C7.373,2,2,7.373,2,14L2,323C2,329.627,7.373,335,14,335L101,335 337.578,335 350.5,357.382 363.422,335 418.578,335 444.422,335 494,335 575,335C581.627,335,587,329.627,587,323L587,14C587,7.373,581.627,2,575,2" Fill="White" Height="361.382" Canvas.Left="-2" Stroke="#FF231F20" StrokeThickness="4" Canvas.Top="16" Width="589" />
+            <CheckBox Content="Play sounds when gestures are recognized" Name="volumeEnabled" Canvas.Left="15" Canvas.Top="40"/>
+            <CheckBox Content="Show colored frame when system is ready to recognize your gestures " Name="activeUserFeedbackEnabled" Canvas.Left="15" Canvas.Top="60"/>
+            <Button Content="Save" Canvas.Left="492" Canvas.Top="313" Width="75" Name="settingsSave" Click="settingsSave_Click"/>
+            <Button Content="Cancel" Canvas.Left="393" Canvas.Top="313" Width="75" Name="settingsCancel" Click="settingsCancel_Click"/>
+            <Slider Maximum="10" Minimum="0" Name="gestureTimeOut" Canvas.Left="15" Canvas.Top="85" Width="144"/>
+            <TextBlock Canvas.Left="180" Canvas.Top="80">
+                <Run Text="Time (in seconds) after a recognized gesture until the next"/>
+                <LineBreak/>
+                <Run Text="gesture can be recognized"/>
+            </TextBlock>
+            
+            <Label Content="0s" Canvas.Left="11" Canvas.Top="98"/>
+            <Label Content="10s" Canvas.Left="138" Canvas.Top="98"/>
         </Canvas>
     </Grid>
 </UserControl>
