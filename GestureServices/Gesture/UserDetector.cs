@@ -39,7 +39,11 @@ namespace GestureServices.Gesture
             {
                 JointType? result = null;
 
-                if (handLeft.Y > head.Y && handLeft.ScreenY < handRight.ScreenY)
+                if (handLeft.Y > head.Y && handRight.Y > head.Y)
+                {
+                    result = null;
+                }
+                else if (handLeft.Y > head.Y && handLeft.ScreenY < handRight.ScreenY)
                 {
                     result = JointType.HandRight;
                 }

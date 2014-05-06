@@ -168,7 +168,7 @@
     <comment>Max gitter for horizontal angle (in degree)</comment>
   </data>
   <data name="GestureSwipeMinLength" xml:space="preserve">
-    <value>40</value>
+    <value>60</value>
     <comment>Min swipe length (in cm)</comment>
   </data>
   <data name="GestureWaveMaxGitter" xml:space="preserve">
@@ -176,7 +176,7 @@
     <comment>Max wave gitter (in cm)</comment>
   </data>
   <data name="GestureWaveMinLength" xml:space="preserve">
-    <value>15</value>
+    <value>25</value>
     <comment>Min wave distance (in cm)</comment>
   </data>
   <data name="KinectMinDistance" xml:space="preserve">
