@@ -50,6 +50,8 @@ namespace InteractionUI
 
             BindingExpression bg = activeUserFeedbackEnabled.GetBindingExpression(CheckBox.IsCheckedProperty);
             bg.UpdateTarget();
+
+
         }
 
         private void settingsSave_Click(object sender, System.Windows.RoutedEventArgs e)

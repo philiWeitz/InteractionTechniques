@@ -121,10 +121,16 @@
   <data name="Push" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>sounds\push.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ToLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>sounds\toleft.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Swipe_down" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sounds\swipe_down.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ToRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>sounds\toright.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="Swipe_left" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sounds\swipe_left.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Swipe_right" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sounds\swipe_right.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Swipe_up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>sounds\swipe_up.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>

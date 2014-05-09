@@ -43,8 +43,10 @@ namespace InteractionUI.BusinessLogic
         {
             configService = SpringUtil.getService<IConfigService>();
 
-            gestureToSoundMap[InteractionGesture.SwipeToLeft] = new SoundPlayer(Sounds.ToLeft);
-            gestureToSoundMap[InteractionGesture.SwipeToRight] = new SoundPlayer(Sounds.ToRight);
+            gestureToSoundMap[InteractionGesture.SwipeToLeft] = new SoundPlayer(Sounds.Swipe_left);
+            gestureToSoundMap[InteractionGesture.SwipeToRight] = new SoundPlayer(Sounds.Swipe_right);
+            gestureToSoundMap[InteractionGesture.SwipeDown] = new SoundPlayer(Sounds.Swipe_down);
+            gestureToSoundMap[InteractionGesture.SwipeUp] = new SoundPlayer(Sounds.Swipe_up);
             gestureToSoundMap[InteractionGesture.PushOneHanded] = new SoundPlayer(Sounds.Push);
         }
 

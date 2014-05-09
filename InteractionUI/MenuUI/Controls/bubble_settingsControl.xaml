@@ -15,7 +15,7 @@
             <CheckBox Content="Show colored frame when system is ready to recognize your gestures " Name="activeUserFeedbackEnabled" Canvas.Left="15" Canvas.Top="60"/>
             <Button Content="Save" Canvas.Left="492" Canvas.Top="313" Width="75" Name="settingsSave" Click="settingsSave_Click"/>
             <Button Content="Cancel" Canvas.Left="393" Canvas.Top="313" Width="75" Name="settingsCancel" Click="settingsCancel_Click"/>
-            <Slider Maximum="10" Minimum="0" Name="gestureTimeOut" Canvas.Left="15" Canvas.Top="85" Width="144"/>
+            <Slider Maximum="5" Minimum="0" Name="gestureTimeOut" Canvas.Left="15" Canvas.Top="85" Width="144"/>
             <TextBlock Canvas.Left="180" Canvas.Top="80">
                 <Run Text="Time (in seconds) after a recognized gesture until the next"/>
                 <LineBreak/>
@@ -23,7 +23,7 @@
             </TextBlock>
             
             <Label Content="0s" Canvas.Left="11" Canvas.Top="98"/>
-            <Label Content="10s" Canvas.Left="138" Canvas.Top="98"/>
+            <Label Content="5s" Canvas.Left="138" Canvas.Top="98"/>
         </Canvas>
     </Grid>
 </UserControl>

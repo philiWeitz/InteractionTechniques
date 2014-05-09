@@ -125,6 +125,11 @@
     <Compile Include="MenuUI\Controls\symbol_hand_animationControl.xaml.cs">
       <DependentUpon>symbol_hand_animationControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Sounds.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Sounds.resx</DependentUpon>
+    </Compile>
     <Page Include="MenuUI\Controls\bubble_infobarControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -209,16 +214,15 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Sounds.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Sounds.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Properties\Sounds\Swipe_down.wav" />
+    <Content Include="Properties\Sounds\Swipe_left.wav" />
+    <Content Include="Properties\Sounds\Swipe_right.wav" />
+    <Content Include="Properties\Sounds\Swipe_up.wav" />
     <Resource Include="MenuUI\Controls\trash.ico" />
     <Content Include="Properties\Images\HandRight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -239,8 +243,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Properties\Sounds\Push.wav" />
-    <Content Include="Properties\Sounds\ToLeft.wav" />
-    <Content Include="Properties\Sounds\ToRight.wav" />
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
