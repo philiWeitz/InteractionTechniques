@@ -33,7 +33,7 @@
 
             <ListView.View>
                 <GridView AllowsColumnReorder="true">
-                    <GridViewColumn Header="Gesture" Width="200" DisplayMemberBinding="{Binding ShortcutName}" />
+                    <GridViewColumn Header="Gesture" Width="200" DisplayMemberBinding="{Binding ShortcutType}" />
 
                     <GridViewColumn Header="Shortcut" Width="210">
                         <GridViewColumn.CellTemplate>

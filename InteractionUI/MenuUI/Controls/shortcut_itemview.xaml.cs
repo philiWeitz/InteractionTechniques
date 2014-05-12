@@ -31,11 +31,14 @@ namespace InteractionUI.MenuUI.Controls
         {
             shortcutList.Items.Clear();
 
-            foreach (KeyValuePair<InteractionGesture, ShortcutItem> item in shortcutDef.GestureMap)
+            if (null != shortcutDef)
             {
-                if (item.Key != InteractionGesture.None && item.Key != InteractionGesture.Wave)
+                foreach (KeyValuePair<InteractionGesture, ShortcutItem> item in shortcutDef.GestureMap)
                 {
-                    shortcutList.Items.Add(item.Value);
+                    if (item.Key != InteractionGesture.None && item.Key != InteractionGesture.Wave)
+                    {
+                        shortcutList.Items.Add(item.Value);
+                    }
                 }
             }
         }

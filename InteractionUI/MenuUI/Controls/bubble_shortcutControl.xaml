@@ -16,7 +16,19 @@
             Name="tabcontrol" TabStripPlacement="Left" ItemsSource="{Binding}" Height="304" VerticalAlignment="Top" Margin="17,33,-569,-329">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Name}" Grid.Column="0" VerticalAlignment="Center" />
+                            <Button Tag="{Binding}" Grid.Column="1" Margin="5,2,0,2" VerticalAlignment="Center" Click="Button_Click">
+                                <StackPanel>
+                                    <Image Source="trash.ico" Width="10" />
+                                </StackPanel>
+                            </Button>
+                        </Grid>
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>

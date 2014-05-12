@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
 using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
@@ -25,6 +26,23 @@ namespace InteractionUI
             foreach (ShortcutDefinition item in shortcutService.ReadDefinitionsFromDirectory())
             {
                 tabcontrol.Items.Add(item);
+            }
+        }
+
+        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Button button = (Button)sender;
+
+            if (null != button.Tag)
+            {
+                MessageBoxResult result = MessageBox.Show("Do you want to delete this shortcut definition?",
+                    "Delete Shortcut Definition", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    tabcontrol.Items.Remove(button.Tag);
+                    shortcutService.RemoveShortcutDefinition((ShortcutDefinition)button.Tag);
+                }
             }
         }
     }
