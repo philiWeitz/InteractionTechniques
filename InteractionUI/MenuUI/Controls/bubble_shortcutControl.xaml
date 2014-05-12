@@ -38,7 +38,7 @@
                 </TabControl.ContentTemplate>
             </TabControl>
 
-            <Button Content="+" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="45" Click="Button_Click_1"/>
+            <Button Content="+" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="45" Click="Button_Click_1" />
         </Grid>
     </Canvas>
 </UserControl>

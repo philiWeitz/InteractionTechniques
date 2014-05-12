@@ -24,14 +24,7 @@ namespace InteractionUI
 
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            // close all open windows
-            foreach (Window w in Application.Current.Windows)
-            {
-                if (w != this)
-                {
-                    w.Close();
-                }
-            }
+            Application.Current.Shutdown();
         }
     }
 }

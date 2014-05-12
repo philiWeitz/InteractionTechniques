@@ -1,7 +1,7 @@
-﻿using InteractionUtil.Service.Interface;
-using InteractionUtil.Util;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using System.Windows.Data;
+using InteractionUtil.Service.Interface;
+using InteractionUtil.Util;
 
 namespace InteractionUI
 {
@@ -11,6 +11,7 @@ namespace InteractionUI
     public partial class bubble_settingsControl : UserControl
     {
         private IConfigService confService;
+
         public bubble_settingsControl()
         {
             this.InitializeComponent();
@@ -20,7 +21,6 @@ namespace InteractionUI
         private void initialize()
         {
             confService = SpringUtil.getService<IConfigService>();
-
 
             Binding volumeBinding = new Binding("VolumeEnabled");
             volumeBinding.Source = confService;
@@ -36,9 +36,7 @@ namespace InteractionUI
             activeUserFeedbackEnabledBinding.Source = confService;
             activeUserFeedbackEnabledBinding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
             activeUserFeedbackEnabled.SetBinding(CheckBox.IsCheckedProperty, activeUserFeedbackEnabledBinding);
-
         }
-
 
         private void settingsCancel_Click(object sender, System.Windows.RoutedEventArgs e)
         {
@@ -50,8 +48,6 @@ namespace InteractionUI
 
             BindingExpression bg = activeUserFeedbackEnabled.GetBindingExpression(CheckBox.IsCheckedProperty);
             bg.UpdateTarget();
-
-
         }
 
         private void settingsSave_Click(object sender, System.Windows.RoutedEventArgs e)
@@ -81,8 +77,5 @@ namespace InteractionUI
             BindingExpression bg = activeUserFeedbackEnabled.GetBindingExpression(CheckBox.IsCheckedProperty);
             bg.UpdateTarget();
         }
-
-
-
     }
 }
