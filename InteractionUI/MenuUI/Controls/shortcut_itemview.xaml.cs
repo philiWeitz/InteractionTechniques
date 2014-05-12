@@ -14,7 +14,9 @@ namespace InteractionUI.MenuUI.Controls
     public partial class Shortcut_itemview : UserControl
     {
         private IShortcutReaderWriterService shortcutService;
-        private List<TextBox> textBoxList = new List<TextBox>();
+
+        private Dictionary<Control, DependencyProperty> itemPropertyMap =
+            new Dictionary<Control, DependencyProperty>();
 
         public Shortcut_itemview()
         {
@@ -51,9 +53,9 @@ namespace InteractionUI.MenuUI.Controls
                 textBoxProcess.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 checkBoxActive.GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
 
-                foreach (TextBox textBox in textBoxList)
+                foreach (KeyValuePair<Control, DependencyProperty> pair in itemPropertyMap)
                 {
-                    textBox.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                    pair.Key.GetBindingExpression(pair.Value).UpdateSource();
                 }
 
                 shortcutService.SaveOrUpdateShortcutDefinition((ShortcutDefinition)Tag);
@@ -78,9 +80,16 @@ namespace InteractionUI.MenuUI.Controls
             updateView(shortcutDef);
         }
 
-        private void TextBox_Initialized(object sender, EventArgs e)
+        private void Item_Initialized(object sender, EventArgs e)
         {
-            textBoxList.Add((TextBox)sender);
+            if (sender.GetType().Equals(typeof(TextBox)))
+            {
+                itemPropertyMap.Add((Control)sender, TextBox.TextProperty);
+            }
+            else if (sender.GetType().Equals(typeof(Slider)))
+            {
+                itemPropertyMap.Add((Control)sender, Slider.ValueProperty);
+            }
         }
     }
 }

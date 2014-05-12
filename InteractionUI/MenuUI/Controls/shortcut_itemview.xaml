@@ -37,14 +37,19 @@
 
             <ListView.View>
                 <GridView AllowsColumnReorder="true">
-                    <GridViewColumn Header="Gesture" Width="150" DisplayMemberBinding="{Binding ShortcutType}" />
+                    <GridViewColumn Header="Gesture" Width="130" DisplayMemberBinding="{Binding ShortcutType}" />
 
-                    <GridViewColumn Header="Shortcut" Width="150">
+                    <GridViewColumn Header="Shortcut" Width="250">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Grid>
-                                    <TextBox Width="150" Text="{Binding ShortcutString, UpdateSourceTrigger=Explicit}" Initialized="TextBox_Initialized" Margin="0,2,0,2" />
-                                </Grid>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox Width="100" Text="{Binding ShortcutString, UpdateSourceTrigger=Explicit}" Initialized="Item_Initialized" Margin="0,2,10,2" />
+                                    <Slider Value="{Binding Strength, UpdateSourceTrigger=Explicit}" Minimum="1" Maximum="10" Width="100" SmallChange="1" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True"  Initialized="Item_Initialized">
+                                        <Slider.ToolTip>
+                                            <ToolTip Content="{Binding RelativeSource={RelativeSource Self}, Path=PlacementTarget.Value}" />
+                                        </Slider.ToolTip>
+                                    </Slider>
+                                </StackPanel>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
