@@ -39,7 +39,7 @@ namespace InteractionUtil.Service.Impl
 
                     for (int i = 0; i < item.Strength; ++i)
                     {
-                        SendKeys.SendWait(item.Name);
+                        SendKeys.SendWait(item.ShortcutString);
                     }
                     SendKeys.Flush();
                 }

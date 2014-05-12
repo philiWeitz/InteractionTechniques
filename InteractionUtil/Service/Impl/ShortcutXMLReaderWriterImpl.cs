@@ -60,6 +60,7 @@ namespace InteractionUtil.Service.Impl
                 {
                     File.Delete(shortCutPath + item.OldName + ".xml");
                 }
+                item.OldName = item.Name;
             }
 
             using (StreamWriter file = new StreamWriter(shortCutPath + item.Name + ".xml"))
@@ -113,7 +114,7 @@ namespace InteractionUtil.Service.Impl
 
             foreach (KeyValuePair<InteractionGesture, ShortcutItem> mapItem in item.GestureMap)
             {
-                addNode(xmlDoc, root, mapItem.Key.ToString(), mapItem.Value.Name + SEPARATOR + mapItem.Value.Strength);
+                addNode(xmlDoc, root, mapItem.Key.ToString(), mapItem.Value.ShortcutString + SEPARATOR + mapItem.Value.Strength);
             }
 
             return xmlDoc.InnerXml;
@@ -123,6 +124,7 @@ namespace InteractionUtil.Service.Impl
         {
             ShortcutDefinition result = new ShortcutDefinition();
             result.Name = Path.GetFileNameWithoutExtension(path);
+            result.OldName = Path.GetFileNameWithoutExtension(path);
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
@@ -157,6 +159,7 @@ namespace InteractionUtil.Service.Impl
                         result.GestureMap[gesture] = new ShortcutItem(item[0], int.Parse(item[1]));
                     }
                 }
+                result.GestureMap[gesture].ShortcutType = gesture;
             }
 
             return result;

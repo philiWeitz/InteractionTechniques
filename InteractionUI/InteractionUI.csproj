@@ -116,8 +116,8 @@
     <Compile Include="MenuUI\Controls\button_shortcutControl.xaml.cs">
       <DependentUpon>button_shortcutControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MenuUI\Controls\ItemView.xaml.cs">
-      <DependentUpon>ItemView.xaml</DependentUpon>
+    <Compile Include="MenuUI\Controls\shortcut_itemview.xaml.cs">
+      <DependentUpon>shortcut_itemview.xaml</DependentUpon>
     </Compile>
     <Compile Include="MenuUI\Controls\symbol_nokinectControl.xaml.cs">
       <DependentUpon>symbol_nokinectControl.xaml</DependentUpon>
@@ -193,7 +193,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="MenuUI\Controls\ItemView.xaml">
+    <Page Include="MenuUI\Controls\shortcut_itemview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

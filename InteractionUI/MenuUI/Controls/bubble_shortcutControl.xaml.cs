@@ -1,10 +1,7 @@
-﻿using InteractionUtil.Common;
+﻿using System.Windows.Controls;
+using InteractionUtil.Common;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
 
 namespace InteractionUI
 {
@@ -14,25 +11,21 @@ namespace InteractionUI
     public partial class bubble_shortcutControl : UserControl
     {
         private IShortcutReaderWriterService shortcutService;
+
         public bubble_shortcutControl()
         {
             InitializeComponent();
             initialize();
-
         }
 
         private void initialize()
         {
             shortcutService = SpringUtil.getService<IShortcutReaderWriterService>();
 
-            foreach(ShortcutDefinition item in shortcutService.ReadDefinitionsFromDirectory()) {
+            foreach (ShortcutDefinition item in shortcutService.ReadDefinitionsFromDirectory())
+            {
                 tabcontrol.Items.Add(item);
             }
         }
-
-
-       
-}
-
-
     }
+}

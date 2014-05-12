@@ -3,7 +3,6 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-	xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2"
 	mc:Ignorable="d"
 	x:Class="InteractionUI.bubble_shortcutControl"
 	x:Name="UserControl"
@@ -17,12 +16,12 @@
             Name="tabcontrol" TabStripPlacement="Left" ItemsSource="{Binding}" Height="304" VerticalAlignment="Top" Margin="17,33,-569,-329">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </TabControl.ItemTemplate>
                 <TabControl.ContentTemplate>
                     <DataTemplate>
-                        <views:ItemView/>
+                        <views:Shortcut_itemview />
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
