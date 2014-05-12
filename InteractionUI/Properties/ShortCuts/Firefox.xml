@@ -1,6 +1,6 @@
 <root>
   <ProcessName>firefox</ProcessName>
-  <Active>True</Active>
+  <Active>False</Active>
   <Index>1</Index>
   <CircleClock>{PGDN},1</CircleClock>
   <CircleCounterClock>{PGUP},1</CircleCounterClock>

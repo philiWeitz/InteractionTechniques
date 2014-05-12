@@ -116,6 +116,9 @@
     <Compile Include="MenuUI\Controls\button_shortcutControl.xaml.cs">
       <DependentUpon>button_shortcutControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MenuUI\Controls\ItemView.xaml.cs">
+      <DependentUpon>ItemView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuUI\Controls\symbol_nokinectControl.xaml.cs">
       <DependentUpon>symbol_nokinectControl.xaml</DependentUpon>
     </Compile>
@@ -190,6 +193,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="MenuUI\Controls\ItemView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MenuUI\Controls\symbol_nokinectControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -219,6 +226,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Properties\ShortCuts\VLC.xml">
+      <SubType>Designer</SubType>
+    </Resource>
     <Content Include="Properties\Sounds\Swipe_down.wav" />
     <Content Include="Properties\Sounds\Swipe_left.wav" />
     <Content Include="Properties\Sounds\Swipe_right.wav" />
@@ -238,9 +248,11 @@
     </Content>
     <Content Include="Properties\ShortCuts\Spotify.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Properties\ShortCuts\Firefox.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Properties\Sounds\Push.wav" />
     <None Include="app.config" />

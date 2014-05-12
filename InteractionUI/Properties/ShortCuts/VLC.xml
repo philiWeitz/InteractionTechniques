@@ -1,0 +1,13 @@
+<root>
+  <ProcessName>vlc</ProcessName>
+  <Active>False</Active>
+  <Index>3</Index>
+  <CircleClock>+{LEFT},10</CircleClock>
+  <CircleCounterClock>+{RIGHT},10</CircleCounterClock>
+  <PushOneHanded>" ",1</PushOneHanded>
+  <PullOneHanded></PullOneHanded>
+  <SwipeToLeft>"N"</SwipeToLeft>
+  <SwipeToRight>"P"</SwipeToRight>
+  <SwipeUp>^{UP}</SwipeUp>
+  <SwipeDown>^{DOWN}</SwipeDown>
+</root>

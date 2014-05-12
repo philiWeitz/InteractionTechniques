@@ -7,95 +7,25 @@
 	mc:Ignorable="d"
 	x:Class="InteractionUI.bubble_shortcutControl"
 	x:Name="UserControl"
+    xmlns:views="clr-namespace:InteractionUI.MenuUI.Controls"
 	d:DesignWidth="602" d:DesignHeight="373.382">
 
     <Canvas x:Name="bubble_shortcut">
         <Path Data="F1M575,2L14,2C7.373,2,2,7.373,2,14L2,323C2,329.627,7.373,335,14,335L418.578,335 431.5,357.382 444.422,335 575,335C581.627,335,587,329.627,587,323L587,14C587,7.373,581.627,2,575,2" Fill="White" Height="361.382" Canvas.Left="-2" Stroke="#FF231F20" StrokeThickness="4" Canvas.Top="16" Width="589" />
-        <TabControl Name="tabDynamic" Canvas.Left="15" Canvas.Top="35" ItemsSource="{Binding}" SelectionChanged="tabDynamic_SelectionChanged">
-            <TabControl.Resources>
-                <DataTemplate x:Key="TabHeader" DataType="TabItem">
-                    <DockPanel>
-                        <Button Name="btnDelete" DockPanel.Dock="Right" Margin="5,0,0,0" Padding="0" Click="btnDelete_Click" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}}, Path=Name}">
-                            <Image Source="trash.ico" Height="11" Width="11"></Image>
-                        </Button>
-                        <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type TabItem}}, Path=Header}" />
-                    </DockPanel>
-                </DataTemplate>
-                <Style TargetType="TextBox">
-                    <Setter Property="VerticalAlignment" Value="Stretch"></Setter>
-                    <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
-                    <Setter Property="AcceptsReturn" Value="True"></Setter>
-                    <Setter Property="TextWrapping" Value="WrapWithOverflow"></Setter>
-                    <Setter Property="MaxLines" Value="5000"></Setter>
-                    <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"></Setter>
-                    <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"></Setter>
-                </Style>
-            </TabControl.Resources>
-        </TabControl>
-        <!--<TabControl x:Name="tabControl" TabStripPlacement="Left" Margin="0, 0, 0, 10" Canvas.Left="30" Canvas.Top="120" ItemsSource="{Binding ShortcutDefinition}">
-            <TabControl TabStripPlacement="Left" Margin="0, 0, 0, 10">
-                <TabItem  Name="fontweight" Header="FontWeight">
-                    <TabItem.Content>
-                        <TextBlock TextWrapping="WrapWithOverflow">
-        FontWeight property information goes here.
-                        </TextBlock>
-                    </TabItem.Content>
-                </TabItem>
-
-                <TabItem Name="fontsize" Header="FontSize">
-                    <TabItem.Content>
-                        <TextBlock TextWrapping="WrapWithOverflow">
-        FontSize property information goes here.
-                        </TextBlock>
-                    </TabItem.Content>
-                </TabItem>
+        <Grid>
+            <TabControl
+            Name="tabcontrol" TabStripPlacement="Left" ItemsSource="{Binding}" Height="304" VerticalAlignment="Top" Margin="17,33,-569,-329">
+                <TabControl.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
+                <TabControl.ContentTemplate>
+                    <DataTemplate>
+                        <views:ItemView/>
+                    </DataTemplate>
+                </TabControl.ContentTemplate>
             </TabControl>
-        </TabControl>
-
-        <ListView Visibility="Hidden" x:Name="shortcutDefinitionList" FontSize="13.333" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Canvas.Left="10" Canvas.Top="31" Background="Transparent" BorderThickness="0" FontFamily="/InteractionUI;component/Fonts/#Bellota">
-
-            <ListView.ItemContainerStyle>
-				<Style TargetType="{x:Type ListViewItem}">
-					<Setter Property="HorizontalContentAlignment" Value="Center" />
-				</Style>
-			</ListView.ItemContainerStyle>
-			<ListView.View>
-
-				<GridView AllowsColumnReorder="False">
-
-					<GridViewColumn x:Name="Application" Header="Application" Width="150" DisplayMemberBinding="{Binding Name}" />
-					<GridViewColumn x:Name="Delete" Header="" Width="50">
-
-						<GridViewColumn.CellTemplate>
-							<DataTemplate>
-
-								<Border>
-									<Grid>
-
-										<Button Height="16" Width="16" Background="Transparent" BorderThickness="0" ToolTip="Delete the gesture combinations for this program" x:Name="removeButton" Tag="{Binding}" Click="removeButton_Click">
-											<DockPanel>
-												<Image Source="trash.ico" />
-											</DockPanel>
-										</Button>
-									</Grid>
-								</Border>
-							</DataTemplate>
-						</GridViewColumn.CellTemplate>
-					</GridViewColumn>
-
-					<GridViewColumn Header="Active">
-						<GridViewColumn.CellTemplate>
-							<DataTemplate>
-								<Border>
-									<Grid>
-										<CheckBox BorderThickness="0" Background="Transparent" Tag="{Binding}" IsChecked="{Binding Active}" Checked="checkBoxChanged" Unchecked="checkBoxChanged" />
-									</Grid>
-								</Border>
-							</DataTemplate>
-						</GridViewColumn.CellTemplate>
-					</GridViewColumn>
-				</GridView>
-			</ListView.View>
-        </ListView>-->
+        </Grid>
     </Canvas>
 </UserControl>
