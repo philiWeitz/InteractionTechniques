@@ -49,6 +49,7 @@ namespace InteractionUI.MenuUI.Controls
             {
                 textBoxName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
                 textBoxProcess.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+                checkBoxActive.GetBindingExpression(CheckBox.IsCheckedProperty).UpdateSource();
 
                 foreach (TextBox textBox in textBoxList)
                 {
@@ -65,6 +66,7 @@ namespace InteractionUI.MenuUI.Controls
             {
                 textBoxName.GetBindingExpression(TextBox.TextProperty).UpdateTarget();
                 textBoxProcess.GetBindingExpression(TextBox.TextProperty).UpdateTarget();
+                checkBoxActive.GetBindingExpression(CheckBox.IsCheckedProperty).UpdateTarget();
 
                 updateView((ShortcutDefinition)Tag);
             }

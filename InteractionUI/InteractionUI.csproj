@@ -229,11 +229,13 @@
     <Resource Include="Properties\ShortCuts\VLC.xml">
       <SubType>Designer</SubType>
     </Resource>
+    <Resource Include="Properties\Icons\active.ico" />
+    <Resource Include="Properties\Icons\plus.ico" />
     <Content Include="Properties\Sounds\Swipe_down.wav" />
     <Content Include="Properties\Sounds\Swipe_left.wav" />
     <Content Include="Properties\Sounds\Swipe_right.wav" />
     <Content Include="Properties\Sounds\Swipe_up.wav" />
-    <Resource Include="MenuUI\Controls\trash.ico" />
+    <Resource Include="Properties\Icons\trash.ico" />
     <Content Include="Properties\Images\HandRight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
