@@ -29,7 +29,7 @@ namespace InteractionUI
             }
         }
 
-        private void Button_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void removeTabButton_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Button button = (Button)sender;
 
@@ -46,7 +46,7 @@ namespace InteractionUI
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void addTabButton_Click(object sender, RoutedEventArgs e)
         {
             ShortcutDefinition item = new ShortcutDefinition();
             item.Name = "New Item";

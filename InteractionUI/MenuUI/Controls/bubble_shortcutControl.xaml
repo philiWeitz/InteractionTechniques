@@ -23,7 +23,7 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Text="{Binding Name}" Grid.Column="0" VerticalAlignment="Center" />
-                            <Button Tag="{Binding}" Grid.Column="1" Margin="5,2,0,2" VerticalAlignment="Center" Click="Button_Click">
+                            <Button Tag="{Binding}" Grid.Column="1" Margin="5,2,0,2" VerticalAlignment="Center" Click="removeTabButton_Click">
                                 <StackPanel>
                                     <Image Source="trash.ico" Width="10" />
                                 </StackPanel>
@@ -38,7 +38,7 @@
                 </TabControl.ContentTemplate>
             </TabControl>
 
-            <Button Content="+" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="45" Click="Button_Click_1" />
+            <Button Content="+" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="45" Click="addTabButton_Click" />
         </Grid>
     </Canvas>
 </UserControl>

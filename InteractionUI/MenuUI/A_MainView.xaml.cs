@@ -56,6 +56,8 @@ namespace InteractionUI.MenuUI
 
             highlightView = new HighlightView();
             highlightView.Show();
+
+            bubble_settingsControl.InitCloseAnimation(story_hide_settings_bubble_BeginStoryboard.Storyboard, this);
         }
 
         private void updateTimer_Tick(object sender, EventArgs e)

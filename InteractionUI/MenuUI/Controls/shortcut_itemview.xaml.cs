@@ -59,7 +59,7 @@ namespace InteractionUI.MenuUI.Controls
             }
         }
 
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        private void resetButton_Click(object sender, RoutedEventArgs e)
         {
             if (null != Tag && Tag.GetType().Equals(typeof(ShortcutDefinition)))
             {
