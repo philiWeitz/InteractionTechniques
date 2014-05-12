@@ -26,7 +26,10 @@ namespace InteractionUtil.Common
             GestureMap = new Dictionary<InteractionGesture, ShortcutItem>();
             foreach (InteractionGesture gesture in Enum.GetValues(typeof(InteractionGesture)))
             {
-                GestureMap.Add(gesture, new ShortcutItem());
+                ShortcutItem item = new ShortcutItem();
+                item.ShortcutType = gesture;
+
+                GestureMap.Add(gesture, item);
             }
         }
 

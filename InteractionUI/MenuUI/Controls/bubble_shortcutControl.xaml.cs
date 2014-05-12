@@ -45,5 +45,16 @@ namespace InteractionUI
                 }
             }
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ShortcutDefinition item = new ShortcutDefinition();
+            item.Name = "New Item";
+            item.Idx = tabcontrol.Items.Count;
+
+            shortcutService.SaveOrUpdateShortcutDefinition(item);
+            tabcontrol.Items.Add(item);
+            tabcontrol.SelectedItem = item;
+        }
     }
 }

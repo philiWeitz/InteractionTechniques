@@ -60,12 +60,12 @@ namespace InteractionUtil.Service.Impl
                 {
                     File.Delete(shortCutPath + item.OldName + ".xml");
                 }
-                item.OldName = item.Name;
             }
 
             using (StreamWriter file = new StreamWriter(shortCutPath + item.Name + ".xml"))
             {
                 file.Write(shortcutDefinitionToXml(item));
+                item.OldName = item.Name;
             }
         }
 

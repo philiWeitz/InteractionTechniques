@@ -39,7 +39,7 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Grid>
-                                    <TextBox Width="200" Text="{Binding ShortcutString, UpdateSourceTrigger=Explicit}" Initialized="TextBox_Initialized" />
+                                    <TextBox Width="150" Text="{Binding ShortcutString, UpdateSourceTrigger=Explicit}" Initialized="TextBox_Initialized" />
                                 </Grid>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

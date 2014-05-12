@@ -11,9 +11,9 @@
 
     <Canvas x:Name="bubble_shortcut">
         <Path Data="F1M575,2L14,2C7.373,2,2,7.373,2,14L2,323C2,329.627,7.373,335,14,335L418.578,335 431.5,357.382 444.422,335 575,335C581.627,335,587,329.627,587,323L587,14C587,7.373,581.627,2,575,2" Fill="White" Height="361.382" Canvas.Left="-2" Stroke="#FF231F20" StrokeThickness="4" Canvas.Top="16" Width="589" />
-        <Grid>
+        <Grid Height="318" Width="547" RenderTransformOrigin="0.477,1.163" Canvas.Left="20" Canvas.Top="20">
             <TabControl
-            Name="tabcontrol" TabStripPlacement="Left" ItemsSource="{Binding}" Height="304" VerticalAlignment="Top" Margin="17,33,-569,-329">
+            Name="tabcontrol" TabStripPlacement="Left" ItemsSource="{Binding}" Height="318" VerticalAlignment="Center" Margin="2,5,-2,-5">
                 <TabControl.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -37,6 +37,8 @@
                     </DataTemplate>
                 </TabControl.ContentTemplate>
             </TabControl>
+
+            <Button Content="+" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="45" Click="Button_Click_1"/>
         </Grid>
     </Canvas>
 </UserControl>
