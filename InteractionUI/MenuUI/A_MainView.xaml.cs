@@ -54,7 +54,7 @@ namespace InteractionUI.MenuUI
             updateTimer.Interval = TimeSpan.FromMilliseconds(INTERVAL);
             updateTimer.Start();
 
-            highlightView = new HighlightView();
+            highlightView = new HighlightView(SENSOR_IDX);
             highlightView.Show();
 
             bubble_settingsControl.InitCloseAnimation(story_hide_settings_bubble_BeginStoryboard.Storyboard, this);
@@ -83,7 +83,7 @@ namespace InteractionUI.MenuUI
                     else if (skeletonService.userInRange().Count <= 0)
                     {
                         bubble_infobarControl.infotext.Text = "No user in range";
-                        highlightView.WindowHighlight.Visibility = Visibility.Collapsed;
+                        highlightView.UpdateWindow();
 
                         if (null == noUserDetectedTimer)
                         {
@@ -101,17 +101,7 @@ namespace InteractionUI.MenuUI
                         noUserDetectedTimer = null;
                         bubble_infobarControl.infotext.Text = kinectControl.LastGesture;
 
-                        if (confService.ActiveUserFeedbackEnabled)
-                        {
-                            if (gestureService.getActiveUserDataPointQueue().Count > 0)
-                            {
-                                highlightView.WindowHighlight.Visibility = Visibility.Visible;
-                            }
-                            else
-                            {
-                                highlightView.WindowHighlight.Visibility = Visibility.Collapsed;
-                            }
-                        }
+                        highlightView.UpdateWindow();
                     }
                 }
                 else if (null == kinectThread || !kinectThread.IsAlive)

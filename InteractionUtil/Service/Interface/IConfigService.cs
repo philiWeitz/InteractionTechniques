@@ -14,6 +14,8 @@ namespace InteractionUtil.Service.Interface
 
         bool ActiveUserFeedbackEnabled { get; set; }
 
+        bool NoUserInRangeFeedbackEnabled { get; set; }
+
         void ReadConfigFromFile();
 
         void WriteConfigToFile();

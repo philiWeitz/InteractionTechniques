@@ -49,6 +49,7 @@ namespace InteractionUtil.Service.Impl
             using (StreamWriter file = new StreamWriter(shortCutPath + name + ".xml"))
             {
                 file.Write(shortcutDefinitionToXml(new ShortcutDefinition()));
+                resetLists();
             }
         }
 
@@ -66,6 +67,8 @@ namespace InteractionUtil.Service.Impl
             {
                 file.Write(shortcutDefinitionToXml(item));
                 item.OldName = item.Name;
+
+                resetLists();
             }
         }
 
@@ -76,6 +79,8 @@ namespace InteractionUtil.Service.Impl
                 File.Delete(shortCutPath + item.Name + ".xml");
                 shortcutList.Remove(item);
                 activeShortcutList.Remove(item);
+
+                resetLists();
             }
         }
 
@@ -99,6 +104,12 @@ namespace InteractionUtil.Service.Impl
             activeShortcutList.Sort();
 
             return shortcutList;
+        }
+
+        private void resetLists()
+        {
+            shortcutList = null;
+            activeShortcutList = null;
         }
 
         private String shortcutDefinitionToXml(ShortcutDefinition item)

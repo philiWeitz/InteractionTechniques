@@ -22,10 +22,13 @@ namespace InteractionUtil.Service.Impl
 
         public bool ActiveUserFeedbackEnabled { get; set; }
 
+        public bool NoUserInRangeFeedbackEnabled { get; set; }
+
         public ConfigServiceImpl()
         {
             VolumeEnabled = true;
             ActiveUserFeedbackEnabled = true;
+            NoUserInRangeFeedbackEnabled = true;
             GestureTimeOut = double.Parse(Resource.ConfGestureTimeOut);
         }
 
@@ -67,6 +70,7 @@ namespace InteractionUtil.Service.Impl
             addNode(xmlDoc, root, "GestureTimeOut", GestureTimeOut);
             addNode(xmlDoc, root, "VolumeEnabled", VolumeEnabled);
             addNode(xmlDoc, root, "ActiveUserFeedbackEnabled", ActiveUserFeedbackEnabled);
+            addNode(xmlDoc, root, "NoUserInRangeFeedbackEnabled", NoUserInRangeFeedbackEnabled);
 
             return xmlDoc.InnerXml;
         }
@@ -79,6 +83,7 @@ namespace InteractionUtil.Service.Impl
             GestureTimeOut = getFirstNodeItem<double>(xmlDoc, "GestureTimeOut");
             VolumeEnabled = getFirstNodeItem<bool>(xmlDoc, "VolumeEnabled");
             ActiveUserFeedbackEnabled = getFirstNodeItem<bool>(xmlDoc, "ActiveUserFeedbackEnabled");
+            NoUserInRangeFeedbackEnabled = getFirstNodeItem<bool>(xmlDoc, "NoUserInRangeFeedbackEnabled");
         }
 
         private T getFirstNodeItem<T>(XmlDocument xmlDoc, String nodeName)

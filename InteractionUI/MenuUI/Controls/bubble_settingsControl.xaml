@@ -13,12 +13,17 @@
             <Path Data="F1M575,2L494,2 92,2 14,2C7.373,2,2,7.373,2,14L2,323C2,329.627,7.373,335,14,335L101,335 337.578,335 350.5,357.382 363.422,335 418.578,335 444.422,335 494,335 575,335C581.627,335,587,329.627,587,323L587,14C587,7.373,581.627,2,575,2" Fill="White" Height="361.382" Canvas.Left="-2" Stroke="#FF231F20" StrokeThickness="4" Canvas.Top="16" Width="589" />
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Canvas.Top="35" Canvas.Left="5">
-                <CheckBox Margin="15" Content="Play sounds when gestures are recognized" Name="volumeEnabled" />
-                <CheckBox Margin="15" Content="Show colored frame when system is ready to recognize your gestures " Name="activeUserFeedbackEnabled" />
+                <CheckBox Margin="15" Content="Play sounds when gestures are recognized" Name="volumeEnabled"
+                          IsChecked="{Binding VolumeEnabled, UpdateSourceTrigger=Explicit}" />
+                <CheckBox Margin="15" Content="Show colored frame when system is ready to recognize your gestures" Name="activeUserFeedbackEnabled"
+                          IsChecked="{Binding ActiveUserFeedbackEnabled, UpdateSourceTrigger=Explicit}" />
+                <CheckBox Margin="15" Content="Show colored frame when no user is in range" Name="noUserInRangeFeedbackEnabled"
+                          IsChecked="{Binding NoUserInRangeFeedbackEnabled, UpdateSourceTrigger=Explicit}" />
 
                 <TextBlock Margin="15,15,0,6" Text="Time after a recognized gesture until the next gesture can be recognized" />
                 <StackPanel Orientation="Horizontal"  Margin="15,0,0,15" HorizontalAlignment="Left">
-                    <Slider Maximum="5" Minimum="0.1" TickPlacement="BottomRight" Name="gestureTimeOut" Width="144" HorizontalAlignment="Left" ValueChanged="gestureTimeOut_ValueChanged" />
+                    <Slider Maximum="5" Minimum="0.1" TickPlacement="BottomRight" Name="gestureTimeOut" Width="144" HorizontalAlignment="Left" ValueChanged="gestureTimeOut_ValueChanged"
+                            Value="{Binding GestureTimeOut, UpdateSourceTrigger=Explicit}" />
                     <TextBlock Name="gestureTimeOutText" Margin="10,0,0,0" Text="0"></TextBlock>
                 </StackPanel>
             </StackPanel>

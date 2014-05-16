@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Media.Animation;
 using InteractionUtil.Service.Interface;
 using InteractionUtil.Util;
@@ -13,6 +14,9 @@ namespace InteractionUI
     public partial class bubble_settingsControl : UserControl
     {
         private IConfigService confService;
+
+        private Dictionary<Control, DependencyProperty> itemPropertyMap =
+            new Dictionary<Control, DependencyProperty>();
 
         private Page MainPage { get; set; }
 
@@ -27,21 +31,12 @@ namespace InteractionUI
         private void initialize()
         {
             confService = SpringUtil.getService<IConfigService>();
+            this.DataContext = confService;
 
-            Binding volumeBinding = new Binding("VolumeEnabled");
-            volumeBinding.Source = confService;
-            volumeBinding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
-            volumeEnabled.SetBinding(CheckBox.IsCheckedProperty, volumeBinding);
-
-            Binding gestureTimeOutBinding = new Binding("GestureTimeOut");
-            gestureTimeOutBinding.Source = confService;
-            gestureTimeOutBinding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
-            gestureTimeOut.SetBinding(Slider.ValueProperty, gestureTimeOutBinding);
-
-            Binding activeUserFeedbackEnabledBinding = new Binding("ActiveUserFeedbackEnabled");
-            activeUserFeedbackEnabledBinding.Source = confService;
-            activeUserFeedbackEnabledBinding.UpdateSourceTrigger = UpdateSourceTrigger.Explicit;
-            activeUserFeedbackEnabled.SetBinding(CheckBox.IsCheckedProperty, activeUserFeedbackEnabledBinding);
+            itemPropertyMap[gestureTimeOut] = Slider.ValueProperty;
+            itemPropertyMap[volumeEnabled] = CheckBox.IsCheckedProperty;
+            itemPropertyMap[activeUserFeedbackEnabled] = CheckBox.IsCheckedProperty;
+            itemPropertyMap[noUserInRangeFeedbackEnabled] = CheckBox.IsCheckedProperty;
         }
 
         public void InitCloseAnimation(Storyboard exitStoryBoard, Page mainPage)
@@ -57,14 +52,10 @@ namespace InteractionUI
 
         private void settingsSave_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            BindingExpression be = volumeEnabled.GetBindingExpression(CheckBox.IsCheckedProperty);
-            be.UpdateSource();
-
-            BindingExpression bf = gestureTimeOut.GetBindingExpression(Slider.ValueProperty);
-            bf.UpdateSource();
-
-            BindingExpression bg = activeUserFeedbackEnabled.GetBindingExpression(CheckBox.IsCheckedProperty);
-            bg.UpdateSource();
+            foreach (KeyValuePair<Control, DependencyProperty> item in itemPropertyMap)
+            {
+                item.Key.GetBindingExpression(item.Value).UpdateSource();
+            }
 
             confService.WriteConfigToFile();
             closeView();
@@ -72,18 +63,9 @@ namespace InteractionUI
 
         private void UserControl_IsVisibleChanged(object sender, System.Windows.DependencyPropertyChangedEventArgs e)
         {
-            //selbe Anweisung wie cancel button: in separate Methode auslagern und von hier und cancel aufrufen.
-
-            if ((bool)e.NewValue == true)
+            foreach (KeyValuePair<Control, DependencyProperty> item in itemPropertyMap)
             {
-                BindingExpression be = volumeEnabled.GetBindingExpression(CheckBox.IsCheckedProperty);
-                be.UpdateTarget();
-
-                BindingExpression bf = gestureTimeOut.GetBindingExpression(Slider.ValueProperty);
-                bf.UpdateTarget();
-
-                BindingExpression bg = activeUserFeedbackEnabled.GetBindingExpression(CheckBox.IsCheckedProperty);
-                bg.UpdateTarget();
+                item.Key.GetBindingExpression(item.Value).UpdateTarget();
             }
         }
 
